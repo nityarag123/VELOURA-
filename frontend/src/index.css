@@ -1,0 +1,49 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+
+@layer base {
+  :root {
+    --font-serif: 'Cormorant Garamond', Georgia, serif;
+    --font-sans: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+  }
+  
+  body {
+    font-family: var(--font-sans);
+    background-color: #FFFDF9;
+    color: #2D2020;
+    overflow-x: hidden;
+    margin: 0;
+    padding: 0;
+  }
+
+  #root {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    margin: 0;
+    border: none;
+    text-align: left;
+  }
+
+  .font-serif {
+    font-family: var(--font-serif);
+  }
+}
+
+/* Luxury scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+}
+::-webkit-scrollbar-track {
+  background: #FAF3EB;
+}
+::-webkit-scrollbar-thumb {
+  background: #D9B7BE;
+  border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #731A2D;
+}
