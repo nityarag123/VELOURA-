@@ -7,6 +7,7 @@ import {
 import ProductCard from '../components/product/ProductCard';
 import QuickViewModal from '../components/product/QuickViewModal';
 import api from '../services/api';
+import { MOCK_PRODUCTS } from '../data/mockData';
 
 const FALLBACK_MENU_IMAGE = 'https://images.unsplash.com/photo-1578985545062-69928b1d9587?auto=format&fit=crop&w=600&q=80';
 
@@ -55,8 +56,8 @@ const MENU_CARDS = [
 
 export default function HomePage() {
   const navigate = useNavigate();
-  const [bestsellers, setBestsellers] = useState([]);
-  const [loading, setLoading] = useState(true);
+  const [bestsellers, setBestsellers] = useState(() => MOCK_PRODUCTS.filter(p => p.is_bestseller));
+  const [loading, setLoading] = useState(false);
   const [quickViewProduct, setQuickViewProduct] = useState(null);
 
   // Floating Chat State
@@ -70,11 +71,11 @@ export default function HomePage() {
     const fetchBestsellers = async () => {
       try {
         const res = await api.get('/products');
-        setBestsellers(res.data);
+        if (Array.isArray(res.data) && res.data.length > 0) {
+          setBestsellers(res.data);
+        }
       } catch (err) {
         console.error('Error fetching bestsellers', err);
-      } finally {
-        setLoading(false);
       }
     };
     fetchBestsellers();

@@ -4,14 +4,20 @@ import { Filter, SlidersHorizontal, ArrowUpDown, X, Search, Home } from 'lucide-
 import ProductCard from '../components/product/ProductCard';
 import QuickViewModal from '../components/product/QuickViewModal';
 import api from '../services/api';
+import { MOCK_CATEGORIES, MOCK_PRODUCTS } from '../data/mockData';
 
 export default function ProductListingPage() {
   const [searchParams, setSearchParams] = useSearchParams();
   const categoryParam = searchParams.get('category') || '';
   const searchParam = searchParams.get('search') || '';
 
-  const [products, setProducts] = useState([]);
-  const [categories, setCategories] = useState([]);
+  const [products, setProducts] = useState(() => {
+    if (categoryParam) {
+      return MOCK_PRODUCTS.filter(p => p.category_slug === categoryParam);
+    }
+    return MOCK_PRODUCTS;
+  });
+  const [categories, setCategories] = useState(MOCK_CATEGORIES);
   const [loading, setLoading] = useState(true);
   const [quickViewProduct, setQuickViewProduct] = useState(null);
 
@@ -30,12 +36,33 @@ export default function ProductListingPage() {
     setSearchKeyword(searchParams.get('search') || '');
   }, [searchParams]);
 
+  const filterMock = () => {
+    let list = [...MOCK_PRODUCTS];
+    if (selectedCategory) list = list.filter((p) => p.category_slug === selectedCategory);
+    if (searchKeyword) {
+      const q = searchKeyword.toLowerCase();
+      list = list.filter((p) => p.name?.toLowerCase().includes(q) || p.description?.toLowerCase().includes(q));
+    }
+    if (onlyBestsellers) list = list.filter((p) => p.is_bestseller);
+    if (priceRange === 'under-500') list = list.filter((p) => p.base_price < 500);
+    else if (priceRange === '500-800') list = list.filter((p) => p.base_price >= 500 && p.base_price <= 800);
+    else if (priceRange === '800-1200') list = list.filter((p) => p.base_price >= 800 && p.base_price <= 1200);
+    else if (priceRange === 'above-1200') list = list.filter((p) => p.base_price > 1200);
+    if (onlyEggless) list = list.filter((p) => p.is_eggless_available);
+    if (sortBy === 'price_asc') list.sort((a, b) => a.base_price - b.base_price);
+    else if (sortBy === 'price_desc') list.sort((a, b) => b.base_price - a.base_price);
+    else if (sortBy === 'rating') list.sort((a, b) => (b.rating || 0) - (a.rating || 0));
+    return list;
+  };
+
   // Fetch categories on mount
   useEffect(() => {
     const fetchCats = async () => {
       try {
         const res = await api.get('/categories');
-        setCategories(res.data);
+        if (Array.isArray(res.data) && res.data.length > 0) {
+          setCategories(res.data);
+        }
       } catch (err) {
         console.error(err);
       }
@@ -60,12 +87,17 @@ export default function ProductListingPage() {
 
         const res = await api.get(url);
         let data = res.data;
-        if (onlyEggless) {
-          data = data.filter((p) => p.is_eggless_available);
+        if (Array.isArray(data) && data.length > 0) {
+          if (onlyEggless) {
+            data = data.filter((p) => p.is_eggless_available);
+          }
+          setProducts(data);
+        } else {
+          setProducts(filterMock());
         }
-        setProducts(data);
       } catch (err) {
         console.error(err);
+        setProducts(filterMock());
       } finally {
         setLoading(false);
       }
