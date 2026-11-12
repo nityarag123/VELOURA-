@@ -2,7 +2,7 @@ import os
 import sys
 import json
 import random
-from bottle import Bottle, request, response, run, HTTPResponse
+from bottle import Bottle, request, response, run, HTTPResponse, static_file
 
 sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
@@ -755,7 +755,40 @@ def admin_change_password():
 
     return json_response({"message": "Admin password updated successfully! Please use your new password next time."})
 
+# ================= STATIC FRONTEND SERVING (For Unified Deployment) =================
+FRONTEND_DIST = os.path.abspath(os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), '..', 'frontend', 'dist'))
+
+@app.route('/')
+def serve_index():
+    index_file = os.path.join(FRONTEND_DIST, 'index.html')
+    if os.path.exists(index_file):
+        return static_file('index.html', root=FRONTEND_DIST)
+    return json_response({"status": "healthy", "service": "VELOURA Bakery API", "version": "1.0.0"})
+
+@app.route('/assets/<filename:path>')
+def serve_assets(filename):
+    assets_dir = os.path.join(FRONTEND_DIST, 'assets')
+    if os.path.exists(os.path.join(assets_dir, filename)):
+        return static_file(filename, root=assets_dir)
+    return HTTPResponse(status=404)
+
+@app.route('/<path:path>')
+def serve_spa_fallback(path):
+    # Don't intercept API routes with HTML
+    if path.startswith('api/'):
+        return HTTPResponse(status=404, body=json.dumps({"detail": "Not found"}), headers={'Content-Type': 'application/json'})
+    # Check if direct static file exists in dist
+    if os.path.exists(os.path.join(FRONTEND_DIST, path)):
+        return static_file(path, root=FRONTEND_DIST)
+    # SPA Fallback for React Router
+    index_file = os.path.join(FRONTEND_DIST, 'index.html')
+    if os.path.exists(index_file):
+        return static_file('index.html', root=FRONTEND_DIST)
+    return HTTPResponse(status=404)
+
 if __name__ == '__main__':
     init_db()
-    print("Starting VELOURA Bakery API server on http://127.0.0.1:8000...")
-    run(app, host='127.0.0.1', port=8000, server='wsgiref')
+    port = int(os.environ.get('PORT', 8000))
+    host = os.environ.get('HOST', '0.0.0.0')
+    print(f"Starting VELOURA Bakery API server on http://{host}:{port}...")
+    run(app, host=host, port=port, server='wsgiref')
