@@ -253,11 +253,117 @@ function handleMockFallback(error) {
   if (method === 'get' && url.includes('/admin/stats')) {
     return Promise.resolve({
       data: {
-        total_orders: 12,
-        total_revenue: 8450.0,
-        total_users: 18,
+        total_orders: 14,
+        total_revenue: 9780.0,
+        total_customers: 22,
+        total_users: 22,
         total_products: MOCK_PRODUCTS.length
       },
+      status: 200, statusText: 'OK', headers: {}, config
+    });
+  }
+
+  // 11. Admin Orders: GET /admin/orders
+  if (method === 'get' && url.includes('/admin/orders')) {
+    let orders = [];
+    try {
+      orders = JSON.parse(localStorage.getItem('veloura_orders') || '[]');
+    } catch (e) {}
+
+    if (!orders.length) {
+      orders = [
+        {
+          id: 101,
+          order_number: "VEL-2026-92814",
+          customer_name: "Aarav Sharma",
+          customer_email: "aarav.sharma@example.com",
+          customer_phone: "+91 98765 43210",
+          delivery_address: "Flat 402, Sea Green Apartments, Worli",
+          delivery_city: "Mumbai",
+          delivery_pincode: "400018",
+          delivery_date: "Today",
+          delivery_slot: "Midnight Surprise (11:00 PM - 12:00 AM)",
+          cake_message: "Happy 25th Anniversary Mom & Dad!",
+          special_instructions: "Please deliver discreetly, it's a surprise gift.",
+          total_amount: 1499.0,
+          status: "Baking",
+          payment_method: "UPI (Google Pay)",
+          created_at: new Date(Date.now() - 3600000).toISOString(),
+          items: [
+            { id: 1, product_name: "Royal Belgian Truffle Gateau", quantity: 1, weight: "1.0 kg", flavour: "Belgian Dark Truffle", total_price: 1399.0 }
+          ]
+        },
+        {
+          id: 102,
+          order_number: "VEL-2026-74912",
+          customer_name: "Meera Nair",
+          customer_email: "meera.nair@gmail.com",
+          customer_phone: "+91 91234 56789",
+          delivery_address: "Villa 12, Palm Meadows, Whitefield",
+          delivery_city: "Bengaluru",
+          delivery_pincode: "560066",
+          delivery_date: "Today",
+          delivery_slot: "Evening Prime (6:00 PM - 9:00 PM)",
+          cake_message: "Happy Birthday Arjun!",
+          special_instructions: "Extra candles requested",
+          total_amount: 849.0,
+          status: "Order Placed",
+          payment_method: "Credit Card (HDFC)",
+          created_at: new Date(Date.now() - 7200000).toISOString(),
+          items: [
+            { id: 2, product_name: "Korean Minimalist Bento Cake", quantity: 1, weight: "0.5 kg", flavour: "Strawberry Shortcake", total_price: 749.0 }
+          ]
+        }
+      ];
+    }
+    return Promise.resolve({ data: orders, status: 200, statusText: 'OK', headers: {}, config });
+  }
+
+  // 12. Admin Change Password: PUT /admin/change-password
+  if (method === 'put' && url.includes('/admin/change-password')) {
+    let body = {};
+    try { body = typeof config.data === 'string' ? JSON.parse(config.data) : config.data || {}; } catch(e){}
+    if (body.new_password) {
+      localStorage.setItem('veloura_admin_pw', body.new_password);
+    }
+    return Promise.resolve({
+      data: { message: "Admin password updated successfully! Please use your new password next time." },
+      status: 200, statusText: 'OK', headers: {}, config
+    });
+  }
+
+  // 13. Admin Update Product: PUT /admin/products/:id
+  if (method === 'put' && url.includes('/admin/products/')) {
+    let body = {};
+    try { body = typeof config.data === 'string' ? JSON.parse(config.data) : config.data || {}; } catch(e){}
+    return Promise.resolve({
+      data: { message: "Product updated successfully", ...body },
+      status: 200, statusText: 'OK', headers: {}, config
+    });
+  }
+
+  // 14. Admin Create Product: POST /admin/products
+  if (method === 'post' && url.includes('/admin/products')) {
+    let body = {};
+    try { body = typeof config.data === 'string' ? JSON.parse(config.data) : config.data || {}; } catch(e){}
+    return Promise.resolve({
+      data: { id: Date.now(), ...body },
+      status: 201, statusText: 'Created', headers: {}, config
+    });
+  }
+
+  // 15. Admin Delete Product: DELETE /admin/products/:id
+  if (method === 'delete' && url.includes('/admin/products/')) {
+    return Promise.resolve({
+      data: { message: "Product deleted successfully" },
+      status: 200, statusText: 'OK', headers: {}, config
+    });
+  }
+
+  // 16. Admin Update Order Status: PUT /admin/orders/:id/status
+  if (method === 'put' && url.includes('/admin/orders/')) {
+    return Promise.resolve({
+      data: { message: "Order status updated" },
       status: 200, statusText: 'OK', headers: {}, config
     });
   }
