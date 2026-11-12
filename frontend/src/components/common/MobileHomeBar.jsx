@@ -22,7 +22,7 @@ export default function MobileHomeBar() {
         <Link
           to="/"
           className={`flex flex-col items-center gap-0.5 transition ${
-            isHome ? 'text-[#E31837] font-bold' : 'text-gray-500 hover:text-gray-900'
+            isHome ? 'text-[#4A1525] font-bold' : 'text-gray-500 hover:text-gray-900'
           }`}
         >
           <Home className={`w-5 h-5 ${isHome ? 'stroke-[2.5px]' : ''}`} />
@@ -33,7 +33,7 @@ export default function MobileHomeBar() {
         <Link
           to="/products"
           className={`flex flex-col items-center gap-0.5 transition ${
-            isMenu ? 'text-[#E31837] font-bold' : 'text-gray-500 hover:text-gray-900'
+            isMenu ? 'text-[#4A1525] font-bold' : 'text-gray-500 hover:text-gray-900'
           }`}
         >
           <Cake className={`w-5 h-5 ${isMenu ? 'stroke-[2.5px]' : ''}`} />
@@ -44,7 +44,7 @@ export default function MobileHomeBar() {
         <Link
           to="/products?category=coffee-brews"
           className={`flex flex-col items-center gap-0.5 transition ${
-            isCafe ? 'text-[#E31837] font-bold' : 'text-gray-500 hover:text-gray-900'
+            isCafe ? 'text-[#4A1525] font-bold' : 'text-gray-500 hover:text-gray-900'
           }`}
         >
           <Coffee className={`w-5 h-5 ${isCafe ? 'stroke-[2.5px]' : ''}`} />
@@ -59,7 +59,7 @@ export default function MobileHomeBar() {
           <div className="relative">
             <ShoppingBag className="w-5 h-5" />
             {totalItemCount > 0 && (
-              <span className="absolute -top-1.5 -right-2 bg-[#E31837] text-white text-[9px] font-black w-4 h-4 rounded-full flex items-center justify-center shadow-xs animate-bounce">
+              <span className="absolute -top-1.5 -right-2 bg-[#4A1525] text-white text-[9px] font-black w-4 h-4 rounded-full flex items-center justify-center shadow-xs animate-bounce">
                 {totalItemCount}
               </span>
             )}
@@ -71,7 +71,7 @@ export default function MobileHomeBar() {
         <Link
           to={user ? '/profile' : '/login'}
           className={`flex flex-col items-center gap-0.5 transition ${
-            isProfile ? 'text-[#E31837] font-bold' : 'text-gray-500 hover:text-gray-900'
+            isProfile ? 'text-[#4A1525] font-bold' : 'text-gray-500 hover:text-gray-900'
           }`}
         >
           <User className={`w-5 h-5 ${isProfile ? 'stroke-[2.5px]' : ''}`} />

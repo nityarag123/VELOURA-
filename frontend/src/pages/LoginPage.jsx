@@ -108,7 +108,7 @@ export default function LoginPage() {
         {/* Brand Header */}
         <div className="text-center space-y-1">
           <Link to="/" className="inline-block">
-            <span className="font-serif italic text-3xl font-extrabold text-[#E31837] tracking-wide">
+            <span className="font-serif italic text-3xl font-extrabold text-[#4A1525] tracking-wide">
               veloura
             </span>
           </Link>
@@ -143,7 +143,7 @@ export default function LoginPage() {
 
         {/* 1-Click Instant Demo Access Buttons */}
         <div className="p-3 rounded-2xl bg-red-50 border border-red-100 space-y-2">
-          <p className="text-[11px] font-bold text-[#E31837] uppercase tracking-wider text-center">
+          <p className="text-[11px] font-bold text-[#4A1525] uppercase tracking-wider text-center">
             ⚡ 1-Click Instant Login
           </p>
           <div className="grid grid-cols-2 gap-2">
@@ -159,7 +159,7 @@ export default function LoginPage() {
               type="button"
               onClick={handleInstantAdminLogin}
               disabled={loading}
-              className="py-2 px-2 bg-[#E31837] hover:bg-[#C51132] text-white text-xs font-bold rounded-xl transition shadow-2xs text-center flex items-center justify-center gap-1"
+              className="py-2 px-2 bg-[#4A1525] hover:bg-[#C51132] text-white text-xs font-bold rounded-xl transition shadow-2xs text-center flex items-center justify-center gap-1"
             >
               <ShieldCheck className="w-3.5 h-3.5 text-[#FFD166]" />
               <span>Login as Admin</span>
@@ -177,7 +177,7 @@ export default function LoginPage() {
             }}
             className={`flex-1 py-2 text-xs font-bold rounded-lg transition ${
               activeTab === 'customer'
-                ? 'bg-white text-[#E31837] shadow-xs'
+                ? 'bg-white text-[#4A1525] shadow-xs'
                 : 'text-gray-500 hover:text-black'
             }`}
           >
@@ -191,7 +191,7 @@ export default function LoginPage() {
             }}
             className={`flex-1 py-2 text-xs font-bold rounded-lg transition ${
               activeTab === 'admin'
-                ? 'bg-white text-[#E31837] shadow-xs'
+                ? 'bg-white text-[#4A1525] shadow-xs'
                 : 'text-gray-500 hover:text-black'
             }`}
           >
@@ -219,7 +219,7 @@ export default function LoginPage() {
                   placeholder="name@example.com"
                   value={customerEmail}
                   onChange={(e) => setCustomerEmail(e.target.value)}
-                  className="w-full pl-9 pr-3 py-2.5 text-xs border border-gray-200 rounded-xl focus:outline-none focus:border-[#E31837] font-medium"
+                  className="w-full pl-9 pr-3 py-2.5 text-xs border border-gray-200 rounded-xl focus:outline-none focus:border-[#4A1525] font-medium"
                 />
                 <Mail className="w-4 h-4 text-gray-400 absolute left-3 top-1/2 -translate-y-1/2" />
               </div>
@@ -235,7 +235,7 @@ export default function LoginPage() {
                   placeholder="e.g. Aarav Sharma"
                   value={customerName}
                   onChange={(e) => setCustomerName(e.target.value)}
-                  className="w-full pl-9 pr-3 py-2.5 text-xs border border-gray-200 rounded-xl focus:outline-none focus:border-[#E31837] font-medium"
+                  className="w-full pl-9 pr-3 py-2.5 text-xs border border-gray-200 rounded-xl focus:outline-none focus:border-[#4A1525] font-medium"
                 />
                 <User className="w-4 h-4 text-gray-400 absolute left-3 top-1/2 -translate-y-1/2" />
               </div>
@@ -249,7 +249,7 @@ export default function LoginPage() {
             <button
               type="submit"
               disabled={loading}
-              className="w-full py-3 bg-[#E31837] hover:bg-[#C51132] text-white text-xs font-bold uppercase tracking-wider rounded-full transition shadow-md flex items-center justify-center gap-2"
+              className="w-full py-3 bg-[#4A1525] hover:bg-[#C51132] text-white text-xs font-bold uppercase tracking-wider rounded-full transition shadow-md flex items-center justify-center gap-2"
             >
               <span>{loading ? 'Signing In...' : 'Continue to Veloura'}</span>
               <ArrowRight className="w-4 h-4" />
@@ -271,7 +271,7 @@ export default function LoginPage() {
                   placeholder="admin@veloura.com"
                   value={adminEmail}
                   onChange={(e) => setAdminEmail(e.target.value)}
-                  className="w-full pl-9 pr-3 py-2.5 text-xs border border-gray-200 rounded-xl focus:outline-none focus:border-[#E31837] font-medium"
+                  className="w-full pl-9 pr-3 py-2.5 text-xs border border-gray-200 rounded-xl focus:outline-none focus:border-[#4A1525] font-medium"
                 />
                 <Mail className="w-4 h-4 text-gray-400 absolute left-3 top-1/2 -translate-y-1/2" />
               </div>
@@ -288,7 +288,7 @@ export default function LoginPage() {
                   placeholder="••••••••"
                   value={adminPassword}
                   onChange={(e) => setAdminPassword(e.target.value)}
-                  className="w-full pl-9 pr-3 py-2.5 text-xs border border-gray-200 rounded-xl focus:outline-none focus:border-[#E31837] font-medium"
+                  className="w-full pl-9 pr-3 py-2.5 text-xs border border-gray-200 rounded-xl focus:outline-none focus:border-[#4A1525] font-medium"
                 />
                 <Lock className="w-4 h-4 text-gray-400 absolute left-3 top-1/2 -translate-y-1/2" />
               </div>

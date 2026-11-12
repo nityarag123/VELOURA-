@@ -18,6 +18,8 @@ import OrderConfirmationPage from './pages/OrderConfirmationPage';
 import UserProfilePage from './pages/UserProfilePage';
 import LoginPage from './pages/LoginPage';
 import AdminDashboardPage from './pages/AdminDashboardPage';
+import CoffeeExperiencePage from './pages/CoffeeExperiencePage';
+import ChocolateExperiencePage from './pages/ChocolateExperiencePage';
 
 function App() {
   return (
@@ -25,7 +27,7 @@ function App() {
       <AuthProvider>
         <CartProvider>
           <WishlistProvider>
-            <div className="min-h-screen flex flex-col bg-[#FFFDF9] text-[#2D2020]">
+            <div className="min-h-screen flex flex-col bg-[#FAF6EE] text-[#2D2020] luxury-cream-texture">
               <AnnouncementBar />
               <Header />
               <CartDrawer />
@@ -33,6 +35,8 @@ function App() {
               <main className="flex-1 pb-16 md:pb-0">
                 <Routes>
                   <Route path="/" element={<HomePage />} />
+                  <Route path="/coffee" element={<CoffeeExperiencePage />} />
+                  <Route path="/chocolate" element={<ChocolateExperiencePage />} />
                   <Route path="/products" element={<ProductListingPage />} />
                   <Route path="/product/:slug" element={<ProductDetailPage />} />
                   <Route path="/checkout" element={<CheckoutPage />} />

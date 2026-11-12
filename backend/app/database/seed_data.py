@@ -108,7 +108,7 @@ def seed_database(db: Session):
             "name": "Luxury Gift Hampers",
             "slug": "gift-hampers",
             "description": "Curated velvet-box hampers with artisanal chocolates, dry cakes, and scented blooms.",
-            "image_url": "https://images.unsplash.com/photo-1513519245088-0e12902e5a38?auto=format&fit=crop&w=600&q=80",
+            "image_url": "https://images.unsplash.com/photo-1549465220-1a8b9238cd48?auto=format&fit=crop&w=600&q=80",
             "is_featured": True
         }
     ]
@@ -429,9 +429,9 @@ def seed_database(db: Session):
             "discount_price": 1799.0,
             "rating": 4.99,
             "review_count": 27,
-            "image_url": "https://images.unsplash.com/photo-1513519245088-0e12902e5a38?auto=format&fit=crop&w=800&q=80",
+            "image_url": "https://images.unsplash.com/photo-1549465220-1a8b9238cd48?auto=format&fit=crop&w=800&q=80",
             "gallery_json": json.dumps([
-                "https://images.unsplash.com/photo-1513519245088-0e12902e5a38?auto=format&fit=crop&w=800&q=80"
+                "https://images.unsplash.com/photo-1549465220-1a8b9238cd48?auto=format&fit=crop&w=800&q=80"
             ]),
             "flavours_json": json.dumps(["Grand Luxury Selection"]),
             "weights_json": json.dumps(["Deluxe Box", "Imperial Hamper"]),

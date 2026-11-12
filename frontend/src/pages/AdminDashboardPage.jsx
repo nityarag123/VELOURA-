@@ -240,22 +240,22 @@ export default function AdminDashboardPage() {
       
       {/* Breadcrumb Home Bar */}
       <nav className="text-xs text-gray-500 flex items-center gap-2 py-2 px-3 bg-white rounded-xl border border-gray-100 shadow-2xs">
-        <Link to="/" className="hover:text-[#E31837] flex items-center gap-1 font-bold text-gray-700 transition">
-          <Home className="w-3.5 h-3.5 text-[#E31837]" />
+        <Link to="/" className="hover:text-[#4A1525] flex items-center gap-1 font-bold text-gray-700 transition">
+          <Home className="w-3.5 h-3.5 text-[#4A1525]" />
           <span>Home</span>
         </Link>
         <span className="text-gray-300">/</span>
-        <span className="text-[#E31837] font-bold">Admin Console</span>
+        <span className="text-[#4A1525] font-bold">Admin Console</span>
       </nav>
 
       {/* Console Header */}
       <div className="flex flex-col sm:flex-row sm:items-center justify-between pb-6 border-b border-gray-200 gap-4">
         <div>
           <div className="flex items-center gap-2">
-            <span className="p-1.5 rounded-lg bg-[#E31837] text-white">
+            <span className="p-1.5 rounded-lg bg-[#4A1525] text-white">
               <ShieldCheck className="w-5 h-5" />
             </span>
-            <span className="text-xs font-bold uppercase tracking-widest text-[#E31837]">
+            <span className="text-xs font-bold uppercase tracking-widest text-[#4A1525]">
               Master Chef & Operations Console
             </span>
           </div>
@@ -284,7 +284,7 @@ export default function AdminDashboardPage() {
 
           <div className="p-6 bg-white rounded-3xl border border-gray-200 space-y-1 shadow-xs">
             <span className="text-xs font-bold uppercase tracking-wider text-gray-400">Total Revenue</span>
-            <p className="font-serif text-3xl font-extrabold text-[#E31837]">₹{stats.total_revenue}</p>
+            <p className="font-serif text-3xl font-extrabold text-[#4A1525]">₹{stats.total_revenue}</p>
             <p className="text-[11px] text-gray-500 font-medium">Recorded sales</p>
           </div>
 
@@ -309,7 +309,7 @@ export default function AdminDashboardPage() {
             onClick={() => setActiveTab('products')}
             className={`px-5 py-2.5 rounded-full text-xs font-bold uppercase tracking-wider transition ${
               activeTab === 'products'
-                ? 'bg-[#E31837] text-white shadow-sm'
+                ? 'bg-[#4A1525] text-white shadow-sm'
                 : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
             }`}
           >
@@ -320,7 +320,7 @@ export default function AdminDashboardPage() {
             onClick={() => setActiveTab('orders')}
             className={`px-5 py-2.5 rounded-full text-xs font-bold uppercase tracking-wider transition ${
               activeTab === 'orders'
-                ? 'bg-[#E31837] text-white shadow-sm'
+                ? 'bg-[#4A1525] text-white shadow-sm'
                 : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
             }`}
           >
@@ -343,7 +343,7 @@ export default function AdminDashboardPage() {
         {activeTab === 'products' && (
           <button
             onClick={() => setShowAddProductModal(true)}
-            className="inline-flex items-center gap-2 px-4 py-2 bg-[#E31837] hover:bg-[#C51132] text-white text-xs font-bold uppercase tracking-wider rounded-full shadow-xs transition"
+            className="inline-flex items-center gap-2 px-4 py-2 bg-[#4A1525] hover:bg-[#C51132] text-white text-xs font-bold uppercase tracking-wider rounded-full shadow-xs transition"
           >
             <Plus className="w-4 h-4" />
             <span>Add New Cake</span>
@@ -354,7 +354,7 @@ export default function AdminDashboardPage() {
       {/* TAB 1: PRODUCT CATALOG, PICTURES & PRICE MANAGEMENT */}
       {activeTab === 'products' && (
         <div className="space-y-4">
-          <div className="p-4 bg-red-50 border border-red-100 rounded-2xl flex items-center justify-between text-xs text-[#E31837] font-semibold">
+          <div className="p-4 bg-red-50 border border-red-100 rounded-2xl flex items-center justify-between text-xs text-[#4A1525] font-semibold">
             <span>You can update the image URL, cake title, category, base price, and discount price of any cake in real-time.</span>
           </div>
 
@@ -371,7 +371,7 @@ export default function AdminDashboardPage() {
                     className="w-full h-full object-cover"
                   />
                   <div className="absolute top-2 left-2 flex gap-1">
-                    <span className="bg-[#E31837] text-white text-[10px] font-bold px-2 py-0.5 rounded-full">
+                    <span className="bg-[#4A1525] text-white text-[10px] font-bold px-2 py-0.5 rounded-full">
                       ₹{prod.discount_price || prod.base_price}
                     </span>
                     {prod.discount_price && (
@@ -392,7 +392,7 @@ export default function AdminDashboardPage() {
                   <div className="pt-3 border-t border-gray-100 flex items-center justify-between gap-2">
                     <button
                       onClick={() => handleOpenEditModal(prod)}
-                      className="flex-1 py-1.5 px-3 bg-red-50 hover:bg-[#E31837] text-[#E31837] hover:text-white rounded-xl text-xs font-bold transition flex items-center justify-center gap-1.5"
+                      className="flex-1 py-1.5 px-3 bg-red-50 hover:bg-[#4A1525] text-[#4A1525] hover:text-white rounded-xl text-xs font-bold transition flex items-center justify-center gap-1.5"
                     >
                       <Edit className="w-3.5 h-3.5" />
                       <span>Edit Price & Pic</span>
@@ -424,10 +424,10 @@ export default function AdminDashboardPage() {
               <div className="flex flex-col sm:flex-row sm:items-center justify-between pb-3 border-b border-gray-100 gap-3">
                 <div>
                   <div className="flex items-center gap-2">
-                    <span className="font-mono text-sm font-bold text-[#E31837]">
+                    <span className="font-mono text-sm font-bold text-[#4A1525]">
                       {ord.order_number}
                     </span>
-                    <span className="text-xs bg-red-50 text-[#E31837] font-bold px-2.5 py-0.5 rounded-full">
+                    <span className="text-xs bg-red-50 text-[#4A1525] font-bold px-2.5 py-0.5 rounded-full">
                       {ord.status}
                     </span>
                   </div>
@@ -442,7 +442,7 @@ export default function AdminDashboardPage() {
                   <select
                     value={ord.status}
                     onChange={(e) => handleUpdateOrderStatus(ord.id, e.target.value)}
-                    className="text-xs font-bold bg-gray-50 border border-gray-300 rounded-xl px-3 py-1.5 text-[#E31837] focus:outline-none focus:border-[#E31837]"
+                    className="text-xs font-bold bg-gray-50 border border-gray-300 rounded-xl px-3 py-1.5 text-[#4A1525] focus:outline-none focus:border-[#4A1525]"
                   >
                     <option value="Order Placed">Order Placed</option>
                     <option value="Confirmed">Confirmed</option>
@@ -466,7 +466,7 @@ export default function AdminDashboardPage() {
                           <p className="font-semibold text-gray-900">{it.product_name}</p>
                           <p className="text-[10px] text-gray-400">{it.weight} • {it.flavour} • Qty: {it.quantity}</p>
                           {it.cake_message && (
-                            <p className="text-[10px] text-[#E31837] italic">Message Plaque: "{it.cake_message}"</p>
+                            <p className="text-[10px] text-[#4A1525] italic">Message Plaque: "{it.cake_message}"</p>
                           )}
                         </div>
                       </div>
@@ -478,9 +478,9 @@ export default function AdminDashboardPage() {
                   <p><strong>Address:</strong> {ord.delivery_address}, {ord.city} - {ord.pincode}</p>
                   <p><strong>Slot:</strong> {ord.delivery_date} ({ord.delivery_time_slot})</p>
                   {ord.special_instructions && (
-                    <p className="text-[#E31837]"><strong>Special Note:</strong> {ord.special_instructions}</p>
+                    <p className="text-[#4A1525]"><strong>Special Note:</strong> {ord.special_instructions}</p>
                   )}
-                  <p className="font-bold text-sm text-[#E31837] pt-2 border-t border-gray-200">
+                  <p className="font-bold text-sm text-[#4A1525] pt-2 border-t border-gray-200">
                     Grand Total: ₹{ord.total_amount} ({ord.payment_method})
                   </p>
                 </div>
@@ -495,7 +495,7 @@ export default function AdminDashboardPage() {
         <div className="max-w-xl bg-white p-8 rounded-3xl border border-gray-200 space-y-6 shadow-xs">
           <div>
             <h3 className="font-serif text-xl font-bold text-gray-900 flex items-center gap-2">
-              <Key className="w-5 h-5 text-[#E31837]" />
+              <Key className="w-5 h-5 text-[#4A1525]" />
               <span>Update Admin Password</span>
             </h3>
             <p className="text-xs text-gray-500 mt-1">
@@ -528,7 +528,7 @@ export default function AdminDashboardPage() {
                 placeholder="Enter current password (default: admin123)"
                 value={passwordForm.current_password}
                 onChange={(e) => setPasswordForm({ ...passwordForm, current_password: e.target.value })}
-                className="w-full px-3.5 py-2.5 text-xs border border-gray-200 rounded-xl focus:outline-none focus:border-[#E31837]"
+                className="w-full px-3.5 py-2.5 text-xs border border-gray-200 rounded-xl focus:outline-none focus:border-[#4A1525]"
               />
             </div>
 
@@ -542,7 +542,7 @@ export default function AdminDashboardPage() {
                 placeholder="Enter new password"
                 value={passwordForm.new_password}
                 onChange={(e) => setPasswordForm({ ...passwordForm, new_password: e.target.value })}
-                className="w-full px-3.5 py-2.5 text-xs border border-gray-200 rounded-xl focus:outline-none focus:border-[#E31837]"
+                className="w-full px-3.5 py-2.5 text-xs border border-gray-200 rounded-xl focus:outline-none focus:border-[#4A1525]"
               />
             </div>
 
@@ -556,14 +556,14 @@ export default function AdminDashboardPage() {
                 placeholder="Re-enter new password"
                 value={passwordForm.confirm_password}
                 onChange={(e) => setPasswordForm({ ...passwordForm, confirm_password: e.target.value })}
-                className="w-full px-3.5 py-2.5 text-xs border border-gray-200 rounded-xl focus:outline-none focus:border-[#E31837]"
+                className="w-full px-3.5 py-2.5 text-xs border border-gray-200 rounded-xl focus:outline-none focus:border-[#4A1525]"
               />
             </div>
 
             <button
               type="submit"
               disabled={passwordSubmitting}
-              className="w-full py-3 bg-[#E31837] hover:bg-[#C51132] text-white text-xs font-bold uppercase tracking-wider rounded-full transition shadow-md"
+              className="w-full py-3 bg-[#4A1525] hover:bg-[#C51132] text-white text-xs font-bold uppercase tracking-wider rounded-full transition shadow-md"
             >
               {passwordSubmitting ? 'Updating...' : 'Update Password'}
             </button>
@@ -653,7 +653,7 @@ export default function AdminDashboardPage() {
                     placeholder="Leave empty if no discount"
                     value={editForm.discount_price}
                     onChange={(e) => setEditForm({ ...editForm, discount_price: e.target.value })}
-                    className="w-full px-3 py-2 text-xs border rounded-xl font-bold text-[#E31837]"
+                    className="w-full px-3 py-2 text-xs border rounded-xl font-bold text-[#4A1525]"
                   />
                 </div>
               </div>
@@ -680,7 +680,7 @@ export default function AdminDashboardPage() {
                 </button>
                 <button
                   type="submit"
-                  className="px-6 py-2 bg-[#E31837] hover:bg-[#C51132] text-white text-xs font-bold uppercase tracking-wider rounded-xl transition"
+                  className="px-6 py-2 bg-[#4A1525] hover:bg-[#C51132] text-white text-xs font-bold uppercase tracking-wider rounded-xl transition"
                 >
                   Save Changes
                 </button>
@@ -781,7 +781,7 @@ export default function AdminDashboardPage() {
                 </button>
                 <button
                   type="submit"
-                  className="px-6 py-2 bg-[#E31837] text-white text-xs font-bold uppercase tracking-wider rounded-xl"
+                  className="px-6 py-2 bg-[#4A1525] text-white text-xs font-bold uppercase tracking-wider rounded-xl"
                 >
                   Publish Cake
                 </button>

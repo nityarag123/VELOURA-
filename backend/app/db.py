@@ -184,7 +184,7 @@ def seed_data(conn):
         ("French Pastries & Macarons", "pastries", "Classic Parisian opera slices, mille-feuille, delicate éclairs, and French macarons.", "https://images.unsplash.com/photo-1509440159596-0249088772ff?auto=format&fit=crop&w=600&q=80", 1),
         ("Artisan Brownies & Cookies", "brownies-cookies", "Fudgy Belgian walnut brownies and soft-baked gourmet stuffed cookies.", "https://images.unsplash.com/photo-1607958996333-41aef7caefaa?auto=format&fit=crop&w=600&q=80", 1),
         ("Jar Cakes & Trifles", "jar-cakes", "Portable, layered layers of moist sponge, rich ganache, and light mascarpone mousse.", "https://images.unsplash.com/photo-1541781774459-bb2af2f05b55?auto=format&fit=crop&w=600&q=80", 1),
-        ("Luxury Gift Hampers", "gift-hampers", "Curated velvet-box hampers with artisanal chocolates, dry cakes, and scented blooms.", "https://images.unsplash.com/photo-1513519245088-0e12902e5a38?auto=format&fit=crop&w=600&q=80", 1),
+        ("Luxury Gift Hampers", "gift-hampers", "Curated velvet-box hampers with artisanal chocolates, dry cakes, and scented blooms.", "https://images.unsplash.com/photo-1549465220-1a8b9238cd48?auto=format&fit=crop&w=600&q=80", 1),
         ("Artisanal Coffee & Brews", "coffee-brews", "Handcrafted specialty coffees made from 100% Arabica single-origin estate beans, brewed fresh by master baristas.", "https://images.unsplash.com/photo-1509042239860-f550ce710b93?auto=format&fit=crop&w=600&q=80", 1),
         ("Gourmet Cafe & Savory Bites", "cafe-savory", "Artisanal flaky French croissants, truffle sourdough melts, gourmet quiches, and warm cafe bites.", "https://images.unsplash.com/photo-1555396273-367ea4eb4db5?auto=format&fit=crop&w=600&q=80", 1)
     ]
@@ -394,8 +394,8 @@ def seed_data(conn):
             "Our most majestic gift trunk lined with silk: features 1 Bento Belgian Cake, 6 Assorted Parisian Macarons, 4 NYC Cookies, and Artisanal Bonbons.",
             cat_map["gift-hampers"],
             1999.0, 1799.0, 4.99, 27,
-            "https://images.unsplash.com/photo-1513519245088-0e12902e5a38?auto=format&fit=crop&w=800&q=80",
-            json.dumps(["https://images.unsplash.com/photo-1513519245088-0e12902e5a38?auto=format&fit=crop&w=800&q=80"]),
+            "https://images.unsplash.com/photo-1549465220-1a8b9238cd48?auto=format&fit=crop&w=800&q=80",
+            json.dumps(["https://images.unsplash.com/photo-1549465220-1a8b9238cd48?auto=format&fit=crop&w=800&q=80"]),
             json.dumps(["Grand Luxury Selection"]),
             json.dumps(["Deluxe Box", "Imperial Hamper"]),
             1, 1, 1, 1

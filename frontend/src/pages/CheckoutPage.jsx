@@ -122,17 +122,17 @@ export default function CheckoutPage() {
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-6">
       
       {/* Breadcrumb Home Bar */}
-      <nav className="text-xs text-gray-500 flex items-center gap-2 py-2 px-3 bg-white rounded-xl border border-gray-100 shadow-2xs">
-        <Link to="/" className="hover:text-[#E31837] flex items-center gap-1 font-bold text-gray-700 transition">
-          <Home className="w-3.5 h-3.5 text-[#E31837]" />
+      <nav className="text-xs text-gray-500 flex items-center gap-2 py-2 px-4 bg-white rounded-xl border border-[#EFE8DF] shadow-2xs">
+        <Link to="/" className="hover:text-[#4A1525] flex items-center gap-1 font-bold text-gray-700 transition">
+          <Home className="w-3.5 h-3.5 text-[#C5A059]" />
           <span>Home</span>
         </Link>
         <span className="text-gray-300">/</span>
-        <Link to="/products" className="hover:text-[#E31837] font-medium text-gray-600 transition">
+        <Link to="/products" className="hover:text-[#4A1525] font-medium text-gray-600 transition">
           Menu
         </Link>
         <span className="text-gray-300">/</span>
-        <span className="text-[#E31837] font-bold">Secure Checkout</span>
+        <span className="text-[#4A1525] font-bold">Secure Checkout</span>
       </nav>
 
       {/* Page Title */}

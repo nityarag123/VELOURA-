@@ -11,7 +11,7 @@
   
   body {
     font-family: var(--font-sans);
-    background-color: #FFFDF9;
+    background-color: #FAF6EE;
     color: #2D2020;
     overflow-x: hidden;
     margin: 0;
@@ -31,6 +31,163 @@
   .font-serif {
     font-family: var(--font-serif);
   }
+
+  em {
+    font-family: var(--font-serif);
+    font-style: italic;
+  }
+
+  html, body {
+    cursor: url('/croissant-cursor.svg') 2 3, auto;
+  }
+
+  /* Ensure all normal elements inherit croissant cursor smoothly */
+  *, *::before, *::after {
+    cursor: inherit;
+  }
+
+  /* All clickable/interactive elements show the roasted coffee bean pointer cursor */
+  a, button, [role="button"], input[type="submit"], input[type="button"], select, label, .cursor-pointer, [tabindex="0"] {
+    cursor: url('/coffee-bean-cursor.svg') 4 4, pointer !important;
+  }
+
+  /* Specific text inputs get native text cursor */
+  input[type="text"], input[type="email"], input[type="tel"], input[type="password"], textarea {
+    cursor: text !important;
+  }
+
+  /* Tactile interactive word & button click feedback */
+  button, a, [role="button"] {
+    transition: transform 0.15s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.15s ease, background-color 0.2s ease, color 0.2s ease, box-shadow 0.2s ease;
+  }
+
+  button:active, a:active, [role="button"]:active {
+    transform: scale(0.94) translateY(1px) !important;
+  }
+
+  /* Interactive word click animation */
+  .word-click {
+    display: inline-block;
+    transition: transform 0.18s cubic-bezier(0.16, 1, 0.3, 1), color 0.18s ease;
+    user-select: none;
+  }
+  .word-click:hover {
+    color: #C5A059;
+  }
+  .word-click:active {
+    transform: scale(0.92) translateY(1px);
+    color: #3D121A;
+  }
+
+  /* Golden underline slide animation */
+  .nav-word-link {
+    position: relative;
+    display: inline-block;
+    transition: color 0.25s ease, transform 0.15s ease;
+  }
+  .nav-word-link::after {
+    content: '';
+    position: absolute;
+    width: 100%;
+    transform: scaleX(0);
+    height: 2px;
+    bottom: -2px;
+    left: 0;
+    background-color: #C5A059;
+    transform-origin: bottom right;
+    transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+  .nav-word-link:hover::after {
+    transform: scaleX(1);
+    transform-origin: bottom left;
+  }
+  .nav-word-link:active {
+    transform: scale(0.93) translateY(1px);
+  }
+}
+
+/* Luxury theme buttons inspired by Latte Global Cafe */
+.btn-cream {
+  background-color: #FAF5EE;
+  color: #3D121A;
+  border: 1px solid #E8DEC8;
+  font-weight: 600;
+  letter-spacing: 0.05em;
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.btn-cream:hover {
+  background-color: #FFFFFF;
+  color: #230A10;
+  border-color: #C5A059;
+  box-shadow: 0 8px 24px rgba(197, 160, 89, 0.25);
+  transform: translateY(-1px);
+}
+
+.btn-maroon {
+  background-color: #4A1525;
+  color: #FFFDF9;
+  border: 1px solid #38101C;
+  font-weight: 600;
+  letter-spacing: 0.05em;
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.btn-maroon:hover {
+  background-color: #36101B;
+  color: #F8E7C5;
+  box-shadow: 0 8px 25px rgba(74, 21, 37, 0.35);
+  transform: translateY(-1px);
+}
+
+.btn-outline-light {
+  background-color: rgba(255, 255, 255, 0.08);
+  color: #FFFFFF;
+  border: 1px solid rgba(255, 255, 255, 0.35);
+  backdrop-filter: blur(8px);
+  font-weight: 600;
+  letter-spacing: 0.05em;
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.btn-outline-light:hover {
+  background-color: rgba(255, 255, 255, 0.22);
+  border-color: #FFFFFF;
+  color: #FFFFFF;
+  transform: translateY(-1px);
+}
+
+.btn-outline-maroon {
+  background-color: transparent;
+  color: #4A1525;
+  border: 1px solid #4A1525;
+  font-weight: 600;
+  letter-spacing: 0.05em;
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.btn-outline-maroon:hover {
+  background-color: #4A1525;
+  color: #FFFDF9;
+  transform: translateY(-1px);
+}
+
+/* Haute Luxury Creamy Alabaster Texture with subtle French botanical watermark */
+.luxury-cream-texture, .leaf-pattern-light {
+  background-color: #FAF6EE;
+  background-image: 
+    radial-gradient(ellipse at 50% 0%, rgba(255, 255, 255, 0.75) 0%, rgba(250, 246, 238, 0.94) 80%),
+    url("data:image/svg+xml,%3Csvg width='56' height='56' viewBox='0 0 56 56' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' stroke='%23C5A059' stroke-width='0.75' stroke-opacity='0.08'%3E%3Cpath d='M28 8c3 7 8 11 16 11-8 0-13 4-16 11-3-7-8-11-16-11 8 0 13-4 16-11z' /%3E%3Ccircle cx='28' cy='28' r='1.2' fill='%23C5A059' fill-opacity='0.1' /%3E%3Cpath d='M0 28h6M50 28h6M28 0v6M28 50v6' /%3E%3C/g%3E%3C/svg%3E");
+  background-size: 100% 100%, 56px 56px;
+}
+
+/* Warm Silk Travertine Header & Bar */
+.luxury-nav-surface {
+  background-color: rgba(250, 246, 238, 0.96);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+}
+
+.leaf-pattern-dark {
+  background-color: #2F0B15;
+  background-image: radial-gradient(rgba(197, 160, 89, 0.2) 0.8px, transparent 0.8px);
+  background-size: 20px 20px;
 }
 
 /* Luxury scrollbar */
@@ -47,3 +204,4 @@
 ::-webkit-scrollbar-thumb:hover {
   background: #731A2D;
 }
+

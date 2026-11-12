@@ -38,7 +38,16 @@ export default function ProductListingPage() {
 
   const filterMock = () => {
     let list = [...MOCK_PRODUCTS];
-    if (selectedCategory) list = list.filter((p) => p.category_slug === selectedCategory);
+    if (selectedCategory === 'cakes') {
+      list = list.filter((p) => 
+        p.category_slug?.includes('cake') || 
+        p.category?.slug?.includes('cake') ||
+        p.name?.toLowerCase().includes('cake') ||
+        p.name?.toLowerCase().includes('gateau')
+      );
+    } else if (selectedCategory) {
+      list = list.filter((p) => p.category_slug === selectedCategory || p.category?.slug === selectedCategory);
+    }
     if (searchKeyword) {
       const q = searchKeyword.toLowerCase();
       list = list.filter((p) => p.name?.toLowerCase().includes(q) || p.description?.toLowerCase().includes(q));
@@ -76,7 +85,9 @@ export default function ProductListingPage() {
       setLoading(true);
       try {
         let url = `/products?sort_by=${sortBy}`;
-        if (selectedCategory) url += `&category=${selectedCategory}`;
+        if (selectedCategory && selectedCategory !== 'cakes') {
+          url += `&category=${selectedCategory}`;
+        }
         if (searchKeyword) url += `&search=${encodeURIComponent(searchKeyword)}`;
         if (onlyBestsellers) url += `&is_bestseller=true`;
 
@@ -88,6 +99,14 @@ export default function ProductListingPage() {
         const res = await api.get(url);
         let data = res.data;
         if (Array.isArray(data) && data.length > 0) {
+          if (selectedCategory === 'cakes') {
+            data = data.filter((p) => 
+              p.category_slug?.includes('cake') || 
+              p.category?.slug?.includes('cake') ||
+              p.name?.toLowerCase().includes('cake') ||
+              p.name?.toLowerCase().includes('gateau')
+            );
+          }
           if (onlyEggless) {
             data = data.filter((p) => p.is_eggless_available);
           }
@@ -137,27 +156,31 @@ export default function ProductListingPage() {
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
       
       {/* Breadcrumb Home Bar */}
-      <nav className="text-xs text-gray-500 flex items-center gap-2 py-2 px-3 bg-white rounded-xl border border-gray-100 shadow-2xs mb-6">
-        <Link to="/" className="hover:text-[#E31837] flex items-center gap-1 font-bold text-gray-700 transition">
-          <Home className="w-3.5 h-3.5 text-[#E31837]" />
+      <nav className="text-xs text-gray-500 flex items-center gap-2 py-2 px-4 bg-white rounded-xl border border-[#EFE8DF] shadow-2xs mb-6">
+        <Link to="/" className="hover:text-[#4A1525] flex items-center gap-1 font-bold text-gray-700 transition">
+          <Home className="w-3.5 h-3.5 text-[#C5A059]" />
           <span>Home</span>
         </Link>
         <span className="text-gray-300">/</span>
         <span className="text-gray-500 font-medium">Menu</span>
         <span className="text-gray-300">/</span>
-        <span className="text-[#E31837] font-bold">
-          {selectedCategory
+        <span className="text-[#4A1525] font-bold">
+          {selectedCategory === 'cakes'
+            ? 'Artisanal Cakes & Gateaux'
+            : selectedCategory
             ? categories.find((c) => c.slug === selectedCategory)?.name || selectedCategory
             : searchKeyword
             ? `Search: "${searchKeyword}"`
-            : 'All Items'}
+            : 'All Creations'}
         </span>
       </nav>
 
       {/* Header & Title */}
       <div className="mb-6">
         <h1 className="font-serif text-3xl sm:text-4xl font-bold text-[#2D2020]">
-          {selectedCategory
+          {selectedCategory === 'cakes'
+            ? 'Artisanal Cakes & Gateaux'
+            : selectedCategory
             ? categories.find((c) => c.slug === selectedCategory)?.name || 'Artisanal Cakes'
             : searchKeyword
             ? `Search Results for "${searchKeyword}"`
@@ -184,7 +207,7 @@ export default function ProductListingPage() {
         <div className="hidden sm:flex flex-wrap items-center gap-2">
           {selectedCategory && (
             <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-[#FAF3EB] text-[#4A1525] text-xs font-medium border border-[#EADCCF]">
-              <span>Category: {categories.find((c) => c.slug === selectedCategory)?.name || selectedCategory}</span>
+              <span>Category: {selectedCategory === 'cakes' ? 'Artisanal Cakes & Gateaux' : (categories.find((c) => c.slug === selectedCategory)?.name || selectedCategory)}</span>
               <button onClick={() => handleCategoryClick(selectedCategory)}>
                 <X className="w-3 h-3 hover:text-red-600" />
               </button>
@@ -277,7 +300,7 @@ export default function ProductListingPage() {
               <div className="space-y-1.5 max-h-56 overflow-y-auto pr-1">
                 <button
                   onClick={() => handleCategoryClick('')}
-                  className={`w-full text-left px-3 py-1.5 rounded-xl text-xs font-medium transition ${
+                  className={`w-full text-left px-3 py-1.5 rounded-xl text-xs font-medium transition word-click ${
                     selectedCategory === ''
                       ? 'bg-[#4A1525] text-white font-bold'
                       : 'text-gray-600 hover:bg-[#FAF3EB]'
@@ -285,11 +308,21 @@ export default function ProductListingPage() {
                 >
                   All Categories
                 </button>
+                <button
+                  onClick={() => handleCategoryClick('cakes')}
+                  className={`w-full text-left px-3 py-1.5 rounded-xl text-xs font-medium transition word-click flex items-center justify-between ${
+                    selectedCategory === 'cakes'
+                      ? 'bg-[#4A1525] text-white font-bold'
+                      : 'text-gray-600 hover:bg-[#FAF3EB]'
+                  }`}
+                >
+                  <span>🎂 All Cakes & Gateaux</span>
+                </button>
                 {categories.map((c) => (
                   <button
                     key={c.id}
                     onClick={() => handleCategoryClick(c.slug)}
-                    className={`w-full text-left px-3 py-1.5 rounded-xl text-xs font-medium transition flex items-center justify-between ${
+                    className={`w-full text-left px-3 py-1.5 rounded-xl text-xs font-medium transition word-click flex items-center justify-between ${
                       selectedCategory === c.slug
                         ? 'bg-[#4A1525] text-white font-bold'
                         : 'text-gray-600 hover:bg-[#FAF3EB]'

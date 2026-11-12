@@ -26,10 +26,10 @@ export default function ProductCard({ product, onQuickView }) {
   };
 
   return (
-    <div className="group relative bg-white rounded-2xl overflow-hidden border border-gray-100 hover:border-gray-300 hover:shadow-xl transition-all duration-300 flex flex-col">
+    <div className="group relative bg-[#FFFDF9] rounded-2xl overflow-hidden border border-[#EFE8DF] hover:border-[#C5A059]/60 hover:shadow-[0_12px_30px_rgba(74,21,37,0.08)] transition-all duration-300 flex flex-col">
       
       {/* Product Image Box */}
-      <div className="relative aspect-square overflow-hidden bg-[#FFF9F9]">
+      <div className="relative aspect-square overflow-hidden bg-[#FAF6F0]">
         <Link to={`/product/${product.slug}`}>
           <img
             src={product.image_url}
@@ -42,27 +42,27 @@ export default function ProductCard({ product, onQuickView }) {
         {/* FSSAI Green Vegetarian / Eggless Square Dot in Top-Left */}
         {product.is_eggless_available && (
           <div 
-            className="absolute top-2.5 left-2.5 w-4 h-4 rounded-xs border-1.5 border-emerald-600 bg-white flex items-center justify-center shadow-xs"
+            className="absolute top-3 left-3 w-4 h-4 rounded-xs border border-emerald-600 bg-white/95 backdrop-blur-xs flex items-center justify-center shadow-xs"
             title="100% Vegetarian / Eggless"
           >
-            <span className="w-2 h-2 rounded-full bg-emerald-600"></span>
+            <span className="w-1.5 h-1.5 rounded-full bg-emerald-600"></span>
           </div>
         )}
 
         {/* Bestseller Tag */}
         {product.is_bestseller && (
-          <span className="absolute top-2.5 right-2.5 bg-[#FF6B6B] text-white text-[9px] font-bold px-2 py-0.5 rounded-full uppercase tracking-wider shadow-xs">
-            Best Seller
+          <span className="absolute top-3 right-3 bg-[#C5A059] text-[#1F0A10] text-[9px] font-bold px-2 py-0.5 rounded-full uppercase tracking-wider shadow-xs">
+            Signature
           </span>
         )}
       </div>
 
-      {/* Content Details (Matching Bakingo screenshot) */}
-      <div className="p-3.5 flex-1 flex flex-col justify-between">
+      {/* Content Details */}
+      <div className="p-3.5 sm:p-4 flex-1 flex flex-col justify-between">
         <div>
           {/* Product Title */}
           <Link to={`/product/${product.slug}`} className="block">
-            <h3 className="text-xs sm:text-sm font-bold text-gray-900 group-hover:text-[#E31837] transition line-clamp-1">
+            <h3 className="font-serif text-sm sm:text-base font-bold text-[#2D2020] group-hover:text-[#4A1525] transition line-clamp-1">
               {product.name}
             </h3>
           </Link>
@@ -70,11 +70,11 @@ export default function ProductCard({ product, onQuickView }) {
           {/* Price & Wishlist Row */}
           <div className="flex items-center justify-between mt-1.5">
             <div className="flex items-baseline gap-1.5">
-              <span className="font-extrabold text-sm sm:text-base text-gray-900">
+              <span className="font-extrabold text-sm sm:text-base text-[#3D121A]">
                 ₹{product.discount_price || product.base_price}
               </span>
               {product.discount_price && (
-                <span className="text-[11px] text-gray-400 line-through">
+                <span className="text-[11px] text-[#A68890] line-through">
                   ₹{product.base_price}
                 </span>
               )}
@@ -86,19 +86,19 @@ export default function ProductCard({ product, onQuickView }) {
                 e.preventDefault();
                 toggleWishlist(product);
               }}
-              className={`p-1 text-gray-400 hover:text-[#E31837] transition ${
-                isFavorited ? 'text-[#E31837]' : ''
+              className={`p-1 text-gray-400 hover:text-[#4A1525] transition ${
+                isFavorited ? 'text-[#4A1525]' : ''
               }`}
               title={isFavorited ? "Remove from wishlist" : "Add to wishlist"}
             >
-              <Heart className={`w-4 h-4 ${isFavorited ? 'fill-current' : ''}`} />
+              <Heart className={`w-4 h-4 ${isFavorited ? 'fill-[#4A1525] text-[#4A1525]' : ''}`} />
             </button>
           </div>
 
           {/* Rating & Reviews */}
-          <div className="flex items-center gap-1.5 mt-1 text-[11px] font-semibold text-gray-700">
-            <span className="text-emerald-700 font-bold flex items-center gap-0.5">
-              {product.rating} <Star className="w-3 h-3 fill-current text-emerald-600 inline" />
+          <div className="flex items-center gap-1.5 mt-1 text-[11px] font-semibold text-gray-600">
+            <span className="text-[#8C6D4C] font-bold flex items-center gap-0.5">
+              {product.rating} <Star className="w-3 h-3 fill-[#C5A059] text-[#C5A059] inline" />
             </span>
             <span className="text-gray-400 font-normal">
               ({product.review_count > 50 ? `${(product.review_count / 10).toFixed(1)}K` : product.review_count} Reviews)
@@ -106,14 +106,14 @@ export default function ProductCard({ product, onQuickView }) {
           </div>
         </div>
 
-        {/* Quick Add Button on Hover */}
-        <div className="pt-3 mt-2 border-t border-gray-100 flex items-center justify-between">
+        {/* Quick Add Button */}
+        <div className="pt-3 mt-2.5 border-t border-[#F4EFEA] flex items-center justify-between">
           <button
             onClick={(e) => {
               e.preventDefault();
               if (onQuickView) onQuickView(product);
             }}
-            className="text-[11px] font-semibold text-gray-500 hover:text-black underline"
+            className="text-[11px] font-medium text-[#8C6D4C] hover:text-[#3D121A] hover:underline"
           >
             Customise
           </button>
@@ -122,8 +122,8 @@ export default function ProductCard({ product, onQuickView }) {
             onClick={handleQuickAdd}
             className={`px-3 py-1 rounded-full text-xs font-bold transition flex items-center gap-1 shadow-2xs ${
               addedAnimation
-                ? 'bg-emerald-600 text-white'
-                : 'bg-red-50 text-[#E31837] hover:bg-[#E31837] hover:text-white'
+                ? 'bg-emerald-700 text-white'
+                : 'bg-[#FAF5EE] text-[#4A1525] border border-[#E8DEC8] hover:bg-[#4A1525] hover:text-white'
             }`}
           >
             {addedAnimation ? (
@@ -145,3 +145,4 @@ export default function ProductCard({ product, onQuickView }) {
     </div>
   );
 }
+

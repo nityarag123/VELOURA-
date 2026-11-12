@@ -3,7 +3,7 @@ import { Link, useNavigate, useLocation } from 'react-router-dom';
 import { 
   Search, ShoppingCart, User as UserIcon, MapPin, 
   ChevronDown, X, Menu, Shield, LogOut, Package, ArrowRight,
-  Percent, Sparkles, Home
+  Clock, Sparkles, Phone, Compass
 } from 'lucide-react';
 import { useAuth } from '../../context/AuthContext';
 import { useCart } from '../../context/CartContext';
@@ -16,6 +16,134 @@ const CITIES = [
   { name: 'Pune', pincode: '411001' },
   { name: 'Hyderabad', pincode: '500001' },
   { name: 'Kolkata', pincode: '700001' }
+];
+
+
+// --- BESPOKE LUXURY CATEGORY ICONS ---
+function LuxuryCakeIcon({ className = "w-3.5 h-3.5" }) {
+  return (
+    <svg className={className} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+      <path d="M20 21v-7a2 2 0 0 0-2-2H6a2 2 0 0 0-2 2v7" />
+      <path d="M4 16s2-1 4-1 4 1 4 1 2-1 4-1 4 1 4 1" />
+      <path d="M2 21h20" />
+      <path d="M7 8v2" />
+      <path d="M12 8v2" />
+      <path d="M17 8v2" />
+      <circle cx="7" cy="4" r="1" fill="currentColor" />
+      <circle cx="12" cy="4" r="1" fill="currentColor" />
+      <circle cx="17" cy="4" r="1" fill="currentColor" />
+    </svg>
+  );
+}
+
+function LuxuryCoffeeIcon({ className = "w-3.5 h-3.5" }) {
+  return (
+    <svg className={className} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+      <path d="M17 8h1a4 4 0 1 1 0 8h-1" />
+      <path d="M3 8h14v9a4 4 0 0 1-4 4H7a4 4 0 0 1-4-4Z" />
+      <path d="M6 2v3" />
+      <path d="M10 2v3" />
+      <path d="M14 2v3" />
+    </svg>
+  );
+}
+
+function LuxuryCroissantIcon({ className = "w-3.5 h-3.5" }) {
+  return (
+    <svg className={className} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+      <path d="m4.5 16.5 3-3a7 7 0 0 1 9 0l3 3" />
+      <path d="m2 12 3.5 1.5a11 11 0 0 1 13 0L22 12" />
+      <path d="M8 8.5C9.5 7 11 6.5 12 6.5s2.5.5 4 2" />
+      <path d="M7 16a6 6 0 0 0 10 0" />
+    </svg>
+  );
+}
+
+function LuxuryGelatoIcon({ className = "w-3.5 h-3.5" }) {
+  return (
+    <svg className={className} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+      <path d="m12 13 4.5 8H7.5Z" />
+      <path d="M12 3a4 4 0 0 0-4 4c0 1.2.5 2.2 1.3 3" />
+      <path d="M12 3a4 4 0 0 1 4 4c0 1.2-.5 2.2-1.3 3" />
+      <path d="M7.5 13h9" />
+    </svg>
+  );
+}
+
+function LuxuryCuisineIcon({ className = "w-3.5 h-3.5" }) {
+  return (
+    <svg className={className} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+      <path d="M12 4v2" />
+      <circle cx="12" cy="4" r="1" fill="currentColor" />
+      <path d="M4 17h16" />
+      <path d="M4 17a8 8 0 0 1 16 0" />
+      <path d="M2 20h20" />
+    </svg>
+  );
+}
+
+function LuxuryChocolateIcon({ className = "w-3.5 h-3.5" }) {
+  return (
+    <svg className={className} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+      <rect width="18" height="14" x="3" y="5" rx="2" />
+      <line x1="9" x2="9" y1="5" y2="19" />
+      <line x1="15" x2="15" y1="5" y2="19" />
+      <line x1="3" x2="21" y1="12" y2="12" />
+    </svg>
+  );
+}
+
+function LuxuryMenuIcon({ className = "w-3.5 h-3.5" }) {
+  return (
+    <svg className={className} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+      <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2" />
+    </svg>
+  );
+}
+
+const CATEGORY_NAV_ITEMS = [
+  {
+    label: 'Cakes & Gateaux',
+    to: '/#cakes',
+    icon: LuxuryCakeIcon,
+    isActive: (loc) => loc.hash === '#cakes' || (loc.pathname === '/' && !loc.hash)
+  },
+  {
+    label: 'Specialty Coffee',
+    to: '/coffee',
+    icon: LuxuryCoffeeIcon,
+    isActive: (loc) => loc.pathname === '/coffee'
+  },
+  {
+    label: 'Boulangerie',
+    to: '/#boulangerie',
+    icon: LuxuryCroissantIcon,
+    isActive: (loc) => loc.hash === '#boulangerie'
+  },
+  {
+    label: 'Gelato',
+    to: '/#gelato',
+    icon: LuxuryGelatoIcon,
+    isActive: (loc) => loc.hash === '#gelato'
+  },
+  {
+    label: 'Global Cuisine',
+    to: '/products?category=cafe-savory',
+    icon: LuxuryCuisineIcon,
+    isActive: (loc) => loc.pathname === '/products' && loc.search.includes('category=cafe-savory')
+  },
+  {
+    label: 'Chocolates',
+    to: '/chocolate',
+    icon: LuxuryChocolateIcon,
+    isActive: (loc) => loc.pathname === '/chocolate'
+  },
+  {
+    label: 'Complete Menu',
+    to: '/products',
+    icon: LuxuryMenuIcon,
+    isActive: (loc) => loc.pathname === '/products' && !loc.search
+  }
 ];
 
 export default function Header() {
@@ -34,14 +162,18 @@ export default function Header() {
   // Track order modal
   const [isTrackModalOpen, setIsTrackModalOpen] = useState(false);
   const [trackOrderNumber, setTrackOrderNumber] = useState('');
-  const [trackError, setTrackError] = useState('');
 
   // Search state
   const [searchQuery, setSearchQuery] = useState('');
   const [searchResults, setSearchResults] = useState([]);
   const [isSearching, setIsSearching] = useState(false);
   const [showSearchDropdown, setShowSearchDropdown] = useState(false);
+  const [isSearchOpenMobile, setIsSearchOpenMobile] = useState(false);
   const searchRef = useRef(null);
+
+  // Indulgence dropdown state
+  const [isIndulgenceOpen, setIsIndulgenceOpen] = useState(false);
+  const indulgenceTimeoutRef = useRef(null);
 
   // User menu state
   const [isUserMenuOpen, setIsUserMenuOpen] = useState(false);
@@ -95,7 +227,7 @@ export default function Header() {
       const text = `Pin ${customPincode.trim()}`;
       setSelectedCity(text);
       localStorage.setItem('veloura_city', text);
-      setPincodeMessage('Delivery available! Express 2-hour slot active.');
+      setPincodeMessage('Delivery confirmed! 2-Hour Express slots available.');
       setTimeout(() => {
         setIsCityModalOpen(false);
         setPincodeMessage('');
@@ -109,6 +241,7 @@ export default function Header() {
     e.preventDefault();
     if (searchQuery.trim()) {
       setShowSearchDropdown(false);
+      setIsSearchOpenMobile(false);
       navigate(`/products?search=${encodeURIComponent(searchQuery.trim())}`);
     }
   };
@@ -123,359 +256,580 @@ export default function Header() {
 
   return (
     <>
-      <header className="sticky top-0 z-40 shadow-sm">
-        
-        {/* TOP FESTIVE RED BAR (Bakingo-style vibrant celebration header) */}
-        <div className="relative z-30 bg-[#E31837] text-white px-4 sm:px-6 lg:px-8 pt-3 pb-4 border-b border-[#BE122C]">
+      {/* 1. TOP UTILITY STRIP (High-end hospitality header strip) */}
+      <div className="bg-[#2B0E16] text-[#E8DCCB] text-[11px] font-medium py-1.5 px-4 sm:px-8 border-b border-[#431622] relative z-40">
+        <div className="max-w-7xl mx-auto flex items-center justify-between">
           
-          {/* Subtle starry / fairy background glow */}
-          <div className="absolute inset-0 opacity-15 pointer-events-none bg-[radial-gradient(#FFE082_1px,transparent_1px)] [background-size:16px_16px]" />
-
-          <div className="max-w-7xl mx-auto flex items-center justify-between gap-4 relative z-10">
-            
-            {/* Mobile menu trigger */}
-            <button 
-              onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-              className="p-1.5 text-white hover:bg-white/10 rounded-lg lg:hidden"
+          {/* Left: City Selection with pin */}
+          <div className="flex items-center gap-3">
+            <button
+              onClick={() => setIsCityModalOpen(true)}
+              className="inline-flex items-center gap-1.5 text-[#E8DCCB] hover:text-[#C5A059] transition"
             >
-              {isMobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
+              <MapPin className="w-3.5 h-3.5 text-[#C5A059]" />
+              <span>Delivering to <strong className="text-white underline underline-offset-2">{selectedCity}</strong></span>
+              <ChevronDown className="w-3 h-3 opacity-70" />
             </button>
+            <span className="hidden md:inline text-white/30">•</span>
+            <span className="hidden md:inline text-white/80">
+              ⚡ Guaranteed 2-Hour Express Slots & Midnight Deliveries
+            </span>
+          </div>
 
-            {/* Brand Logo & Delivering To */}
-            <div className="flex items-center gap-4 sm:gap-6">
-              <Link to="/" className="flex items-center gap-1.5 group">
-                <span className="font-serif italic text-3xl sm:text-4xl font-extrabold tracking-wide text-white drop-shadow-xs">
-                  veloura
-                </span>
-                <Sparkles className="w-4 h-4 text-[#FFD166] animate-pulse" />
-              </Link>
+          {/* Right: Concierge Phone & Track Order */}
+          <div className="flex items-center gap-4 sm:gap-6">
+            <a 
+              href="tel:+918882553333" 
+              className="hidden sm:inline-flex items-center gap-1.5 text-white/80 hover:text-white transition"
+            >
+              <Phone className="w-3 h-3 text-[#C5A059]" />
+              <span>Concierge: +91 88825 53333</span>
+            </a>
+            <span className="hidden sm:inline text-white/30">•</span>
+            <button
+              onClick={() => setIsTrackModalOpen(true)}
+              className="text-[#E8DCCB] hover:text-[#C5A059] transition font-semibold"
+            >
+              Track Order
+            </button>
+            {isAdmin && (
+              <>
+                <span className="text-white/30">•</span>
+                <Link to="/admin" className="text-[#FFD166] hover:underline font-bold inline-flex items-center gap-1">
+                  <Shield className="w-3 h-3" />
+                  <span>Admin</span>
+                </Link>
+              </>
+            )}
+          </div>
 
-              {/* Location Picker */}
-              <button
-                onClick={() => setIsCityModalOpen(true)}
-                className="hidden sm:flex items-center gap-1.5 text-xs text-white/95 hover:text-white transition font-medium bg-white/10 hover:bg-white/15 px-3 py-1.5 rounded-full"
+        </div>
+      </div>
+
+      {/* 2. MAIN LUXURY NAVBAR (Matching Latte Global Cafe aesthetic) */}
+      <header className="sticky top-0 z-30 luxury-nav-surface border-b border-[#E8DEC8] shadow-[0_2px_18px_rgba(74,21,37,0.04)] transition-all">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between gap-4">
+          
+          {/* Mobile menu trigger */}
+          <button 
+            onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+            className="p-2 text-[#3D121A] hover:bg-[#FAF5EE] rounded-xl lg:hidden transition"
+            aria-label="Toggle menu"
+          >
+            {isMobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
+          </button>
+
+          {/* Brand Logo: Editorial Cormorant Garamond */}
+          <Link to="/" className="flex flex-col items-start group">
+            <div className="flex items-center gap-2">
+              <span className="font-serif text-2xl sm:text-[28px] font-normal tracking-[0.22em] text-[#340C16] group-hover:text-[#4A1525] transition-colors leading-none">
+                VELOURA
+              </span>
+              <Sparkles className="w-3.5 h-3.5 text-[#C5A059] group-hover:rotate-45 group-hover:scale-110 transition-transform duration-500" />
+            </div>
+            <span className="text-[8px] sm:text-[8.5px] tracking-[0.32em] uppercase text-[#9E7D46] font-bold mt-1">
+              Pâtisserie & Specialty Cafe
+            </span>
+          </Link>
+
+          {/* Desktop Navigation Links */}
+          <nav className="hidden lg:flex items-center gap-7 xl:gap-8 text-[11.5px] xl:text-[12px] uppercase tracking-[0.16em] font-semibold text-[#3D121A]">
+            
+            <Link 
+              to="/" 
+              className={`nav-word-link word-click transition py-2 relative hover:text-[#280911] ${
+                location.pathname === '/' && !location.hash ? 'text-[#3D121A] font-bold after:content-[""] after:absolute after:bottom-0 after:left-0 after:right-0 after:h-[2px] after:bg-[#C5A059]' : ''
+              }`}
+            >
+              Home
+            </Link>
+
+            <a 
+              href="/#about" 
+              className="nav-word-link word-click hover:text-[#280911] transition py-2"
+            >
+              About
+            </a>
+
+            {/* Direct 1-Click Cakes Navigation */}
+            <Link 
+              to="/#cakes" 
+              className={`nav-word-link word-click transition py-2 relative hover:text-[#280911] ${
+                location.hash === '#cakes' ? 'text-[#3D121A] font-bold after:content-[""] after:absolute after:bottom-0 after:left-0 after:right-0 after:h-[2px] after:bg-[#C5A059]' : ''
+              }`}
+            >
+              Cakes
+            </Link>
+
+            {/* Indulgence Dropdown */}
+            <div 
+              className="relative py-2"
+              onMouseEnter={() => {
+                if (indulgenceTimeoutRef.current) clearTimeout(indulgenceTimeoutRef.current);
+                setIsIndulgenceOpen(true);
+              }}
+              onMouseLeave={() => {
+                indulgenceTimeoutRef.current = setTimeout(() => setIsIndulgenceOpen(false), 200);
+              }}
+            >
+              <button 
+                className="flex items-center gap-1 hover:text-[#280911] transition"
+                onClick={() => setIsIndulgenceOpen(!isIndulgenceOpen)}
               >
-                <MapPin className="w-3.5 h-3.5 text-[#FFD166]" />
-                <span>Delivering To <strong>{selectedCity}</strong></span>
-                <ChevronDown className="w-3.5 h-3.5 opacity-80" />
+                <span>Indulgence</span>
+                <ChevronDown className={`w-3.5 h-3.5 text-[#C5A059] transition-transform duration-200 ${isIndulgenceOpen ? 'rotate-180' : ''}`} />
               </button>
+
+              {isIndulgenceOpen && (
+                <div className="absolute top-full left-0 w-72 bg-white/98 backdrop-blur-xl rounded-2xl shadow-[0_12px_40px_rgba(43,14,22,0.12)] border border-[#C5A059]/30 py-3 z-50 animate-in fade-in zoom-in-95">
+                  <div className="px-4 pb-2 border-b border-[#F4EFEA] mb-1.5 flex items-center justify-between">
+                    <span className="text-[10px] uppercase tracking-widest font-bold text-[#8C6D4C]">
+                      Curated Offerings
+                    </span>
+                    <Sparkles className="w-3 h-3 text-[#C5A059]" />
+                  </div>
+                  <Link
+                    to="/coffee"
+                    onClick={() => setIsIndulgenceOpen(false)}
+                    className="flex items-center justify-between px-4 py-2.5 text-xs text-[#2D2020] hover:bg-[#FAF5EE] hover:text-[#3D121A] transition group"
+                  >
+                    <div className="flex items-center gap-2.5">
+                      <div className="w-7 h-7 rounded-lg bg-[#FAF5EE] flex items-center justify-center text-[#C5A059] group-hover:bg-white group-hover:shadow-xs transition">
+                        <LuxuryCoffeeIcon className="w-3.5 h-3.5" />
+                      </div>
+                      <div>
+                        <p className="font-bold text-[12px]">Specialty Coffee</p>
+                        <p className="text-[10px] text-gray-500">From Bean to Cup</p>
+                      </div>
+                    </div>
+                    <ArrowRight className="w-3.5 h-3.5 text-[#C5A059] group-hover:translate-x-0.5 transition-transform" />
+                  </Link>
+                  <Link
+                    to="/#cakes"
+                    onClick={() => setIsIndulgenceOpen(false)}
+                    className="flex items-center justify-between px-4 py-2.5 text-xs text-[#2D2020] hover:bg-[#FAF5EE] hover:text-[#3D121A] transition group"
+                  >
+                    <div className="flex items-center gap-2.5">
+                      <div className="w-7 h-7 rounded-lg bg-[#FAF5EE] flex items-center justify-center text-[#C5A059] group-hover:bg-white group-hover:shadow-xs transition">
+                        <LuxuryCakeIcon className="w-3.5 h-3.5" />
+                      </div>
+                      <div>
+                        <p className="font-bold text-[12px]">Artisan Cakes & Gateaux</p>
+                        <p className="text-[10px] text-gray-500">Pure Callebaut Truffle</p>
+                      </div>
+                    </div>
+                    <ArrowRight className="w-3.5 h-3.5 text-[#C5A059] group-hover:translate-x-0.5 transition-transform" />
+                  </Link>
+                  <Link
+                    to="/#boulangerie"
+                    onClick={() => setIsIndulgenceOpen(false)}
+                    className="flex items-center justify-between px-4 py-2.5 text-xs text-[#2D2020] hover:bg-[#FAF5EE] hover:text-[#3D121A] transition group"
+                  >
+                    <div className="flex items-center gap-2.5">
+                      <div className="w-7 h-7 rounded-lg bg-[#FAF5EE] flex items-center justify-center text-[#C5A059] group-hover:bg-white group-hover:shadow-xs transition">
+                        <LuxuryCroissantIcon className="w-3.5 h-3.5" />
+                      </div>
+                      <div>
+                        <p className="font-bold text-[12px]">Boulangerie</p>
+                        <p className="text-[10px] text-gray-500">Flaky French Viennoiserie</p>
+                      </div>
+                    </div>
+                    <ArrowRight className="w-3.5 h-3.5 text-[#C5A059] group-hover:translate-x-0.5 transition-transform" />
+                  </Link>
+                  <Link
+                    to="/chocolate"
+                    onClick={() => setIsIndulgenceOpen(false)}
+                    className="flex items-center justify-between px-4 py-2.5 text-xs text-[#2D2020] hover:bg-[#FAF5EE] hover:text-[#3D121A] transition group"
+                  >
+                    <div className="flex items-center gap-2.5">
+                      <div className="w-7 h-7 rounded-lg bg-[#FAF5EE] flex items-center justify-center text-[#C5A059] group-hover:bg-white group-hover:shadow-xs transition">
+                        <LuxuryChocolateIcon className="w-3.5 h-3.5" />
+                      </div>
+                      <div>
+                        <p className="font-bold text-[12px]">Handcrafted Chocolates</p>
+                        <p className="text-[10px] text-gray-500">Single Origin & Trunks</p>
+                      </div>
+                    </div>
+                    <ArrowRight className="w-3.5 h-3.5 text-[#C5A059] group-hover:translate-x-0.5 transition-transform" />
+                  </Link>
+                </div>
+              )}
             </div>
 
-            {/* Wide Search Bar */}
-            <div className="relative flex-1 max-w-xl mx-2 hidden md:block" ref={searchRef}>
+            <Link 
+              to="/products" 
+              className={`hover:text-[#280911] transition py-2 ${
+                location.pathname === '/products' ? 'text-[#3D121A] font-bold' : ''
+              }`}
+            >
+              Menu
+            </Link>
+
+            <a 
+              href="/#reservation" 
+              className="hover:text-[#280911] transition py-2"
+            >
+              Reservation
+            </a>
+
+            <a 
+              href="/#gallery" 
+              className="hover:text-[#280911] transition py-2"
+            >
+              Gallery
+            </a>
+          </nav>
+
+          {/* Right Action Tools: Search, Bag, User & "Book a Table / Order" */}
+          <div className="flex items-center gap-3 sm:gap-4">
+            
+            {/* Search Input (Desktop) */}
+            <div className="relative hidden md:block w-48 xl:w-60" ref={searchRef}>
               <form onSubmit={handleSearchSubmit}>
                 <div className="relative">
                   <input
                     type="text"
-                    placeholder="Search For Cakes, Occasion, Flavour And More..."
+                    placeholder="Search gateaux, coffee..."
                     value={searchQuery}
                     onChange={(e) => setSearchQuery(e.target.value)}
                     onFocus={() => searchQuery && setShowSearchDropdown(true)}
-                    className="w-full bg-white text-gray-800 text-xs sm:text-sm pl-10 pr-4 py-2.5 rounded-full shadow-md focus:outline-none focus:ring-2 focus:ring-[#FFD166] placeholder-gray-400 font-medium"
+                    className="w-full bg-[#FAF6F0]/90 hover:bg-white focus:bg-white text-[#2D2020] text-xs pl-9 pr-3.5 py-2.5 rounded-full border border-[#E3D7C5] focus:border-[#C5A059] focus:outline-none focus:ring-2 focus:ring-[#C5A059]/20 placeholder-[#8C7A70] font-medium transition-all shadow-2xs"
                   />
-                  <Search className="w-4 h-4 text-gray-400 absolute left-3.5 top-1/2 -translate-y-1/2" />
+                  <Search className="w-3.5 h-3.5 text-[#C5A059] absolute left-3.5 top-1/2 -translate-y-1/2" />
                 </div>
               </form>
 
               {/* Live Search Results Dropdown */}
               {showSearchDropdown && (
-                <div className="absolute left-0 right-0 top-full mt-2 bg-white rounded-2xl shadow-2xl border border-gray-100 py-2 z-50 overflow-hidden text-gray-800">
+                <div className="absolute left-0 right-0 top-full mt-2 bg-white rounded-2xl shadow-2xl border border-[#EFE8DF] py-2 z-50 overflow-hidden text-gray-800">
                   {isSearching ? (
                     <div className="py-6 text-center text-xs text-gray-500">Searching Veloura menu...</div>
                   ) : searchResults.length > 0 ? (
                     <div>
-                      <div className="px-4 py-1 text-[11px] font-semibold uppercase tracking-wider text-gray-400">
-                        Products ({searchResults.length})
+                      <div className="px-4 py-1 text-[10px] font-semibold uppercase tracking-wider text-gray-400">
+                        Creations ({searchResults.length})
                       </div>
                       {searchResults.map((item) => (
                         <Link
                           key={item.id}
                           to={`/product/${item.slug}`}
                           onClick={() => setShowSearchDropdown(false)}
-                          className="flex items-center gap-3 px-4 py-2 hover:bg-red-50 transition"
+                          className="flex items-center gap-3 px-4 py-2 hover:bg-[#FAF5EE] transition"
                         >
                           <img 
                             src={item.image_url} 
                             alt={item.name} 
-                            className="w-10 h-10 object-cover rounded-lg border border-gray-100" 
+                            className="w-10 h-10 object-cover rounded-lg border border-[#EFE8DF]" 
                           />
                           <div className="flex-1 min-w-0">
                             <h4 className="text-xs font-semibold text-gray-800 truncate">{item.name}</h4>
-                            <p className="text-[11px] text-[#E31837] font-bold">₹{item.discount_price || item.base_price}</p>
+                            <p className="text-[11px] text-[#4A1525] font-bold">₹{item.discount_price || item.base_price}</p>
                           </div>
                           <ArrowRight className="w-3.5 h-3.5 text-gray-400" />
                         </Link>
                       ))}
-                      <div className="border-t border-gray-100 mt-1 pt-1 px-4 py-1.5 text-right">
+                      <div className="border-t border-[#F4EFEA] mt-1 pt-1 px-4 py-1.5 text-right">
                         <Link 
                           to={`/products?search=${encodeURIComponent(searchQuery)}`}
                           onClick={() => setShowSearchDropdown(false)}
-                          className="text-xs text-[#E31837] font-bold hover:underline inline-flex items-center gap-1"
+                          className="text-xs text-[#4A1525] font-bold hover:underline inline-flex items-center gap-1"
                         >
-                          View all cakes <ArrowRight className="w-3 h-3" />
+                          View all creations <ArrowRight className="w-3 h-3" />
                         </Link>
                       </div>
                     </div>
                   ) : (
                     <div className="py-6 text-center text-xs text-gray-500">
-                      No cakes found for "{searchQuery}"
+                      No creations found for "{searchQuery}"
                     </div>
                   )}
                 </div>
               )}
             </div>
 
-            {/* Action Links on Right */}
-            <div className="flex items-center gap-4 sm:gap-6 text-white text-xs font-semibold">
-              
-              {/* Track Order */}
-              <button
-                onClick={() => setIsTrackModalOpen(true)}
-                className="hidden sm:flex flex-col items-center hover:text-[#FFD166] transition group"
-              >
-                <Percent className="w-4 h-4 mb-0.5 group-hover:scale-110 transition-transform" />
-                <span className="text-[11px] font-medium tracking-tight">Track Order</span>
-              </button>
+            {/* Mobile Search Toggle Button */}
+            <button 
+              onClick={() => setIsSearchOpenMobile(!isSearchOpenMobile)}
+              className="p-2 text-[#3D121A] hover:bg-[#FAF5EE] rounded-full md:hidden transition"
+              aria-label="Search"
+            >
+              <Search className="w-5 h-5" />
+            </button>
 
-              {/* Shopping Bag / Cart */}
-              <button
-                onClick={() => setIsCartOpen(true)}
-                className="flex flex-col items-center hover:text-[#FFD166] transition relative group"
-              >
-                <div className="relative">
-                  <ShoppingCart className="w-5 h-5 group-hover:scale-110 transition-transform" />
-                  {totalItemCount > 0 && (
-                    <span className="absolute -top-1.5 -right-2 bg-white text-[#E31837] text-[10px] font-extrabold w-4 h-4 rounded-full flex items-center justify-center shadow-md animate-bounce">
-                      {totalItemCount}
-                    </span>
-                  )}
-                </div>
-                <span className="text-[11px] font-medium tracking-tight hidden sm:inline">Cart</span>
-              </button>
+            {/* Shopping Bag Trigger */}
+            <button
+              onClick={() => setIsCartOpen(true)}
+              className="p-2 text-[#3D121A] hover:text-[#250910] hover:bg-[#FAF5EE] rounded-full relative transition-all border border-transparent hover:border-[#E8DEC8]"
+              aria-label="Shopping Bag"
+            >
+              <ShoppingCart className="w-5 h-5" />
+              {totalItemCount > 0 && (
+                <span className="absolute -top-0.5 -right-0.5 bg-gradient-to-br from-[#3D121A] to-[#250910] text-[#FFDFB3] border border-[#C5A059]/60 text-[10px] font-extrabold w-4 h-4 rounded-full flex items-center justify-center shadow-xs">
+                  {totalItemCount}
+                </span>
+              )}
+            </button>
 
-              {/* Login / Signup or User Profile */}
-              <div className="relative" ref={userMenuRef}>
-                {user ? (
-                  <button
-                    onClick={() => setIsUserMenuOpen(!isUserMenuOpen)}
-                    className="flex items-center gap-1.5 bg-white/10 hover:bg-white/20 py-1.5 px-3 rounded-full transition text-xs text-white"
-                  >
-                    <UserIcon className="w-4 h-4 text-[#FFD166]" />
-                    <span className="font-semibold max-w-[90px] truncate">{user.full_name?.split(' ')[0] || 'Patron'}</span>
-                    <ChevronDown className="w-3 h-3 opacity-80" />
-                  </button>
-                ) : (
-                  <Link
-                    to="/login"
-                    className="flex flex-col items-center hover:text-[#FFD166] transition group"
-                  >
-                    <UserIcon className="w-4 h-4 mb-0.5 group-hover:scale-110 transition-transform" />
-                    <span className="text-[11px] font-medium tracking-tight">Login/Signup</span>
-                  </Link>
-                )}
-
-                {/* Dropdown Menu */}
-                {isUserMenuOpen && user && (
-                  <div className="absolute right-0 top-full mt-2 w-56 bg-white rounded-2xl shadow-2xl border border-gray-100 py-2 z-50 text-gray-800 animate-in fade-in zoom-in-95">
-                    <div className="px-4 py-2 border-b border-gray-100">
-                      <p className="text-xs font-bold text-gray-900 truncate">{user.full_name}</p>
-                      <p className="text-[11px] text-gray-500 truncate">{user.email}</p>
-                    </div>
-
-                    <Link
-                      to="/profile"
-                      onClick={() => setIsUserMenuOpen(false)}
-                      className="flex items-center gap-2 px-4 py-2 text-xs text-gray-700 hover:bg-red-50 hover:text-[#E31837] transition"
-                    >
-                      <UserIcon className="w-3.5 h-3.5" />
-                      <span>My Profile & Addresses</span>
-                    </Link>
-
-                    <Link
-                      to="/profile?tab=orders"
-                      onClick={() => setIsUserMenuOpen(false)}
-                      className="flex items-center gap-2 px-4 py-2 text-xs text-gray-700 hover:bg-red-50 hover:text-[#E31837] transition"
-                    >
-                      <Package className="w-3.5 h-3.5" />
-                      <span>Order History</span>
-                    </Link>
-
-                    {isAdmin ? (
-                      <Link
-                        to="/admin"
-                        onClick={() => setIsUserMenuOpen(false)}
-                        className="flex items-center gap-2 px-4 py-2 text-xs text-[#E31837] font-bold hover:bg-red-50 transition"
-                      >
-                        <Shield className="w-3.5 h-3.5" />
-                        <span>👑 Admin Console & Catalog</span>
-                      </Link>
-                    ) : (
-                      <Link
-                        to="/login?tab=admin"
-                        onClick={() => setIsUserMenuOpen(false)}
-                        className="flex items-center gap-2 px-4 py-2 text-xs text-amber-700 font-bold hover:bg-amber-50 transition"
-                      >
-                        <Shield className="w-3.5 h-3.5" />
-                        <span>Switch to Admin Console</span>
-                      </Link>
-                    )}
-
-                    <div className="border-t border-gray-100 mt-1 pt-1">
-                      <button
-                        onClick={() => {
-                          logout();
-                          setIsUserMenuOpen(false);
-                          navigate('/');
-                        }}
-                        className="w-full flex items-center gap-2 px-4 py-2 text-xs text-red-600 hover:bg-red-50 transition text-left"
-                      >
-                        <LogOut className="w-3.5 h-3.5" />
-                        <span>Sign Out</span>
-                      </button>
-                    </div>
+            {/* User Account Menu */}
+            <div className="relative" ref={userMenuRef}>
+              {user ? (
+                <button
+                  onClick={() => setIsUserMenuOpen(!isUserMenuOpen)}
+                  className="flex items-center gap-2 bg-[#FAF6F0] hover:bg-white py-1.5 px-3.5 rounded-full transition-all text-xs font-semibold text-[#3D121A] border border-[#E3D7C5] hover:border-[#C5A059] shadow-2xs"
+                >
+                  <div className="w-5 h-5 rounded-full bg-[#3D121A]/10 text-[#C5A059] flex items-center justify-center">
+                    <UserIcon className="w-3 h-3 text-[#C5A059]" />
                   </div>
-                )}
-              </div>
+                  <span className="font-semibold max-w-[85px] truncate">{user.full_name?.split(' ')[0] || 'Patron'}</span>
+                  <ChevronDown className="w-3 h-3 text-[#8C6D4C] opacity-75" />
+                </button>
+              ) : (
+                <Link
+                  to="/login"
+                  className="hidden sm:flex items-center gap-1 text-xs font-bold text-[#3D121A] hover:text-[#4A1525] px-2 py-1.5 transition"
+                >
+                  <UserIcon className="w-4 h-4 text-[#8C6D4C]" />
+                  <span>Login</span>
+                </Link>
+              )}
 
+              {/* User Dropdown */}
+              {isUserMenuOpen && user && (
+                <div className="absolute right-0 top-full mt-2 w-56 bg-white rounded-2xl shadow-2xl border border-[#EFE8DF] py-2 z-50 text-gray-800 animate-in fade-in zoom-in-95">
+                  <div className="px-4 py-2 border-b border-[#F4EFEA]">
+                    <p className="text-xs font-bold text-gray-900 truncate">{user.full_name}</p>
+                    <p className="text-[11px] text-gray-500 truncate">{user.email}</p>
+                  </div>
+
+                  <Link
+                    to="/profile"
+                    onClick={() => setIsUserMenuOpen(false)}
+                    className="flex items-center gap-2 px-4 py-2 text-xs text-gray-700 hover:bg-[#FAF5EE] hover:text-[#4A1525] transition"
+                  >
+                    <UserIcon className="w-3.5 h-3.5" />
+                    <span>My Profile & Orders</span>
+                  </Link>
+
+                  {isAdmin ? (
+                    <Link
+                      to="/admin"
+                      onClick={() => setIsUserMenuOpen(false)}
+                      className="flex items-center gap-2 px-4 py-2 text-xs text-[#4A1525] font-bold hover:bg-[#FAF5EE] transition"
+                    >
+                      <Shield className="w-3.5 h-3.5 text-[#C5A059]" />
+                      <span>👑 Admin Console & Catalog</span>
+                    </Link>
+                  ) : (
+                    <Link
+                      to="/login?tab=admin"
+                      onClick={() => setIsUserMenuOpen(false)}
+                      className="flex items-center gap-2 px-4 py-2 text-xs text-[#8C6D4C] font-bold hover:bg-[#FAF5EE] transition"
+                    >
+                      <Shield className="w-3.5 h-3.5" />
+                      <span>Switch to Admin Console</span>
+                    </Link>
+                  )}
+
+                  <div className="border-t border-[#F4EFEA] mt-1 pt-1">
+                    <button
+                      onClick={() => {
+                        logout();
+                        setIsUserMenuOpen(false);
+                        navigate('/');
+                      }}
+                      className="w-full flex items-center gap-2 px-4 py-2 text-xs text-red-600 hover:bg-red-50 transition text-left"
+                    >
+                      <LogOut className="w-3.5 h-3.5" />
+                      <span>Sign Out</span>
+                    </button>
+                  </div>
+                </div>
+              )}
             </div>
+
+            {/* Primary Action Button: Reserve a Table / Order Now (Latte Global Cafe inspired) */}
+            <a
+              href="/#reservation"
+              className="hidden sm:inline-flex items-center justify-center px-5 py-2.5 rounded-full text-[11px] font-bold uppercase tracking-[0.2em] bg-gradient-to-r from-[#3D121A] via-[#4D1726] to-[#2B0E16] text-[#FAF5EE] border border-[#C5A059]/70 hover:border-[#C5A059] shadow-[0_3px_14px_rgba(61,18,26,0.18)] hover:shadow-[0_6px_22px_rgba(197,160,89,0.32)] hover:scale-[1.03] active:scale-[0.98] transition-all"
+            >
+              <span>Book a Table</span>
+            </a>
 
           </div>
 
-          {/* Glowing Garland Lights decoration along bottom edge */}
-          <div className="absolute bottom-0 left-0 right-0 h-1.5 bg-[radial-gradient(circle,#FFE082_2px,transparent_3px)] [background-size:18px_6px] opacity-80" />
         </div>
 
-        {/* SECONDARY WHITE CATEGORY NAVIGATION BAR */}
-        <nav className="bg-white border-b border-gray-200 relative z-10">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <ul className="flex items-center justify-between text-xs font-semibold text-gray-800 py-2.5 overflow-x-auto gap-3 whitespace-nowrap scrollbar-none">
-              <li>
-                <Link 
-                  to="/" 
-                  className={`flex items-center gap-1.5 px-3 py-1.5 rounded-full transition text-xs ${
-                    location.pathname === '/' 
-                      ? 'bg-[#E31837] text-white font-bold shadow-xs' 
-                      : 'text-gray-700 hover:text-[#E31837] hover:bg-red-50 font-semibold'
-                  }`}
-                >
-                  <Home className="w-3.5 h-3.5" />
-                  <span>Home</span>
-                </Link>
-              </li>
-              <li>
-                <Link to="/products?category=gift-hampers" className="flex items-center gap-1.5 text-[#E31837] hover:underline font-bold px-2 py-1">
-                  <span>🎉 Celebrations</span>
-                </Link>
-              </li>
-              <li>
-                <Link to="/products?category=chocolate-cakes" className="hover:text-[#E31837] transition">
-                  Cakes
-                </Link>
-              </li>
-              <li>
-                <Link to="/products?category=coffee-brews" className="flex items-center gap-1 text-[#8C5E3C] hover:text-[#E31837] font-bold transition">
-                  <span>☕ Artisan Coffee</span>
-                </Link>
-              </li>
-              <li>
-                <Link to="/products?category=cafe-savory" className="flex items-center gap-1 text-[#C06014] hover:text-[#E31837] font-bold transition">
-                  <span>🥐 Cafe & Savory</span>
-                </Link>
-              </li>
-              <li>
-                <Link to="/products?category=designer-cakes" className="hover:text-[#E31837] transition">
-                  Bento
-                </Link>
-              </li>
-              <li>
-                <Link to="/products?category=designer-cakes" className="hover:text-[#E31837] transition">
-                  Theme Cakes
-                </Link>
-              </li>
-              <li>
-                <Link to="/products?category=anniversary-cakes" className="hover:text-[#E31837] transition">
-                  By Relationship
-                </Link>
-              </li>
-              <li>
-                <Link to="/products?category=gift-hampers" className="hover:text-[#E31837] transition">
-                  Desserts & Hampers
-                </Link>
-              </li>
-              <li>
-                <Link to="/products?category=birthday-cakes" className="hover:text-[#E31837] transition">
-                  Birthday
-                </Link>
-              </li>
-              <li>
-                <Link to="/products?category=designer-cakes" className="hover:text-[#E31837] transition">
-                  Customized Cakes
-                </Link>
-              </li>
-              <li>
-                <Link to="/products" className="text-gray-500 hover:text-black font-medium flex items-center gap-0.5">
-                  <span>View More</span>
-                  <ChevronDown className="w-3 h-3" />
-                </Link>
-              </li>
-            </ul>
+        {/* 3. LUXURY HORIZONTAL CATEGORY MENU BAR WITH 1-CLICK DIRECT NAVIGATION */}
+        <nav aria-label="Curated Categories" className="bg-gradient-to-r from-[#F4EEE2] via-[#FAF6EE] to-[#F4EEE2] border-t border-[#E8DEC8] border-b border-[#DFD3C0] px-4 sm:px-8 py-2.5 sm:py-3 overflow-x-auto scrollbar-none shadow-[0_2px_8px_rgba(43,14,22,0.02)]">
+          <div className="max-w-7xl mx-auto flex items-center justify-start md:justify-center gap-1.5 sm:gap-2 text-xs font-semibold whitespace-nowrap">
+            {CATEGORY_NAV_ITEMS.map((item, index) => {
+              const active = item.isActive(location);
+              const IconComp = item.icon;
+              return (
+                <React.Fragment key={item.label}>
+                  {index > 0 && (
+                    <span 
+                      className="w-1.5 h-1.5 rotate-45 bg-[#C5A059]/40 mx-1 sm:mx-1.5 flex-shrink-0 transition-opacity" 
+                      aria-hidden="true" 
+                    />
+                  )}
+                  <Link
+                    to={item.to}
+                    className={`nav-word-link word-click group flex items-center gap-2 py-1.5 px-3.5 rounded-full transition-all duration-300 ${
+                      active
+                        ? 'bg-gradient-to-r from-[#3D121A] via-[#4D1726] to-[#340C16] text-[#FFFDF9] border border-[#C5A059]/70 shadow-[0_3px_12px_rgba(61,18,26,0.22)] ring-1 ring-[#C5A059]/25 font-bold'
+                        : 'text-[#4A3B34] hover:text-[#280911] hover:bg-white/90 hover:border-[#E5DAC8] border border-transparent shadow-none hover:shadow-2xs font-medium'
+                    }`}
+                  >
+                    <IconComp
+                      className={`w-3.5 h-3.5 transition-all duration-300 ${
+                        active 
+                          ? 'text-[#FFDFB3] scale-110 drop-shadow-[0_1px_3px_rgba(197,160,89,0.5)]' 
+                          : 'text-[#9E7D46] group-hover:text-[#C5A059] group-hover:scale-110'
+                      }`}
+                    />
+                    <span className="text-[11px] sm:text-[11.5px] uppercase tracking-[0.14em]">
+                      {item.label}
+                    </span>
+                  </Link>
+                </React.Fragment>
+              );
+            })}
           </div>
         </nav>
 
-        {/* Mobile Search & Menu Drawer */}
-        {isMobileMenuOpen && (
-          <div className="lg:hidden border-t border-gray-100 bg-white px-4 py-4 space-y-3 shadow-lg">
+        {/* Mobile Search Input Drawer */}
+        {isSearchOpenMobile && (
+          <div className="md:hidden border-t border-[#EFE8DF] bg-[#FAF5EE] px-4 py-2.5">
             <form onSubmit={handleSearchSubmit} className="relative">
               <input
                 type="text"
-                placeholder="Search cakes, occasion, flavour..."
+                placeholder="Search cakes, coffee, pastries..."
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
-                className="w-full bg-gray-50 text-xs px-3 py-2 pl-9 rounded-xl border border-gray-200"
+                className="w-full bg-white text-xs pl-9 pr-3 py-2 rounded-full border border-[#E8DEC8] focus:outline-none focus:border-[#4A1525]"
+                autoFocus
               />
               <Search className="w-4 h-4 text-gray-400 absolute left-3 top-1/2 -translate-y-1/2" />
             </form>
-
-            <div className="grid grid-cols-2 gap-2 text-xs font-semibold text-gray-800">
-              <Link to="/" onClick={() => setIsMobileMenuOpen(false)} className="p-2.5 rounded-xl bg-red-50 text-[#E31837] font-bold flex items-center gap-1.5">
-                <Home className="w-3.5 h-3.5" />
-                <span>Home</span>
-              </Link>
-              <Link to="/products" onClick={() => setIsMobileMenuOpen(false)} className="p-2.5 rounded-xl bg-gray-50">All Items</Link>
-              <Link to="/products?category=coffee-brews" onClick={() => setIsMobileMenuOpen(false)} className="p-2.5 rounded-xl bg-amber-50 text-[#8C5E3C] font-bold">☕ Artisan Coffee</Link>
-              <Link to="/products?category=cafe-savory" onClick={() => setIsMobileMenuOpen(false)} className="p-2.5 rounded-xl bg-orange-50 text-[#C06014] font-bold">🥐 Cafe & Savory</Link>
-              <Link to="/products?category=birthday-cakes" onClick={() => setIsMobileMenuOpen(false)} className="p-2.5 rounded-xl bg-gray-50">Birthday Cakes</Link>
-              <Link to="/products?category=chocolate-cakes" onClick={() => setIsMobileMenuOpen(false)} className="p-2.5 rounded-xl bg-gray-50">Chocolate</Link>
-              <Link to="/products?category=designer-cakes" onClick={() => setIsMobileMenuOpen(false)} className="p-2.5 rounded-xl bg-gray-50">Bento Cakes</Link>
-              <Link to="/products?category=gift-hampers" onClick={() => setIsMobileMenuOpen(false)} className="p-2.5 rounded-xl bg-red-50 text-[#E31837]">Hampers</Link>
-              <button 
-                onClick={() => {
-                  setIsCityModalOpen(true);
-                  setIsMobileMenuOpen(false);
-                }}
-                className="p-2.5 rounded-xl bg-gray-50 text-left flex items-center gap-1"
-              >
-                <MapPin className="w-3.5 h-3.5 text-[#E31837]" />
-                <span className="truncate">{selectedCity}</span>
-              </button>
-            </div>
           </div>
         )}
 
+        {/* Mobile Menu Panel (Matching Latte Global Cafe aside drawer) */}
+        {isMobileMenuOpen && (
+          <aside className="lg:hidden border-t border-[#EFE8DF] bg-[#FFFDF9] px-6 py-6 space-y-4 shadow-xl">
+            <div className="space-y-3 text-sm font-semibold text-[#3D121A]">
+              <Link 
+                to="/" 
+                onClick={() => setIsMobileMenuOpen(false)}
+                className="block py-2 border-b border-[#F4EFEA] word-click"
+              >
+                Home
+              </Link>
+              <Link 
+                to="/#cakes" 
+                onClick={() => setIsMobileMenuOpen(false)}
+                className="py-2 border-b border-[#F4EFEA] text-[#3D121A] font-semibold word-click flex items-center justify-between"
+              >
+                <div className="flex items-center gap-2">
+                  <LuxuryCakeIcon className="w-4 h-4 text-[#C5A059]" />
+                  <span>Cakes & Gateaux</span>
+                </div>
+                <span className="text-[10px] uppercase tracking-wider bg-[#3D121A] text-[#FFDFB3] border border-[#C5A059]/40 px-2 py-0.5 rounded-full font-medium">Signature</span>
+              </Link>
+              <a 
+                href="/#about" 
+                onClick={() => setIsMobileMenuOpen(false)}
+                className="block py-2 border-b border-[#F4EFEA] word-click"
+              >
+                About Us
+              </a>
+              <div className="py-2 border-b border-[#F4EFEA]">
+                <p className="text-xs uppercase tracking-widest text-[#8C6D4C] font-bold mb-2">Curated Collections</p>
+                <div className="grid grid-cols-2 gap-2 text-xs font-medium">
+                  <Link to="/#cakes" onClick={() => setIsMobileMenuOpen(false)} className="flex items-center gap-2 p-2.5 rounded-xl bg-[#FAF5EE] hover:bg-[#F2ECE0] text-[#3D121A] border border-[#E8DEC8]/60 font-semibold">
+                    <LuxuryCakeIcon className="w-4 h-4 text-[#C5A059]" />
+                    <span>Cakes & Gateaux</span>
+                  </Link>
+                  <Link to="/coffee" onClick={() => setIsMobileMenuOpen(false)} className="flex items-center gap-2 p-2.5 rounded-xl bg-[#FAF5EE] hover:bg-[#F2ECE0] text-[#3D121A] border border-[#E8DEC8]/60 font-semibold">
+                    <LuxuryCoffeeIcon className="w-4 h-4 text-[#C5A059]" />
+                    <span>Specialty Coffee</span>
+                  </Link>
+                  <Link to="/#boulangerie" onClick={() => setIsMobileMenuOpen(false)} className="flex items-center gap-2 p-2.5 rounded-xl bg-[#FAF5EE] hover:bg-[#F2ECE0] text-[#3D121A] border border-[#E8DEC8]/60 font-medium">
+                    <LuxuryCroissantIcon className="w-4 h-4 text-[#C5A059]" />
+                    <span>Boulangerie</span>
+                  </Link>
+                  <Link to="/#gelato" onClick={() => setIsMobileMenuOpen(false)} className="flex items-center gap-2 p-2.5 rounded-xl bg-[#FAF5EE] hover:bg-[#F2ECE0] text-[#3D121A] border border-[#E8DEC8]/60 font-medium">
+                    <LuxuryGelatoIcon className="w-4 h-4 text-[#C5A059]" />
+                    <span>Gelato</span>
+                  </Link>
+                  <Link to="/products?category=cafe-savory" onClick={() => setIsMobileMenuOpen(false)} className="flex items-center gap-2 p-2.5 rounded-xl bg-[#FAF5EE] hover:bg-[#F2ECE0] text-[#3D121A] border border-[#E8DEC8]/60 font-medium">
+                    <LuxuryCuisineIcon className="w-4 h-4 text-[#C5A059]" />
+                    <span>Global Cuisine</span>
+                  </Link>
+                  <Link to="/chocolate" onClick={() => setIsMobileMenuOpen(false)} className="flex items-center gap-2 p-2.5 rounded-xl bg-[#FAF5EE] hover:bg-[#F2ECE0] text-[#3D121A] border border-[#E8DEC8]/60 font-semibold">
+                    <LuxuryChocolateIcon className="w-4 h-4 text-[#C5A059]" />
+                    <span>Chocolates</span>
+                  </Link>
+                </div>
+              </div>
+              <Link 
+                to="/products" 
+                onClick={() => setIsMobileMenuOpen(false)}
+                className="block py-2 border-b border-[#F4EFEA] word-click"
+              >
+                Menu (All Creations)
+              </Link>
+              <a 
+                href="/#reservation" 
+                onClick={() => setIsMobileMenuOpen(false)}
+                className="block py-2 border-b border-[#F4EFEA]"
+              >
+                Reservation & Bespoke
+              </a>
+              <a 
+                href="/#gallery" 
+                onClick={() => setIsMobileMenuOpen(false)}
+                className="block py-2 border-b border-[#F4EFEA]"
+              >
+                Gallery
+              </a>
+            </div>
+
+            <div className="pt-2 flex flex-col gap-2">
+              <a 
+                href="/#reservation"
+                onClick={() => setIsMobileMenuOpen(false)}
+                className="w-full text-center py-2.5 rounded-full btn-maroon text-xs font-bold uppercase tracking-wider"
+              >
+                Reserve a Table
+              </a>
+              {!user && (
+                <Link
+                  to="/login"
+                  onClick={() => setIsMobileMenuOpen(false)}
+                  className="w-full text-center py-2.5 rounded-full btn-cream text-xs font-bold uppercase tracking-wider"
+                >
+                  Sign In / Register
+                </Link>
+              )}
+            </div>
+          </aside>
+        )}
       </header>
 
       {/* Track Order Modal */}
       {isTrackModalOpen && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-xs p-4 animate-in fade-in">
-          <div className="bg-white rounded-3xl max-w-sm w-full p-6 shadow-2xl relative">
+          <div className="bg-white rounded-3xl max-w-sm w-full p-6 shadow-2xl relative border border-[#EFE8DF]">
             <button 
               onClick={() => setIsTrackModalOpen(false)}
               className="absolute right-4 top-4 p-1 rounded-full text-gray-400 hover:text-black"
             >
               <X className="w-5 h-5" />
             </button>
-            <h3 className="font-serif text-xl font-bold text-gray-900 mb-1">Track Celebration Order</h3>
-            <p className="text-xs text-gray-500 mb-4">Enter your unique order number (e.g., VEL-2026-89102)</p>
+            <h3 className="font-serif text-2xl font-bold text-[#3D121A] mb-1">Track Celebration Order</h3>
+            <p className="text-xs text-gray-500 mb-4">Enter your order ID (e.g., VEL-2026-89102)</p>
 
             <form onSubmit={handleTrackSubmit} className="space-y-3">
               <input
@@ -484,11 +838,11 @@ export default function Header() {
                 placeholder="VEL-2026-XXXXX"
                 value={trackOrderNumber}
                 onChange={(e) => setTrackOrderNumber(e.target.value.toUpperCase())}
-                className="w-full px-3 py-2.5 text-xs font-mono uppercase tracking-wider border rounded-xl focus:outline-none focus:border-[#E31837]"
+                className="w-full px-3 py-2.5 text-xs font-mono uppercase tracking-wider border border-[#E8DEC8] rounded-xl focus:outline-none focus:border-[#4A1525]"
               />
               <button
                 type="submit"
-                className="w-full py-2.5 bg-[#E31837] hover:bg-[#C51132] text-white text-xs font-bold uppercase tracking-wider rounded-xl transition shadow-sm"
+                className="w-full py-2.5 btn-maroon text-xs font-bold uppercase tracking-wider rounded-xl transition shadow-sm"
               >
                 Track Live Status
               </button>
@@ -499,8 +853,8 @@ export default function Header() {
 
       {/* City & Delivery Pincode Modal */}
       {isCityModalOpen && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-xs p-4">
-          <div className="bg-white rounded-3xl max-w-md w-full p-6 shadow-2xl border border-gray-100 relative">
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-xs p-4 animate-in fade-in">
+          <div className="bg-white rounded-3xl max-w-md w-full p-6 shadow-2xl border border-[#EFE8DF] relative">
             <button 
               onClick={() => setIsCityModalOpen(false)}
               className="absolute right-4 top-4 p-1.5 rounded-full hover:bg-gray-100 text-gray-400 hover:text-gray-600"
@@ -509,22 +863,22 @@ export default function Header() {
             </button>
 
             <div className="text-center mb-5">
-              <div className="w-12 h-12 rounded-full bg-red-50 text-[#E31837] flex items-center justify-center mx-auto mb-2">
-                <MapPin className="w-6 h-6" />
+              <div className="w-12 h-12 rounded-full bg-[#FAF5EE] text-[#4A1525] flex items-center justify-center mx-auto mb-2 border border-[#E8DEC8]">
+                <MapPin className="w-6 h-6 text-[#C5A059]" />
               </div>
-              <h3 className="font-serif text-xl font-bold text-gray-900">Select Delivery City</h3>
-              <p className="text-xs text-gray-500 mt-1">We offer guaranteed same-day & midnight delivery in major metro cities.</p>
+              <h3 className="font-serif text-2xl font-bold text-[#3D121A]">Select Delivery Destination</h3>
+              <p className="text-xs text-gray-500 mt-1">Guaranteed same-day 2-hour express & midnight delivery across metros.</p>
             </div>
 
             {/* Popular Cities */}
             <div className="mb-5">
-              <p className="text-[11px] font-bold text-gray-400 uppercase tracking-wider mb-2">Metro Hubs</p>
+              <p className="text-[11px] font-bold text-[#8C6D4C] uppercase tracking-wider mb-2">Metro Hubs</p>
               <div className="grid grid-cols-2 gap-2">
                 {CITIES.map((c) => (
                   <button
                     key={c.name}
                     onClick={() => handleCitySelect(c)}
-                    className="flex flex-col items-start p-2.5 rounded-xl border border-gray-200 hover:border-[#E31837] hover:bg-red-50/50 text-left transition"
+                    className="flex flex-col items-start p-2.5 rounded-xl border border-[#EFE8DF] hover:border-[#4A1525] hover:bg-[#FAF5EE] text-left transition"
                   >
                     <span className="text-xs font-bold text-gray-900">{c.name}</span>
                     <span className="text-[10px] text-gray-400">Pincode {c.pincode}</span>
@@ -534,7 +888,7 @@ export default function Header() {
             </div>
 
             {/* Custom Pincode Input */}
-            <form onSubmit={handleCustomPincodeSubmit} className="pt-2 border-t border-gray-100">
+            <form onSubmit={handleCustomPincodeSubmit} className="pt-2 border-t border-[#F4EFEA]">
               <label className="block text-xs font-semibold text-gray-700 mb-1.5">Or Enter Your Pincode</label>
               <div className="flex gap-2">
                 <input
@@ -543,11 +897,11 @@ export default function Header() {
                   placeholder="e.g. 400001"
                   value={customPincode}
                   onChange={(e) => setCustomPincode(e.target.value)}
-                  className="flex-1 px-3 py-2 text-xs border rounded-xl focus:outline-none focus:border-[#E31837]"
+                  className="flex-1 px-3 py-2 text-xs border border-[#E8DEC8] rounded-xl focus:outline-none focus:border-[#4A1525]"
                 />
                 <button
                   type="submit"
-                  className="px-4 py-2 bg-[#E31837] hover:bg-[#C51132] text-white text-xs font-bold rounded-xl transition"
+                  className="px-4 py-2 btn-maroon text-xs font-bold rounded-xl transition"
                 >
                   Verify
                 </button>
@@ -562,3 +916,4 @@ export default function Header() {
     </>
   );
 }
+
