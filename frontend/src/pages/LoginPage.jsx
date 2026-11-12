@@ -1,43 +1,56 @@
 import React, { useState } from 'react';
-import { useNavigate, Link } from 'react-router-dom';
-import { Lock, Mail, User, ShieldCheck, Sparkles, ArrowRight, CheckCircle2 } from 'lucide-react';
+import { useNavigate, useSearchParams, Link } from 'react-router-dom';
+import { Lock, Mail, User, ShieldCheck, Sparkles, ArrowRight, CheckCircle2, LogOut } from 'lucide-react';
 import { useAuth } from '../context/AuthContext';
 
 export default function LoginPage() {
   const navigate = useNavigate();
-  const { login, user } = useAuth();
+  const [searchParams] = useSearchParams();
+  const { login, logout, user } = useAuth();
 
-  const [activeTab, setActiveTab] = useState('customer'); // 'customer' or 'admin'
+  const [activeTab, setActiveTab] = useState(() => {
+    return searchParams.get('tab') === 'admin' ? 'admin' : 'customer';
+  });
   const [customerEmail, setCustomerEmail] = useState('');
   const [customerName, setCustomerName] = useState('');
   
   const [adminEmail, setAdminEmail] = useState('admin@veloura.com');
-  const [adminPassword, setAdminPassword] = useState('');
+  const [adminPassword, setAdminPassword] = useState('admin123');
 
   const [errorMsg, setErrorMsg] = useState('');
   const [loading, setLoading] = useState(false);
 
-  if (user) {
-    if (user.is_admin) navigate('/admin');
-    else navigate('/profile');
-    return null;
-  }
+  // If already logged in as ADMIN, navigate to /admin
+  React.useEffect(() => {
+    if (user?.is_admin) {
+      navigate('/admin');
+    }
+  }, [user, navigate]);
 
   const handleCustomerLogin = async (e) => {
     e.preventDefault();
-    if (!customerEmail.trim()) {
+    const cleanEmail = customerEmail.trim().toLowerCase();
+    if (!cleanEmail) {
       setErrorMsg('Please enter your email address');
       return;
     }
+
+    // If customer entered admin email, guide them to admin tab
+    if (cleanEmail === 'admin@veloura.com' || cleanEmail.includes('admin')) {
+      setActiveTab('admin');
+      setAdminEmail(cleanEmail);
+      setErrorMsg('admin@veloura.com is an administrator account. Please enter your admin password.');
+      return;
+    }
+
     setErrorMsg('');
     setLoading(true);
 
     try {
-      // Customer login: PASSWORD NOT NEEDED!
-      await login(customerEmail.trim().toLowerCase(), '', customerName.trim());
+      await login(cleanEmail, '', customerName.trim());
       navigate('/');
     } catch (err) {
-      setErrorMsg(err.response?.data?.detail || 'Failed to sign in. Please try again.');
+      setErrorMsg(err.message || 'Failed to sign in. Please try again.');
     } finally {
       setLoading(false);
     }
@@ -56,21 +69,35 @@ export default function LoginPage() {
       await login(adminEmail.trim().toLowerCase(), adminPassword);
       navigate('/admin');
     } catch (err) {
-      setErrorMsg(err.response?.data?.detail || 'Incorrect admin email or password.');
+      setErrorMsg(err.message || 'Incorrect admin email or password.');
     } finally {
       setLoading(false);
     }
   };
 
-  const handleQuickDemo = (role) => {
-    if (role === 'customer') {
-      setCustomerEmail('user@veloura.com');
-      setCustomerName('Aarav Sharma');
-      setActiveTab('customer');
-    } else {
-      setAdminEmail('admin@veloura.com');
-      setAdminPassword('admin123');
-      setActiveTab('admin');
+  const handleInstantCustomerLogin = async () => {
+    setLoading(true);
+    setErrorMsg('');
+    try {
+      await login('user@veloura.com', '', 'Aarav Sharma');
+      navigate('/');
+    } catch (err) {
+      setErrorMsg('Failed to sign in as customer.');
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const handleInstantAdminLogin = async () => {
+    setLoading(true);
+    setErrorMsg('');
+    try {
+      await login('admin@veloura.com', 'admin123');
+      navigate('/admin');
+    } catch (err) {
+      setErrorMsg('Failed to sign in as admin.');
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -95,25 +122,47 @@ export default function LoginPage() {
           </p>
         </div>
 
-        {/* 1-Click Demo Buttons */}
+        {/* If user is currently signed in as Customer, show banner to switch */}
+        {user && !user.is_admin && (
+          <div className="p-3 bg-amber-50 rounded-2xl border border-amber-200 flex items-center justify-between gap-3 text-xs">
+            <div>
+              <p className="text-gray-500 text-[11px]">Currently signed in as:</p>
+              <p className="font-bold text-gray-900 truncate">{user.full_name || user.email}</p>
+              <span className="text-[10px] text-amber-800 font-bold uppercase tracking-wider">Customer Mode</span>
+            </div>
+            <button
+              type="button"
+              onClick={logout}
+              className="px-2.5 py-1 text-xs font-bold bg-white text-red-600 border border-red-200 rounded-lg hover:bg-red-50 transition shadow-2xs flex items-center gap-1"
+            >
+              <LogOut className="w-3 h-3" />
+              <span>Sign Out</span>
+            </button>
+          </div>
+        )}
+
+        {/* 1-Click Instant Demo Access Buttons */}
         <div className="p-3 rounded-2xl bg-red-50 border border-red-100 space-y-2">
           <p className="text-[11px] font-bold text-[#E31837] uppercase tracking-wider text-center">
-            ⚡ Quick 1-Click Demo Credentials
+            ⚡ 1-Click Instant Login
           </p>
           <div className="grid grid-cols-2 gap-2">
             <button
               type="button"
-              onClick={() => handleQuickDemo('customer')}
-              className="py-1.5 px-2 bg-white hover:bg-gray-50 text-gray-800 text-xs font-semibold rounded-xl border border-gray-200 transition shadow-2xs"
+              onClick={handleInstantCustomerLogin}
+              disabled={loading}
+              className="py-2 px-2 bg-white hover:bg-gray-50 text-gray-800 text-xs font-bold rounded-xl border border-gray-200 transition shadow-2xs text-center"
             >
-              Fill Customer Demo
+              Login as Customer
             </button>
             <button
               type="button"
-              onClick={() => handleQuickDemo('admin')}
-              className="py-1.5 px-2 bg-[#E31837] hover:bg-[#C51132] text-white text-xs font-semibold rounded-xl transition shadow-2xs"
+              onClick={handleInstantAdminLogin}
+              disabled={loading}
+              className="py-2 px-2 bg-[#E31837] hover:bg-[#C51132] text-white text-xs font-bold rounded-xl transition shadow-2xs text-center flex items-center justify-center gap-1"
             >
-              Fill Admin Demo
+              <ShieldCheck className="w-3.5 h-3.5 text-[#FFD166]" />
+              <span>Login as Admin</span>
             </button>
           </div>
         </div>

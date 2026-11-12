@@ -300,14 +300,23 @@ export default function Header() {
                       <span>Order History</span>
                     </Link>
 
-                    {isAdmin && (
+                    {isAdmin ? (
                       <Link
                         to="/admin"
                         onClick={() => setIsUserMenuOpen(false)}
                         className="flex items-center gap-2 px-4 py-2 text-xs text-[#E31837] font-bold hover:bg-red-50 transition"
                       >
                         <Shield className="w-3.5 h-3.5" />
-                        <span>Admin Console & Catalog</span>
+                        <span>👑 Admin Console & Catalog</span>
+                      </Link>
+                    ) : (
+                      <Link
+                        to="/login?tab=admin"
+                        onClick={() => setIsUserMenuOpen(false)}
+                        className="flex items-center gap-2 px-4 py-2 text-xs text-amber-700 font-bold hover:bg-amber-50 transition"
+                      >
+                        <Shield className="w-3.5 h-3.5" />
+                        <span>Switch to Admin Console</span>
                       </Link>
                     )}
 
