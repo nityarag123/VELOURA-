@@ -8,10 +8,12 @@ import ProductCard from '../components/product/ProductCard';
 import QuickViewModal from '../components/product/QuickViewModal';
 import api from '../services/api';
 
+const FALLBACK_MENU_IMAGE = 'https://images.unsplash.com/photo-1578985545062-69928b1d9587?auto=format&fit=crop&w=600&q=80';
+
 const MENU_CARDS = [
   {
     title: 'COFFEE',
-    image: 'https://images.unsplash.com/photo-1541167760496-1628856ab772?auto=format&fit=crop&w=600&q=80',
+    image: 'https://images.unsplash.com/photo-1514432324607-a09d9b4aefdd?auto=format&fit=crop&w=600&q=80',
     slug: 'coffee-brews'
   },
   {
@@ -21,7 +23,7 @@ const MENU_CARDS = [
   },
   {
     title: 'HAMPERS',
-    image: 'https://images.unsplash.com/photo-1513519245088-0e12902e5a38?auto=format&fit=crop&w=600&q=80',
+    image: 'https://images.unsplash.com/photo-1549465220-1a8b9238cd48?auto=format&fit=crop&w=600&q=80',
     slug: 'gift-hampers'
   },
   {
@@ -36,17 +38,17 @@ const MENU_CARDS = [
   },
   {
     title: 'DESIGNER',
-    image: 'https://images.unsplash.com/photo-1535141192574-5d4897c13136?auto=format&fit=crop&w=600&q=80',
+    image: 'https://images.unsplash.com/photo-1565958011703-44f9829ba187?auto=format&fit=crop&w=600&q=80',
     slug: 'birthday-cakes'
   },
   {
     title: 'DESSERTS',
-    image: 'https://images.unsplash.com/photo-1509440159596-0249088772ff?auto=format&fit=crop&w=600&q=80',
+    image: 'https://images.unsplash.com/photo-1569864358642-9d1684040f43?auto=format&fit=crop&w=600&q=80',
     slug: 'pastries'
   },
   {
     title: 'CUPCAKES',
-    image: 'https://images.unsplash.com/photo-1587668178277-295251f900ce?auto=format&fit=crop&w=600&q=80',
+    image: 'https://images.unsplash.com/photo-1576618148400-f54bed99fcfd?auto=format&fit=crop&w=600&q=80',
     slug: 'cupcakes'
   }
 ];
@@ -140,48 +142,63 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* 2. "MENU - What will you wish for?" (Exact section matching Screenshot 1) */}
-      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-4">
+      {/* 2. "MENU - What will you wish for?" (Symmetrical Festive Hanging Garland) */}
+      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-6">
         
         {/* Section Heading */}
         <div className="text-center mb-6">
           <h2 className="text-2xl sm:text-3xl font-extrabold text-[#E31837] tracking-tight">
             Menu
           </h2>
-          <p className="text-sm sm:text-base text-gray-500 font-normal mt-0.5">
+          <p className="text-xs sm:text-sm text-gray-500 font-medium mt-1">
             What will you wish for?
           </p>
         </div>
 
-        {/* Garland Lights / Star Garland Decoration Bar */}
-        <div className="relative mb-2">
-          <div className="h-6 flex items-center justify-around text-[#E6C387] opacity-80 pointer-events-none">
-            {[...Array(12)].map((_, i) => (
-              <span key={i} className="text-sm">✦</span>
+        {/* Garland Container */}
+        <div className="relative pt-2">
+          {/* Connecting festive garland wire (visible on tablet & desktop) */}
+          <div className="hidden sm:block absolute top-5 left-10 right-10 h-0.5 border-t border-dashed border-[#E6C387]/70 z-0 pointer-events-none" />
+
+          {/* Cards Grid: 4 cols on mobile (2 balanced rows of 4), 8 cols on tablet/desktop */}
+          <div className="grid grid-cols-4 sm:grid-cols-8 gap-3 sm:gap-4 md:gap-5 relative z-10">
+            {MENU_CARDS.map((item) => (
+              <Link
+                key={item.title}
+                to={`/products?category=${item.slug}`}
+                className="group flex flex-col items-center focus:outline-hidden"
+              >
+                {/* Symmetrical hanging star pin & string */}
+                <div className="flex flex-col items-center mb-2">
+                  <span className="text-[#D4AF37] text-xs sm:text-sm drop-shadow-xs group-hover:scale-125 group-hover:text-[#E31837] transition-transform duration-300">
+                    ✦
+                  </span>
+                  <span className="hidden sm:block w-px h-2 bg-[#E6C387]/70 mt-0.5" />
+                </div>
+
+                {/* Card Container: Strict aspect-square, identical size across all items */}
+                <div className="w-full aspect-square rounded-2xl sm:rounded-3xl overflow-hidden bg-white shadow-md border-2 border-white group-hover:border-[#E31837]/30 group-hover:shadow-xl transition-all duration-300 group-hover:-translate-y-1.5 flex items-center justify-center p-1 sm:p-1.5">
+                  <div className="w-full h-full rounded-xl sm:rounded-2xl overflow-hidden bg-gray-100 relative">
+                    <img
+                      src={item.image}
+                      alt={item.title}
+                      onError={(e) => {
+                        e.target.onerror = null;
+                        e.target.src = FALLBACK_MENU_IMAGE;
+                      }}
+                      className="w-full h-full object-cover object-center group-hover:scale-110 transition-transform duration-500"
+                      loading="lazy"
+                    />
+                  </div>
+                </div>
+
+                {/* Card Title */}
+                <h3 className="mt-2.5 sm:mt-3 text-[11px] sm:text-xs md:text-sm font-extrabold tracking-wide text-gray-800 group-hover:text-[#E31837] transition-colors uppercase text-center truncate max-w-full">
+                  {item.title}
+                </h3>
+              </Link>
             ))}
           </div>
-        </div>
-
-        {/* Horizontal Row of Rounded Cards */}
-        <div className="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-8 gap-3 sm:gap-4">
-          {MENU_CARDS.map((item) => (
-            <Link
-              key={item.title}
-              to={`/products?category=${item.slug}`}
-              className="group flex flex-col items-center"
-            >
-              <div className="w-full aspect-4/5 rounded-2xl overflow-hidden bg-white shadow-md border border-gray-100 group-hover:shadow-xl transition-all duration-300">
-                <img
-                  src={item.image}
-                  alt={item.title}
-                  className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-                />
-              </div>
-              <h3 className="mt-3 text-xs sm:text-sm font-extrabold tracking-wide text-gray-900 group-hover:text-[#E31837] transition uppercase">
-                {item.title}
-              </h3>
-            </Link>
-          ))}
         </div>
       </section>
 
