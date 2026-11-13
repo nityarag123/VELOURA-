@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Link, useNavigate, useLocation } from 'react-router-dom';
 import { 
   Star, Heart, ArrowRight, Sparkles, Clock, 
-  MessageCircle, X, ChevronRight, CheckCircle2, 
+  MessageCircle, X, ChevronLeft, ChevronRight, CheckCircle2, 
   MapPin, Phone, Mail, Award, Calendar, Users, Coffee, Eye, Check, Sparkle
 } from 'lucide-react';
 import ProductCard from '../components/product/ProductCard';
@@ -194,6 +194,62 @@ const GALLERY_IMAGES = [
   }
 ];
 
+// Automatic 4-Slide Luxury Hero Carousel Dataset
+const HERO_SLIDES = [
+  {
+    id: 1,
+    tag: 'HAUTE PÂTISSERIE • ARTISAN GATEAUX',
+    pillNumber: '01',
+    pillTitle: 'Signature Gateaux',
+    title: 'An Exceptional Journey of',
+    italicWord: 'Sweetness & Taste',
+    desc: 'Handcrafted celebration gateaux layered with pure Callebaut chocolate, French raspberry coulis, and edible gold leaf — baked fresh daily in small batches.',
+    image: 'https://images.unsplash.com/photo-1578985545062-69928b1d9587?auto=format&fit=crop&w=2000&q=85',
+    ctaPrimary: { text: 'Explore Signature Cakes', link: '/#cakes' },
+    ctaSecondary: { text: 'Reserve Bespoke Gateau', link: '/#reservation' },
+    badges: ['100% Belgian Callebaut', '2-Hour Express Delivery', 'Eggless Creations Available']
+  },
+  {
+    id: 2,
+    tag: 'SPECIALTY ROASTERY • SINGLE-ORIGIN BREWS',
+    pillNumber: '02',
+    pillTitle: 'Specialty Coffee',
+    title: 'Precision Roasts & Pure',
+    italicWord: 'Single-Origin Arabica',
+    desc: 'Micro-lot beans sourced from premier high-altitude estates, precision roasted in small batches and extracted on our bespoke Slayer espresso bar.',
+    image: 'https://images.unsplash.com/photo-1442512595331-e89e73853f31?auto=format&fit=crop&w=2000&q=85',
+    ctaPrimary: { text: 'Discover Specialty Coffee', link: '/coffee' },
+    ctaSecondary: { text: 'Reserve Barista Tasting', link: '/#reservation' },
+    badges: ['Single-Origin Arabica', 'Siphon & Pour-Over Rituals', 'Fresh Roasted Weekly']
+  },
+  {
+    id: 3,
+    tag: 'FRENCH BOULANGERIE • VIENNOISERIE',
+    pillNumber: '03',
+    pillTitle: 'Boulangerie & Flakes',
+    title: 'Golden Honeycomb Lamination &',
+    italicWord: 'Normandy Butter',
+    desc: 'Laminated over 72 slow hours with pure cultured Normandy butter. Ultra-crisp golden exterior with a delicate, melt-in-your-mouth honeycomb crumb.',
+    image: 'https://images.unsplash.com/photo-1555507036-ab1f4038808a?auto=format&fit=crop&w=2000&q=85',
+    ctaPrimary: { text: 'Explore Boulangerie', link: '/#boulangerie' },
+    ctaSecondary: { text: 'Order Fresh Morning Basket', link: '/products?category=pastries' },
+    badges: ['Cultured Normandy Butter', '72-Hour Fermentation', 'Baked Fresh at 6:00 AM']
+  },
+  {
+    id: 4,
+    tag: 'GRAND RESERVE SALON • JUBILEE HILLS & METROS',
+    pillNumber: '04',
+    pillTitle: 'Dining Salons',
+    title: 'An Atmospheric Sanctuary of',
+    italicWord: 'Warmth & Elegance',
+    desc: 'Reserve a bespoke table at our flagship Jubilee Hills salon in Hyderabad or metro dining rooms. Experience tableside high tea rituals and velvet booth seating.',
+    image: 'https://images.unsplash.com/photo-1550966871-3ed3cdb5ed0c?auto=format&fit=crop&w=2000&q=85',
+    ctaPrimary: { text: 'Reserve Your Table', link: '/#reservation' },
+    ctaSecondary: { text: 'Explore Salon Seating', link: '/#reservation' },
+    badges: ['Jubilee Hills, Hyderabad', 'Plush Velvet Alcoves', 'Dedicated Concierge']
+  }
+];
+
 // Signature Dining Salon Tables with capacity, ambience, and real photography
 const RESTAURANT_TABLES = [
   {
@@ -331,6 +387,26 @@ export default function HomePage() {
   const [loading, setLoading] = useState(false);
   const [quickViewProduct, setQuickViewProduct] = useState(null);
 
+  // Automatic Hero Carousel State (4 Slides, 6s interval)
+  const [currentHeroSlide, setCurrentHeroSlide] = useState(0);
+  const [isHeroAutoPlaying, setIsHeroAutoPlaying] = useState(true);
+
+  useEffect(() => {
+    if (!isHeroAutoPlaying) return;
+    const timer = setInterval(() => {
+      setCurrentHeroSlide((prev) => (prev + 1) % HERO_SLIDES.length);
+    }, 6000);
+    return () => clearInterval(timer);
+  }, [isHeroAutoPlaying]);
+
+  const handlePrevHeroSlide = () => {
+    setCurrentHeroSlide((prev) => (prev - 1 + HERO_SLIDES.length) % HERO_SLIDES.length);
+  };
+
+  const handleNextHeroSlide = () => {
+    setCurrentHeroSlide((prev) => (prev + 1) % HERO_SLIDES.length);
+  };
+
   // Reservation & Table form state
   const [reservationName, setReservationName] = useState('');
   const [reservationPhone, setReservationPhone] = useState('');
@@ -427,83 +503,179 @@ export default function HomePage() {
   return (
     <div className="space-y-0 pb-16 bg-[#FAF8F5] text-[#2D2020]">
       
-      {/* 1. CINEMATIC HERO SECTION (Inspired by Latte Global Cafe Hero) */}
-      <section className="relative min-h-[85vh] sm:min-h-[90vh] flex items-center justify-center bg-[#1F0A11] text-white overflow-hidden">
+      {/* 1. CINEMATIC HERO SECTION (Automatic 4-Slide International Standard Carousel) */}
+      <section 
+        className="relative min-h-[90vh] sm:min-h-[92vh] flex items-center justify-center bg-[#18060D] text-white overflow-hidden select-none"
+        onMouseEnter={() => setIsHeroAutoPlaying(false)}
+        onMouseLeave={() => setIsHeroAutoPlaying(true)}
+      >
         
-        {/* Background Image with Dark Luxury Vignette Overlay */}
-        <div className="absolute inset-0 z-0">
-          <img
-            src="https://images.unsplash.com/photo-1517256064527-09c73fc73e38?auto=format&fit=crop&w=2000&q=85"
-            alt="Veloura Pâtisserie & Specialty Cafe"
-            className="w-full h-full object-cover object-center opacity-45 scale-105 animate-in fade-in duration-1000"
-          />
-          <div className="absolute inset-0 bg-gradient-to-t from-[#1F0A11] via-[#2D0D18]/70 to-[#1F0A11]/60" />
-          <div className="absolute inset-0 bg-[radial-gradient(#C5A059_1px,transparent_1px)] [background-size:28px_28px] opacity-10 pointer-events-none" />
-        </div>
+        {/* Background Slides with Cross-Fade & Ken Burns Zoom */}
+        {HERO_SLIDES.map((slide, idx) => {
+          const isActive = currentHeroSlide === idx;
+          return (
+            <div
+              key={slide.id}
+              className={`absolute inset-0 transition-opacity duration-1000 ease-in-out ${
+                isActive ? 'opacity-100 z-0' : 'opacity-0 -z-10 pointer-events-none'
+              }`}
+            >
+              <img
+                src={slide.image}
+                alt={slide.title}
+                className={`w-full h-full object-cover object-center transition-transform duration-[7000ms] ease-out ${
+                  isActive ? 'scale-105' : 'scale-100'
+                }`}
+              />
+              {/* Luxury Vignette & Starry Texture Overlay */}
+              <div className="absolute inset-0 bg-gradient-to-t from-[#18060D] via-[#240B13]/75 to-[#18060D]/65" />
+              <div className="absolute inset-0 bg-gradient-to-r from-[#18060D]/80 via-transparent to-[#18060D]/80" />
+              <div className="absolute inset-0 bg-[radial-gradient(#C5A059_0.8px,transparent_0.8px)] [background-size:24px_24px] opacity-15 pointer-events-none" />
+            </div>
+          );
+        })}
 
-        <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 text-center relative z-10 py-20 sm:py-28 space-y-6">
+        {/* Carousel Content Container */}
+        <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 text-center relative z-10 py-24 sm:py-32 space-y-6">
           
-          {/* Eyebrow */}
-          <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white/10 backdrop-blur-md border border-white/20 text-[#FFDFB3] text-xs font-semibold uppercase tracking-[0.25em] shadow-sm animate-in fade-in slide-in-from-bottom-2">
+          {/* Eyebrow Tag with Sparkle */}
+          <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white/10 backdrop-blur-md border border-white/20 text-[#FFDFB3] text-[11px] sm:text-xs font-semibold uppercase tracking-[0.25em] shadow-lg animate-in fade-in slide-in-from-bottom-2 duration-500">
             <Sparkles className="w-3.5 h-3.5 text-[#C5A059]" />
-            <span>Welcome to Veloura Pâtisserie & Cafe</span>
+            <span>{HERO_SLIDES[currentHeroSlide].tag}</span>
           </div>
 
-          {/* Main Title with Serif & Italic Accents */}
-          <h1 className="font-serif text-4xl sm:text-6xl lg:text-7xl font-bold text-white tracking-tight leading-[1.1] drop-shadow-sm max-w-4xl mx-auto">
-            An Exceptional Journey of <br className="hidden sm:inline" />
-            <em className="text-[#F8E7C5] font-serif not-italic italic font-normal">Sweetness & Taste</em>
+          {/* Main Title with Serif & Italic Accent */}
+          <h1 className="font-serif text-3xl sm:text-5xl md:text-6xl lg:text-7xl font-bold text-white tracking-tight leading-[1.12] drop-shadow-md max-w-4xl mx-auto transition-all duration-500">
+            {HERO_SLIDES[currentHeroSlide].title} <br className="hidden sm:inline" />
+            <em className="text-[#F8E7C5] font-serif not-italic italic font-normal">
+              {HERO_SLIDES[currentHeroSlide].italicWord}
+            </em>
           </h1>
 
-          {/* Subtext */}
-          <p className="text-sm sm:text-base lg:text-lg text-white/85 max-w-2xl mx-auto font-normal leading-relaxed">
-            A globally inspired pâtisserie and specialty roastery where world flavours, artisanal craftsmanship, pure Belgian cocoa, and warm hospitality come together beautifully.
+          {/* Subtitle */}
+          <p className="text-xs sm:text-base lg:text-lg text-white/85 max-w-2xl mx-auto font-normal leading-relaxed transition-all duration-500">
+            {HERO_SLIDES[currentHeroSlide].desc}
           </p>
 
           {/* Dual Action CTAs */}
-          <div className="pt-4 flex flex-wrap items-center justify-center gap-4">
-            <a
-              href="#reservation"
-              className="px-8 py-3.5 rounded-full text-xs sm:text-sm font-bold uppercase tracking-wider btn-cream shadow-xl hover:scale-105 transition-all"
-            >
-              Reserve a Table
-            </a>
-            <Link
-              to="/products"
-              className="px-8 py-3.5 rounded-full text-xs sm:text-sm font-bold uppercase tracking-wider btn-outline-light shadow-lg hover:scale-105 transition-all"
-            >
-              Explore Collection
-            </Link>
+          <div className="pt-3 flex flex-wrap items-center justify-center gap-3 sm:gap-4">
+            {HERO_SLIDES[currentHeroSlide].ctaPrimary.link.startsWith('#') || HERO_SLIDES[currentHeroSlide].ctaPrimary.link.startsWith('/#') ? (
+              <a
+                href={HERO_SLIDES[currentHeroSlide].ctaPrimary.link}
+                className="px-7 sm:px-9 py-3 sm:py-3.5 rounded-full text-xs sm:text-sm font-bold uppercase tracking-wider btn-cream shadow-2xl hover:scale-105 transition-all flex items-center gap-2"
+              >
+                <span>{HERO_SLIDES[currentHeroSlide].ctaPrimary.text}</span>
+                <ArrowRight className="w-4 h-4 text-[#2B0E16]" />
+              </a>
+            ) : (
+              <Link
+                to={HERO_SLIDES[currentHeroSlide].ctaPrimary.link}
+                className="px-7 sm:px-9 py-3 sm:py-3.5 rounded-full text-xs sm:text-sm font-bold uppercase tracking-wider btn-cream shadow-2xl hover:scale-105 transition-all flex items-center gap-2"
+              >
+                <span>{HERO_SLIDES[currentHeroSlide].ctaPrimary.text}</span>
+                <ArrowRight className="w-4 h-4 text-[#2B0E16]" />
+              </Link>
+            )}
+
+            {HERO_SLIDES[currentHeroSlide].ctaSecondary.link.startsWith('#') || HERO_SLIDES[currentHeroSlide].ctaSecondary.link.startsWith('/#') ? (
+              <a
+                href={HERO_SLIDES[currentHeroSlide].ctaSecondary.link}
+                className="px-7 sm:px-9 py-3 sm:py-3.5 rounded-full text-xs sm:text-sm font-bold uppercase tracking-wider btn-outline-light shadow-lg hover:scale-105 transition-all"
+              >
+                {HERO_SLIDES[currentHeroSlide].ctaSecondary.text}
+              </a>
+            ) : (
+              <Link
+                to={HERO_SLIDES[currentHeroSlide].ctaSecondary.link}
+                className="px-7 sm:px-9 py-3 sm:py-3.5 rounded-full text-xs sm:text-sm font-bold uppercase tracking-wider btn-outline-light shadow-lg hover:scale-105 transition-all"
+              >
+                {HERO_SLIDES[currentHeroSlide].ctaSecondary.text}
+              </Link>
+            )}
           </div>
 
-          {/* Provenance Pills */}
-          <div className="pt-10 flex flex-wrap items-center justify-center gap-3 sm:gap-6 text-xs text-white/80 font-medium">
-            <div className="flex items-center gap-2">
-              <span className="w-2 h-2 rounded-full bg-[#C5A059]" />
-              <span>100% Belgian Callebaut</span>
-            </div>
-            <span className="hidden sm:inline text-white/30">•</span>
-            <div className="flex items-center gap-2">
-              <span className="w-2 h-2 rounded-full bg-[#C5A059]" />
-              <span>Single-Origin Arabica</span>
-            </div>
-            <span className="hidden sm:inline text-white/30">•</span>
-            <div className="flex items-center gap-2">
-              <span className="w-2 h-2 rounded-full bg-[#C5A059]" />
-              <span>Crafted Fresh Daily</span>
-            </div>
-            <span className="hidden sm:inline text-white/30">•</span>
-            <div className="flex items-center gap-2">
-              <span className="w-2 h-2 rounded-full bg-[#C5A059]" />
-              <span>2-Hour Express Delivery</span>
-            </div>
+          {/* Provenance Feature Badges */}
+          <div className="pt-6 sm:pt-8 flex flex-wrap items-center justify-center gap-2 sm:gap-5 text-[11px] sm:text-xs text-white/80 font-medium">
+            {HERO_SLIDES[currentHeroSlide].badges.map((badge, bIdx) => (
+              <React.Fragment key={bIdx}>
+                {bIdx > 0 && <span className="hidden sm:inline text-[#C5A059]/40">•</span>}
+                <div className="flex items-center gap-1.5 px-3 py-1 rounded-full bg-white/5 backdrop-blur-xs border border-white/10">
+                  <span className="w-1.5 h-1.5 rounded-full bg-[#C5A059]" />
+                  <span>{badge}</span>
+                </div>
+              </React.Fragment>
+            ))}
           </div>
 
+        </div>
+
+        {/* Carousel Arrow Controls (Left / Right) */}
+        <button
+          onClick={handlePrevHeroSlide}
+          className="absolute left-4 sm:left-8 top-1/2 -translate-y-1/2 z-20 w-11 h-11 sm:w-13 sm:h-13 rounded-full bg-black/35 hover:bg-black/70 backdrop-blur-md border border-white/20 text-white flex items-center justify-center transition-all hover:scale-110 active:scale-95 shadow-xl hover:border-[#C5A059]"
+          title="Previous experience"
+          aria-label="Previous slide"
+        >
+          <ChevronLeft className="w-5 h-5 sm:w-6 sm:h-6" />
+        </button>
+
+        <button
+          onClick={handleNextHeroSlide}
+          className="absolute right-4 sm:right-8 top-1/2 -translate-y-1/2 z-20 w-11 h-11 sm:w-13 sm:h-13 rounded-full bg-black/35 hover:bg-black/70 backdrop-blur-md border border-white/20 text-white flex items-center justify-center transition-all hover:scale-110 active:scale-95 shadow-xl hover:border-[#C5A059]"
+          title="Next experience"
+          aria-label="Next slide"
+        >
+          <ChevronRight className="w-5 h-5 sm:w-6 sm:h-6" />
+        </button>
+
+        {/* Bottom Slide Progress Tabs (International Bakery Standard) */}
+        <div className="absolute bottom-6 sm:bottom-8 left-0 right-0 z-20 max-w-4xl mx-auto px-4">
+          <div className="grid grid-cols-4 gap-2 sm:gap-3 bg-black/40 backdrop-blur-md p-2 rounded-2xl border border-white/15">
+            {HERO_SLIDES.map((slide, sIdx) => {
+              const isSelected = currentHeroSlide === sIdx;
+              return (
+                <button
+                  key={slide.id}
+                  onClick={() => setCurrentHeroSlide(sIdx)}
+                  className={`text-left p-2 sm:p-2.5 rounded-xl transition-all duration-300 relative overflow-hidden group ${
+                    isSelected ? 'bg-white/15 shadow-inner' : 'hover:bg-white/5 opacity-70 hover:opacity-100'
+                  }`}
+                >
+                  <div className="flex items-center justify-between mb-1">
+                    <span className={`text-[10px] font-bold tracking-wider font-mono ${
+                      isSelected ? 'text-[#C5A059]' : 'text-white/60'
+                    }`}>
+                      {slide.pillNumber}
+                    </span>
+                    {isSelected && (
+                      <span className="w-1.5 h-1.5 rounded-full bg-[#C5A059] animate-ping" />
+                    )}
+                  </div>
+                  <p className={`text-[11px] sm:text-xs font-semibold truncate transition-colors ${
+                    isSelected ? 'text-white' : 'text-white/70 group-hover:text-white'
+                  }`}>
+                    {slide.pillTitle}
+                  </p>
+
+                  {/* Progress Line */}
+                  <div className="mt-2 h-0.5 w-full bg-white/20 rounded-full overflow-hidden">
+                    {isSelected ? (
+                      <div 
+                        className="h-full bg-gradient-to-r from-[#C5A059] to-[#FFDFB3] animate-[heroProgress_6000ms_linear_infinite]"
+                      />
+                    ) : (
+                      <div className="h-full w-0" />
+                    )}
+                  </div>
+                </button>
+              );
+            })}
+          </div>
         </div>
 
       </section>
 
-      {/* 2. ABOUT US SECTION (Matching Latte Global Cafe's About Grid & Leaf Pattern) */}
+            {/* 2. ABOUT US SECTION (Matching Latte Global Cafe's About Grid & Leaf Pattern) */}
       <section className="py-20 sm:py-28 leaf-pattern-light border-b border-[#EFE8DF]" id="about">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-center">
