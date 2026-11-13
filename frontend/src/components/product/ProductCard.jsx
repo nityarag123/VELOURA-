@@ -26,15 +26,15 @@ export default function ProductCard({ product, onQuickView }) {
   };
 
   return (
-    <div className="group relative bg-[#FFFDF9] rounded-2xl overflow-hidden border border-[#EFE8DF] hover:border-[#C5A059]/60 hover:shadow-[0_12px_30px_rgba(74,21,37,0.08)] transition-all duration-300 flex flex-col">
+    <div className="group relative bg-white rounded-2xl overflow-hidden border border-[#EAE3D5] hover:border-[#D8B879] hover:shadow-[0_16px_40px_rgba(38,13,22,0.09)] transition-all duration-500 flex flex-col justify-between">
       
-      {/* Product Image Box */}
-      <div className="relative aspect-square overflow-hidden bg-[#FAF6F0]">
-        <Link to={`/product/${product.slug}`}>
+      {/* Product Image Box with subtle zoom */}
+      <div className="relative aspect-4/3 sm:aspect-square overflow-hidden bg-[#FAF6EE]">
+        <Link to={`/product/${product.slug}`} className="block w-full h-full">
           <img
             src={product.image_url}
             alt={product.name}
-            className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+            className="w-full h-full object-cover group-hover:scale-106 transition-transform duration-700 ease-out"
             loading="lazy"
           />
         </Link>
@@ -49,95 +49,103 @@ export default function ProductCard({ product, onQuickView }) {
           </div>
         )}
 
-        {/* Bestseller Tag */}
+        {/* Signature Bestseller Badge */}
         {product.is_bestseller && (
-          <span className="absolute top-3 right-3 bg-[#C5A059] text-[#1F0A10] text-[9px] font-bold px-2 py-0.5 rounded-full uppercase tracking-wider shadow-xs">
+          <span className="absolute top-3 right-3 bg-[#260D16]/90 backdrop-blur-md text-[#D8B879] border border-[#D8B879]/50 text-[9px] font-bold px-2.5 py-0.5 rounded-full uppercase tracking-widest shadow-xs">
             Signature
           </span>
         )}
+
+        {/* Quick View Floating Button on Hover */}
+        <button
+          onClick={(e) => {
+            e.preventDefault();
+            if (onQuickView) onQuickView(product);
+          }}
+          className="absolute bottom-3 right-3 opacity-0 group-hover:opacity-100 transition-opacity duration-300 px-3 py-1.5 rounded-full bg-white/90 backdrop-blur-md text-[#260D16] text-[10px] font-bold uppercase tracking-wider shadow-md hover:bg-[#260D16] hover:text-[#D8B879]"
+        >
+          Quick View
+        </button>
       </div>
 
       {/* Content Details */}
-      <div className="p-3.5 sm:p-4 flex-1 flex flex-col justify-between">
+      <div className="p-4 sm:p-5 flex-1 flex flex-col justify-between space-y-3">
         <div>
+          {/* Category Tag */}
+          <span className="text-[9.5px] uppercase tracking-[0.22em] text-[#9E7D46] font-bold block mb-1">
+            {product.category?.name || 'Artisan Gateau'}
+          </span>
+
           {/* Product Title */}
           <Link to={`/product/${product.slug}`} className="block">
-            <h3 className="font-serif text-sm sm:text-base font-bold text-[#2D2020] group-hover:text-[#4A1525] transition line-clamp-1">
+            <h3 className="font-serif text-base sm:text-lg font-bold text-[#160B0D] group-hover:text-[#260D16] transition-colors line-clamp-1 leading-snug">
               {product.name}
             </h3>
           </Link>
 
-          {/* Price & Wishlist Row */}
-          <div className="flex items-center justify-between mt-1.5">
-            <div className="flex items-baseline gap-1.5">
-              <span className="font-extrabold text-sm sm:text-base text-[#3D121A]">
-                ₹{product.discount_price || product.base_price}
-              </span>
-              {product.discount_price && (
-                <span className="text-[11px] text-[#A68890] line-through">
-                  ₹{product.base_price}
-                </span>
-              )}
-            </div>
+          {/* Rating & Reviews */}
+          <div className="flex items-center gap-1.5 mt-1 text-[11px] font-medium text-gray-500">
+            <span className="text-[#9E7D46] font-bold flex items-center gap-0.5">
+              {product.rating} <Star className="w-3 h-3 fill-[#D8B879] text-[#D8B879] inline" />
+            </span>
+            <span className="text-gray-400 font-normal">
+              • {product.review_count > 50 ? `${(product.review_count / 10).toFixed(1)}K` : product.review_count} reviews
+            </span>
+          </div>
+        </div>
 
+        {/* Price & Action Row */}
+        <div className="pt-3 border-t border-[#F2ECE1] flex items-center justify-between">
+          <div className="flex items-baseline gap-1.5">
+            <span className="font-extrabold text-base sm:text-lg text-[#260D16]">
+              ₹{product.discount_price || product.base_price}
+            </span>
+            {product.discount_price && (
+              <span className="text-[11px] text-gray-400 line-through">
+                ₹{product.base_price}
+              </span>
+            )}
+          </div>
+
+          <div className="flex items-center gap-2">
             {/* Wishlist Heart Icon */}
             <button
               onClick={(e) => {
                 e.preventDefault();
                 toggleWishlist(product);
               }}
-              className={`p-1 text-gray-400 hover:text-[#4A1525] transition ${
-                isFavorited ? 'text-[#4A1525]' : ''
+              className={`p-1.5 rounded-full hover:bg-[#FAF6EE] text-gray-400 hover:text-[#260D16] transition ${
+                isFavorited ? 'text-[#260D16]' : ''
               }`}
               title={isFavorited ? "Remove from wishlist" : "Add to wishlist"}
+              aria-label="Wishlist"
             >
-              <Heart className={`w-4 h-4 ${isFavorited ? 'fill-[#4A1525] text-[#4A1525]' : ''}`} />
+              <Heart className={`w-4 h-4 ${isFavorited ? 'fill-[#260D16] text-[#260D16]' : ''}`} />
+            </button>
+
+            {/* Quick Add Button */}
+            <button
+              onClick={handleQuickAdd}
+              className={`px-3 py-1.5 rounded-full text-xs font-bold transition flex items-center gap-1.5 shadow-2xs ${
+                addedAnimation
+                  ? 'bg-emerald-700 text-white'
+                  : 'bg-[#260D16] text-[#FAF5EE] hover:bg-[#3D121A] active:scale-95'
+              }`}
+              title="Add to shopping bag"
+            >
+              {addedAnimation ? (
+                <>
+                  <Check className="w-3.5 h-3.5" />
+                  <span>Added</span>
+                </>
+              ) : (
+                <>
+                  <ShoppingBag className="w-3.5 h-3.5 text-[#D8B879]" />
+                  <span>Add</span>
+                </>
+              )}
             </button>
           </div>
-
-          {/* Rating & Reviews */}
-          <div className="flex items-center gap-1.5 mt-1 text-[11px] font-semibold text-gray-600">
-            <span className="text-[#8C6D4C] font-bold flex items-center gap-0.5">
-              {product.rating} <Star className="w-3 h-3 fill-[#C5A059] text-[#C5A059] inline" />
-            </span>
-            <span className="text-gray-400 font-normal">
-              ({product.review_count > 50 ? `${(product.review_count / 10).toFixed(1)}K` : product.review_count} Reviews)
-            </span>
-          </div>
-        </div>
-
-        {/* Quick Add Button */}
-        <div className="pt-3 mt-2.5 border-t border-[#F4EFEA] flex items-center justify-between">
-          <button
-            onClick={(e) => {
-              e.preventDefault();
-              if (onQuickView) onQuickView(product);
-            }}
-            className="text-[11px] font-medium text-[#8C6D4C] hover:text-[#3D121A] hover:underline"
-          >
-            Customise
-          </button>
-
-          <button
-            onClick={handleQuickAdd}
-            className={`px-3 py-1 rounded-full text-xs font-bold transition flex items-center gap-1 shadow-2xs ${
-              addedAnimation
-                ? 'bg-emerald-700 text-white'
-                : 'bg-[#FAF5EE] text-[#4A1525] border border-[#E8DEC8] hover:bg-[#4A1525] hover:text-white'
-            }`}
-          >
-            {addedAnimation ? (
-              <>
-                <Check className="w-3 h-3" />
-                <span>Added</span>
-              </>
-            ) : (
-              <>
-                <ShoppingBag className="w-3 h-3" />
-                <span>Add</span>
-              </>
-            )}
-          </button>
         </div>
 
       </div>

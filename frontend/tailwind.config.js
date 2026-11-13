@@ -8,20 +8,23 @@ export default {
     extend: {
       colors: {
         veloura: {
-          burgundy: '#4A1525',
-          maroon: '#3D121A',
-          deep: '#230A10',
-          gold: '#C5A059',
+          burgundy: '#260D16', // Deep Burgundy
+          espresso: '#160B0D', // Dark Espresso
+          gold: '#D8B879',     // Champagne Gold
           goldLight: '#E8D2A6',
-          cream: '#FFFDF9',
-          linen: '#F8F5EE',
+          cream: '#F6EAD5',    // Warm Cream
+          ivory: '#FFF9F0',    // Soft Ivory
+          // Backwards compatibility
+          maroon: '#260D16',
+          deep: '#160B0D',
+          linen: '#FAF6EE',
           sand: '#ECE5D8',
-          charcoal: '#2D2020',
+          charcoal: '#160B0D',
         }
       },
       fontFamily: {
-        serif: ['"Cormorant Garamond"', 'Georgia', 'serif'],
-        sans: ['"Plus Jakarta Sans"', '-apple-system', 'BlinkMacSystemFont', 'sans-serif'],
+        serif: ['"Cormorant Garamond"', '"Playfair Display"', 'Georgia', 'serif'],
+        sans: ['"Manrope"', '"DM Sans"', '-apple-system', 'BlinkMacSystemFont', 'sans-serif'],
       }
     },
   },

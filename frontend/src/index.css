@@ -5,14 +5,14 @@
 
 @layer base {
   :root {
-    --font-serif: 'Cormorant Garamond', Georgia, serif;
-    --font-sans: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+    --font-serif: 'Cormorant Garamond', 'Playfair Display', Georgia, serif;
+    --font-sans: 'Manrope', 'DM Sans', -apple-system, BlinkMacSystemFont, sans-serif;
   }
   
   body {
     font-family: var(--font-sans);
     background-color: #FAF6EE;
-    color: #2D2020;
+    color: #160B0D;
     overflow-x: hidden;
     margin: 0;
     padding: 0;
