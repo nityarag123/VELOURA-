@@ -10,11 +10,11 @@ import { useCart } from '../../context/CartContext';
 import api from '../../services/api';
 
 const CITIES = [
+  { name: 'Hyderabad', pincode: '500033' },
   { name: 'Mumbai', pincode: '400001' },
-  { name: 'Delhi NCR', pincode: '110001' },
   { name: 'Bengaluru', pincode: '560001' },
+  { name: 'Delhi NCR', pincode: '110001' },
   { name: 'Pune', pincode: '411001' },
-  { name: 'Hyderabad', pincode: '500001' },
   { name: 'Kolkata', pincode: '700001' }
 ];
 
@@ -153,7 +153,7 @@ export default function Header() {
   const { totalItemCount, setIsCartOpen } = useCart();
 
   const [selectedCity, setSelectedCity] = useState(() => {
-    return localStorage.getItem('veloura_city') || 'Mumbai';
+    return localStorage.getItem('veloura_city') || 'Hyderabad';
   });
   const [isCityModalOpen, setIsCityModalOpen] = useState(false);
   const [customPincode, setCustomPincode] = useState('');

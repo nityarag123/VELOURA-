@@ -83,7 +83,7 @@ export default function Footer() {
             {/* Boutique Locations Quick Mention */}
             <div className="pt-2 text-[11px] text-[#C5A059] space-y-1">
               <p className="font-bold uppercase tracking-wider text-[10px] text-white">Flagship Boutiques</p>
-              <p className="text-[#BCA4AB]">Bandra West, Mumbai • Indiranagar, Bengaluru • Connaught Place, New Delhi</p>
+              <p className="text-[#BCA4AB]">Jubilee Hills, Hyderabad • Bandra West, Mumbai • Indiranagar, Bengaluru • Connaught Place, New Delhi</p>
             </div>
 
             {/* Social Icons */}

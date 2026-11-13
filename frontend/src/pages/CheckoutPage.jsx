@@ -18,8 +18,8 @@ export default function CheckoutPage() {
     customer_email: user?.email || '',
     customer_phone: user?.phone || '',
     delivery_address: user?.address || '',
-    city: user?.city || 'Mumbai',
-    pincode: user?.pincode || '400001',
+    city: user?.city || 'Hyderabad',
+    pincode: user?.pincode || '500033',
     delivery_date: 'Today',
     delivery_time_slot: 'Evening Prime (6:00 PM - 9:00 PM)',
     cake_message: '',
@@ -220,7 +220,7 @@ export default function CheckoutPage() {
                   name="delivery_address"
                   required
                   rows={2}
-                  placeholder="Flat 4B, Emerald Heights, Central Avenue, Powai"
+                  placeholder="e.g. Villa 14, Palm Meadows, Jubilee Hills Road No. 36"
                   value={formData.delivery_address}
                   onChange={handleChange}
                   className="w-full px-3.5 py-2 text-xs border border-[#E5D7CA] rounded-xl focus:outline-none focus:border-[#4A1525]"

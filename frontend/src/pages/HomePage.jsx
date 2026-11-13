@@ -337,7 +337,7 @@ export default function HomePage() {
   const [reservationEmail, setReservationEmail] = useState('');
   const [reservationDate, setReservationDate] = useState('');
   const [reservationTime, setReservationTime] = useState('');
-  const [reservationLocation, setReservationLocation] = useState('Veloura Flagship Roastery • Bandra West, Mumbai');
+  const [reservationLocation, setReservationLocation] = useState('Veloura Grand Reserve Salon • Jubilee Hills, Hyderabad');
   const [reservationType, setReservationType] = useState('Table Reservation');
   const [reservationGuests, setReservationGuests] = useState('4 Guests');
   const [reservationSuccess, setReservationSuccess] = useState(false);
@@ -1190,6 +1190,7 @@ export default function HomePage() {
                         onChange={(e) => setReservationLocation(e.target.value)}
                         className="w-full px-4 py-3 bg-[#2B0E16] border border-white/20 rounded-xl text-xs text-white focus:outline-none focus:border-[#C5A059]"
                       >
+                        <option>Veloura Grand Reserve Salon • Jubilee Hills, Hyderabad</option>
                         <option>Veloura Flagship Roastery • Bandra West, Mumbai</option>
                         <option>Veloura Pâtisserie & Tea Salon • Indiranagar, Bengaluru</option>
                         <option>Veloura Bistro & Bakehouse • Connaught Place, New Delhi</option>
@@ -1230,6 +1231,16 @@ export default function HomePage() {
 
               {/* Boutique Locations list */}
               <div className="space-y-4">
+                <div className="p-4 rounded-2xl bg-white border-2 border-[#C5A059]/70 shadow-md space-y-1 relative overflow-hidden">
+                  <div className="flex items-center justify-between">
+                    <div className="flex items-center gap-2">
+                      <h5 className="font-serif font-bold text-base text-[#3D121A]">Veloura Grand Reserve Salon & Roastery</h5>
+                    </div>
+                    <span className="text-[10px] font-bold text-[#3D121A] uppercase tracking-wider bg-[#C5A059] text-white px-2.5 py-0.5 rounded-full shadow-2xs">Hyderabad • Main Flagship</span>
+                  </div>
+                  <p className="text-xs text-gray-600 font-medium">Road No. 36, Jubilee Hills, Hyderabad, Telangana – 500033</p>
+                </div>
+
                 <div className="p-4 rounded-2xl bg-white border border-[#E8DEC8] space-y-1">
                   <div className="flex items-center justify-between">
                     <h5 className="font-serif font-bold text-base text-[#3D121A]">Veloura Flagship Roastery</h5>

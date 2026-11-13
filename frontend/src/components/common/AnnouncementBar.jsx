@@ -3,7 +3,7 @@ import { Sparkles, Clock, ShieldCheck } from 'lucide-react';
 
 const messages = [
   { icon: Sparkles, text: "Welcome to VELOURA • Use code VELOURA10 for 10% Off on your first order" },
-  { icon: Clock, text: "Express 2-Hour Delivery & Midnight Delivery Available across Mumbai, Delhi & Bangalore" },
+  { icon: Clock, text: "Express 2-Hour Delivery & Midnight Delivery Available across Hyderabad, Mumbai, Delhi & Bengaluru" },
   { icon: ShieldCheck, text: "100% Handcrafted Artisanal Cakes • Pure Belgian Cocoa & Premium Ingredients" }
 ];
 

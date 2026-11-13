@@ -72,7 +72,7 @@ export const AuthProvider = ({ children }) => {
       email: emailLower,
       full_name: fullName || (isAdmin ? 'VELOURA Master Chef' : 'Valued Patron'),
       is_admin: isAdmin,
-      city: 'Mumbai',
+      city: 'Hyderabad',
       address: '101 Marine Drive'
     };
 
@@ -95,7 +95,7 @@ export const AuthProvider = ({ children }) => {
         email: userData.email,
         full_name: userData.full_name || 'Valued Patron',
         is_admin: false,
-        city: userData.city || 'Mumbai',
+        city: userData.city || 'Hyderabad',
         address: userData.address || ''
       };
       localStorage.setItem('veloura_token', 'mock_jwt_token_veloura_2026');
