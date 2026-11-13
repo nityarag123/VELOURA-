@@ -103,10 +103,10 @@ function LuxuryMenuIcon({ className = "w-3.5 h-3.5" }) {
 
 const CATEGORY_NAV_ITEMS = [
   {
-    label: 'Cakes & Gateaux',
-    to: '/#cakes',
+    label: 'Artisan Bakery',
+    to: '/bakery',
     icon: LuxuryCakeIcon,
-    isActive: (loc) => loc.hash === '#cakes' || (loc.pathname === '/' && !loc.hash)
+    isActive: (loc) => loc.pathname === '/bakery' || loc.pathname === '/cakes'
   },
   {
     label: 'Specialty Coffee',
@@ -115,22 +115,22 @@ const CATEGORY_NAV_ITEMS = [
     isActive: (loc) => loc.pathname === '/coffee'
   },
   {
+    label: 'Cakes & Gateaux',
+    to: '/bakery?category=cakes',
+    icon: LuxuryCakeIcon,
+    isActive: (loc) => (loc.pathname === '/bakery' || loc.pathname === '/cakes') && (!loc.search || loc.search.includes('category=cakes'))
+  },
+  {
     label: 'Boulangerie',
-    to: '/#boulangerie',
+    to: '/bakery?category=boulangerie',
     icon: LuxuryCroissantIcon,
-    isActive: (loc) => loc.hash === '#boulangerie'
+    isActive: (loc) => loc.pathname === '/bakery' && loc.search.includes('category=boulangerie')
   },
   {
     label: 'Gelato',
-    to: '/#gelato',
+    to: '/bakery?category=gelato',
     icon: LuxuryGelatoIcon,
-    isActive: (loc) => loc.hash === '#gelato'
-  },
-  {
-    label: 'Global Cuisine',
-    to: '/products?category=cafe-savory',
-    icon: LuxuryCuisineIcon,
-    isActive: (loc) => loc.pathname === '/products' && loc.search.includes('category=cafe-savory')
+    isActive: (loc) => loc.pathname === '/bakery' && loc.search.includes('category=gelato')
   },
   {
     label: 'Chocolates',
@@ -351,14 +351,14 @@ export default function Header() {
               About
             </a>
 
-            {/* Direct 1-Click Cakes Navigation */}
+            {/* Direct 1-Click Bakery Navigation */}
             <Link 
-              to="/#cakes" 
+              to="/bakery" 
               className={`nav-word-link word-click transition py-2 relative hover:text-[#280911] ${
-                location.hash === '#cakes' ? 'text-[#3D121A] font-bold after:content-[""] after:absolute after:bottom-0 after:left-0 after:right-0 after:h-[2px] after:bg-[#C5A059]' : ''
+                location.pathname === '/bakery' || location.pathname === '/cakes' ? 'text-[#3D121A] font-bold after:content-[""] after:absolute after:bottom-0 after:left-0 after:right-0 after:h-[2px] after:bg-[#C5A059]' : ''
               }`}
             >
-              Cakes
+              Bakery
             </Link>
 
             {/* Indulgence Dropdown */}
@@ -405,7 +405,7 @@ export default function Header() {
                     <ArrowRight className="w-3.5 h-3.5 text-[#C5A059] group-hover:translate-x-0.5 transition-transform" />
                   </Link>
                   <Link
-                    to="/#cakes"
+                    to="/bakery?category=cakes"
                     onClick={() => setIsIndulgenceOpen(false)}
                     className="flex items-center justify-between px-4 py-2.5 text-xs text-[#2D2020] hover:bg-[#FAF5EE] hover:text-[#3D121A] transition group"
                   >
@@ -421,7 +421,7 @@ export default function Header() {
                     <ArrowRight className="w-3.5 h-3.5 text-[#C5A059] group-hover:translate-x-0.5 transition-transform" />
                   </Link>
                   <Link
-                    to="/#boulangerie"
+                    to="/bakery?category=boulangerie"
                     onClick={() => setIsIndulgenceOpen(false)}
                     className="flex items-center justify-between px-4 py-2.5 text-xs text-[#2D2020] hover:bg-[#FAF5EE] hover:text-[#3D121A] transition group"
                   >
@@ -432,6 +432,22 @@ export default function Header() {
                       <div>
                         <p className="font-bold text-[12px]">Boulangerie</p>
                         <p className="text-[10px] text-gray-500">Flaky French Viennoiserie</p>
+                      </div>
+                    </div>
+                    <ArrowRight className="w-3.5 h-3.5 text-[#C5A059] group-hover:translate-x-0.5 transition-transform" />
+                  </Link>
+                  <Link
+                    to="/bakery?category=gelato"
+                    onClick={() => setIsIndulgenceOpen(false)}
+                    className="flex items-center justify-between px-4 py-2.5 text-xs text-[#2D2020] hover:bg-[#FAF5EE] hover:text-[#3D121A] transition group"
+                  >
+                    <div className="flex items-center gap-2.5">
+                      <div className="w-7 h-7 rounded-lg bg-[#FAF5EE] flex items-center justify-center text-[#C5A059] group-hover:bg-white group-hover:shadow-xs transition">
+                        <LuxuryGelatoIcon className="w-3.5 h-3.5" />
+                      </div>
+                      <div>
+                        <p className="font-bold text-[12px]">Artisanal Gelato</p>
+                        <p className="text-[10px] text-gray-500">Bourbon Vanilla & Pistachio</p>
                       </div>
                     </div>
                     <ArrowRight className="w-3.5 h-3.5 text-[#C5A059] group-hover:translate-x-0.5 transition-transform" />
@@ -727,13 +743,13 @@ export default function Header() {
                 Home
               </Link>
               <Link 
-                to="/#cakes" 
+                to="/bakery" 
                 onClick={() => setIsMobileMenuOpen(false)}
                 className="py-2 border-b border-[#F4EFEA] text-[#3D121A] font-semibold word-click flex items-center justify-between"
               >
                 <div className="flex items-center gap-2">
                   <LuxuryCakeIcon className="w-4 h-4 text-[#C5A059]" />
-                  <span>Cakes & Gateaux</span>
+                  <span>Artisan Bakery & Cakes</span>
                 </div>
                 <span className="text-[10px] uppercase tracking-wider bg-[#3D121A] text-[#FFDFB3] border border-[#C5A059]/40 px-2 py-0.5 rounded-full font-medium">Signature</span>
               </Link>
@@ -747,7 +763,7 @@ export default function Header() {
               <div className="py-2 border-b border-[#F4EFEA]">
                 <p className="text-xs uppercase tracking-widest text-[#8C6D4C] font-bold mb-2">Curated Collections</p>
                 <div className="grid grid-cols-2 gap-2 text-xs font-medium">
-                  <Link to="/#cakes" onClick={() => setIsMobileMenuOpen(false)} className="flex items-center gap-2 p-2.5 rounded-xl bg-[#FAF5EE] hover:bg-[#F2ECE0] text-[#3D121A] border border-[#E8DEC8]/60 font-semibold">
+                  <Link to="/bakery?category=cakes" onClick={() => setIsMobileMenuOpen(false)} className="flex items-center gap-2 p-2.5 rounded-xl bg-[#FAF5EE] hover:bg-[#F2ECE0] text-[#3D121A] border border-[#E8DEC8]/60 font-semibold">
                     <LuxuryCakeIcon className="w-4 h-4 text-[#C5A059]" />
                     <span>Cakes & Gateaux</span>
                   </Link>
@@ -755,11 +771,11 @@ export default function Header() {
                     <LuxuryCoffeeIcon className="w-4 h-4 text-[#C5A059]" />
                     <span>Specialty Coffee</span>
                   </Link>
-                  <Link to="/#boulangerie" onClick={() => setIsMobileMenuOpen(false)} className="flex items-center gap-2 p-2.5 rounded-xl bg-[#FAF5EE] hover:bg-[#F2ECE0] text-[#3D121A] border border-[#E8DEC8]/60 font-medium">
+                  <Link to="/bakery?category=boulangerie" onClick={() => setIsMobileMenuOpen(false)} className="flex items-center gap-2 p-2.5 rounded-xl bg-[#FAF5EE] hover:bg-[#F2ECE0] text-[#3D121A] border border-[#E8DEC8]/60 font-medium">
                     <LuxuryCroissantIcon className="w-4 h-4 text-[#C5A059]" />
                     <span>Boulangerie</span>
                   </Link>
-                  <Link to="/#gelato" onClick={() => setIsMobileMenuOpen(false)} className="flex items-center gap-2 p-2.5 rounded-xl bg-[#FAF5EE] hover:bg-[#F2ECE0] text-[#3D121A] border border-[#E8DEC8]/60 font-medium">
+                  <Link to="/bakery?category=gelato" onClick={() => setIsMobileMenuOpen(false)} className="flex items-center gap-2 p-2.5 rounded-xl bg-[#FAF5EE] hover:bg-[#F2ECE0] text-[#3D121A] border border-[#E8DEC8]/60 font-medium">
                     <LuxuryGelatoIcon className="w-4 h-4 text-[#C5A059]" />
                     <span>Gelato</span>
                   </Link>

@@ -29,26 +29,26 @@ export default function MobileHomeBar() {
           <span className="text-[10px] tracking-tight">Home</span>
         </Link>
 
-        {/* 2. Menu / Cakes */}
+        {/* 2. Bakery & Cakes */}
         <Link
-          to="/products"
+          to="/bakery"
           className={`flex flex-col items-center gap-0.5 transition ${
-            isMenu ? 'text-[#4A1525] font-bold' : 'text-gray-500 hover:text-gray-900'
+            location.pathname === '/bakery' || location.pathname === '/cakes' ? 'text-[#3D121A] font-bold' : 'text-gray-500 hover:text-gray-900'
           }`}
         >
-          <Cake className={`w-5 h-5 ${isMenu ? 'stroke-[2.5px]' : ''}`} />
-          <span className="text-[10px] tracking-tight">Cakes</span>
+          <Cake className={`w-5 h-5 ${location.pathname === '/bakery' ? 'stroke-[2.5px] text-[#C5A059]' : ''}`} />
+          <span className="text-[10px] tracking-tight">Bakery</span>
         </Link>
 
-        {/* 3. Cafe & Coffee */}
+        {/* 3. Specialty Coffee */}
         <Link
-          to="/products?category=coffee-brews"
+          to="/coffee"
           className={`flex flex-col items-center gap-0.5 transition ${
-            isCafe ? 'text-[#4A1525] font-bold' : 'text-gray-500 hover:text-gray-900'
+            location.pathname === '/coffee' ? 'text-[#3D121A] font-bold' : 'text-gray-500 hover:text-gray-900'
           }`}
         >
-          <Coffee className={`w-5 h-5 ${isCafe ? 'stroke-[2.5px]' : ''}`} />
-          <span className="text-[10px] tracking-tight">Cafe</span>
+          <Coffee className={`w-5 h-5 ${location.pathname === '/coffee' ? 'stroke-[2.5px] text-[#C5A059]' : ''}`} />
+          <span className="text-[10px] tracking-tight">Coffee</span>
         </Link>
 
         {/* 4. Cart */}

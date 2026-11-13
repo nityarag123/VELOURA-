@@ -117,9 +117,9 @@ export default function Footer() {
             <h4 className="font-serif text-sm font-bold text-white uppercase tracking-wider">Roastery & Pâtisserie</h4>
             <ul className="space-y-2 text-xs text-[#BCA4AB]">
               <li><Link to="/coffee" className="hover:text-white transition font-semibold text-[#FFDFB3]">☕ Coffee: Bean to Cup</Link></li>
-              <li><Link to="/#cakes" className="hover:text-white transition">🎂 Celebration Cakes</Link></li>
-              <li><Link to="/#boulangerie" className="hover:text-white transition">🥐 Artisan Boulangerie</Link></li>
-              <li><Link to="/#gelato" className="hover:text-white transition">🍨 Italian Gelato</Link></li>
+              <li><Link to="/bakery" className="hover:text-white transition">🎂 Artisan Bakery & Cakes</Link></li>
+              <li><Link to="/bakery?category=boulangerie" className="hover:text-white transition">🥐 Artisan Boulangerie</Link></li>
+              <li><Link to="/bakery?category=gelato" className="hover:text-white transition">🍨 Italian Gelato & Sorbets</Link></li>
               <li><Link to="/products?category=gift-hampers" className="hover:text-white transition">Celebration Gift Trunks</Link></li>
             </ul>
           </div>

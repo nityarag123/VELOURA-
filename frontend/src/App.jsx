@@ -20,6 +20,7 @@ import LoginPage from './pages/LoginPage';
 import AdminDashboardPage from './pages/AdminDashboardPage';
 import CoffeeExperiencePage from './pages/CoffeeExperiencePage';
 import ChocolateExperiencePage from './pages/ChocolateExperiencePage';
+import BakeryExperiencePage from './pages/BakeryExperiencePage';
 
 function App() {
   return (
@@ -35,6 +36,8 @@ function App() {
               <main className="flex-1 pb-16 md:pb-0">
                 <Routes>
                   <Route path="/" element={<HomePage />} />
+                  <Route path="/bakery" element={<BakeryExperiencePage />} />
+                  <Route path="/cakes" element={<BakeryExperiencePage />} />
                   <Route path="/coffee" element={<CoffeeExperiencePage />} />
                   <Route path="/chocolate" element={<ChocolateExperiencePage />} />
                   <Route path="/products" element={<ProductListingPage />} />

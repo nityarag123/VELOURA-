@@ -24,9 +24,9 @@ const HERO_SLIDES = [
     desc: 'Crafted with 70% pure Callebaut Belgian dark cocoa, silky truffle ganache layers, and delicate 24K edible gold leaf for true chocolate connoisseurs.',
     image: 'https://images.unsplash.com/photo-1578985545062-69928b1d9587?auto=format&fit=crop&w=2000&q=85',
     buttonText: 'Shop Chocolate Cakes',
-    buttonLink: '/products?category=chocolate-cakes',
-    secondaryButtonText: 'Explore Collection',
-    secondaryButtonLink: '/products',
+    buttonLink: '/bakery?category=cakes',
+    secondaryButtonText: 'Explore Bakery',
+    secondaryButtonLink: '/bakery',
     badge: '70% Callebaut Belgian Ganache'
   },
   {
@@ -38,9 +38,9 @@ const HERO_SLIDES = [
     desc: 'Delicate Madagascar vanilla sponge layered with hand-picked strawberries, wild forest raspberries, and light whipped mascarpone chantilly cream.',
     image: 'https://images.unsplash.com/photo-1565958011703-44f9829ba187?auto=format&fit=crop&w=2000&q=85',
     buttonText: 'Shop Fruit Cakes',
-    buttonLink: '/products',
-    secondaryButtonText: 'Explore Collection',
-    secondaryButtonLink: '/products',
+    buttonLink: '/bakery?category=cakes',
+    secondaryButtonText: 'Explore Bakery',
+    secondaryButtonLink: '/bakery',
     badge: 'Farm-Fresh Strawberries & Berries'
   },
   {
@@ -52,9 +52,9 @@ const HERO_SLIDES = [
     desc: 'Delicate almond meringue macarons with pistachio, salted caramel, and dark chocolate ganache, alongside golden flaky morning viennoiserie.',
     image: 'https://images.unsplash.com/photo-1569864358642-9d1684040f43?auto=format&fit=crop&w=2000&q=85',
     buttonText: 'Shop French Pastries',
-    buttonLink: '/products?category=pastries',
-    secondaryButtonText: 'Explore Collection',
-    secondaryButtonLink: '/products',
+    buttonLink: '/bakery?category=boulangerie',
+    secondaryButtonText: 'Desserts & Sweets',
+    secondaryButtonLink: '/bakery?category=desserts',
     badge: 'Parisian Macarons & Viennoiserie'
   },
   {
@@ -66,7 +66,7 @@ const HERO_SLIDES = [
     desc: 'Bespoke multi-tiered showstoppers designed to make birthdays, anniversaries, and milestones extraordinary, with 2-hour express delivery across Hyderabad and metros.',
     image: 'https://images.unsplash.com/photo-1621303837174-89787a7d4729?auto=format&fit=crop&w=2000&q=85',
     buttonText: 'Shop Celebration Cakes',
-    buttonLink: '/products?category=birthday-cakes',
+    buttonLink: '/bakery?category=cakes',
     secondaryButtonText: 'Reserve Custom Cake',
     secondaryButtonLink: '/#reservation',
     badge: 'Custom Celebration Tiered Designs'
@@ -81,7 +81,7 @@ const SIGNATURE_COLLECTIONS = [
     subtitle: '70% Callebaut Dark Cocoa',
     desc: 'Intense cocoa notes, velvety ganache ribbons, and gold leaf finish.',
     image: 'https://images.unsplash.com/photo-1606890737304-57a1ca8a5b62?auto=format&fit=crop&w=800&q=80',
-    link: '/products?category=chocolate-cakes',
+    link: '/bakery?category=cakes',
     tag: 'Bestseller'
   },
   {
@@ -90,7 +90,7 @@ const SIGNATURE_COLLECTIONS = [
     subtitle: 'Fresh Strawberries & Raspberries',
     desc: 'Madagascar vanilla bean sponge with whipped mascarpone cream.',
     image: 'https://images.unsplash.com/photo-1565958011703-44f9829ba187?auto=format&fit=crop&w=800&q=80',
-    link: '/products',
+    link: '/bakery?category=cakes',
     tag: 'Seasonal Harvest'
   },
   {
@@ -99,7 +99,7 @@ const SIGNATURE_COLLECTIONS = [
     subtitle: 'Pure Normandy Butter',
     desc: '72-hour laminated flaky croissants and crisp Parisian macarons.',
     image: 'https://images.unsplash.com/photo-1555507036-ab1f4038808a?auto=format&fit=crop&w=800&q=80',
-    link: '/products?category=pastries',
+    link: '/bakery?category=boulangerie',
     tag: 'Baked at 6 AM'
   },
   {
@@ -108,7 +108,7 @@ const SIGNATURE_COLLECTIONS = [
     subtitle: 'Custom Sugar Craft & Florals',
     desc: 'Grand bespoke centerpieces for milestone birthdays and weddings.',
     image: 'https://images.unsplash.com/photo-1588195538326-c5b1e9f80a1b?auto=format&fit=crop&w=800&q=80',
-    link: '/products?category=birthday-cakes',
+    link: '/bakery?category=cakes',
     tag: 'Bespoke Orders'
   }
 ];
