@@ -3,7 +3,7 @@ import { Link, useNavigate, useLocation } from 'react-router-dom';
 import { 
   Star, Heart, ArrowRight, Sparkles, Clock, 
   MessageCircle, X, ChevronRight, CheckCircle2, 
-  MapPin, Phone, Mail, Award, Calendar, Users, Coffee
+  MapPin, Phone, Mail, Award, Calendar, Users, Coffee, Eye, Check, Sparkle
 } from 'lucide-react';
 import ProductCard from '../components/product/ProductCard';
 import QuickViewModal from '../components/product/QuickViewModal';
@@ -194,6 +194,122 @@ const GALLERY_IMAGES = [
   }
 ];
 
+// Signature Dining Salon Tables with capacity, ambience, and real photography
+const RESTAURANT_TABLES = [
+  {
+    id: 'T-01',
+    tableNumber: 'Table 01',
+    name: 'Salon Window Alcove',
+    zone: 'window',
+    zoneName: 'Window & Light',
+    capacity: '2 Guests',
+    guestsValue: '2 Guests',
+    tag: 'Couples & Intimate',
+    badge: 'Window View',
+    image: 'https://images.unsplash.com/photo-1550966871-3ed3cdb5ed0c?auto=format&fit=crop&w=800&q=80',
+    description: 'Bathed in warm street-side sunlight with French linen drapery, fresh orchid blooms, and crystal water carafes.',
+    perks: ['Panoramic street views', 'Soft acoustic jazz', 'Candlelit evening setting']
+  },
+  {
+    id: 'T-02',
+    tableNumber: 'Table 02',
+    name: 'Parisian Velvet Booth',
+    zone: 'booth',
+    zoneName: 'Velvet Booths',
+    capacity: '4 Guests',
+    guestsValue: '4 Guests',
+    tag: 'Signature Experience',
+    badge: 'Most Popular',
+    image: 'https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?auto=format&fit=crop&w=800&q=80',
+    description: 'Plush burgundy velvet banquette seating with fluted mahogany paneling and brass reading pendants.',
+    perks: ['Ultra-plush velvet seating', 'Dedicated table concierge', 'Acoustic privacy alcove']
+  },
+  {
+    id: 'T-03',
+    tableNumber: 'Table 03',
+    name: 'Sunlit Conservatory Table',
+    zone: 'window',
+    zoneName: 'Window & Light',
+    capacity: '2-4 Guests',
+    guestsValue: '3 Guests',
+    tag: 'Daylight & Greenery',
+    badge: 'Botanical Setting',
+    image: 'https://images.unsplash.com/photo-1559339352-11d035aa65de?auto=format&fit=crop&w=800&q=80',
+    description: 'Surrounded by indoor olive trees and marble planters beneath high glass skylights. Ideal for afternoon high tea.',
+    perks: ['Glass skylight canopy', 'Artisan tea service setup', 'Natural photo lighting']
+  },
+  {
+    id: 'T-04',
+    tableNumber: 'Table 04',
+    name: 'The Imperial Grand Round',
+    zone: 'vip',
+    zoneName: 'Suites & Celebrations',
+    capacity: '6-8 Guests',
+    guestsValue: '5+ Guests (Private Area)',
+    tag: 'Celebration Table',
+    badge: 'Chandelier Suite',
+    image: 'https://images.unsplash.com/photo-1544025162-d76694265947?auto=format&fit=crop&w=800&q=80',
+    description: 'Hand-carved Italian marble round dining table under an oversized Venetian crystal chandelier with cake presentation pedestal.',
+    perks: ['Celebration cake stand included', 'Dedicated master sommelier/barista', 'Spacious round seating']
+  },
+  {
+    id: 'T-05',
+    tableNumber: 'Table 05',
+    name: 'Pâtisserie Courtyard Terrace',
+    zone: 'terrace',
+    zoneName: 'Courtyard Terrace',
+    capacity: '2 Guests',
+    guestsValue: '2 Guests',
+    tag: 'Open Air Garden',
+    badge: 'Alfresco Dining',
+    image: 'https://images.unsplash.com/photo-1525610553991-2bede1a236e2?auto=format&fit=crop&w=800&q=80',
+    description: 'Open-air Parisian café table framed by jasmine trellises, bistro wicker chairs, and hand-painted tile work.',
+    perks: ['Open-air garden breeze', 'Bistro wicker seating', 'Warm fairy light canopy']
+  },
+  {
+    id: 'T-06',
+    tableNumber: 'Table 06',
+    name: 'Master Roastery Bar Counter',
+    zone: 'booth',
+    zoneName: 'Velvet Booths',
+    capacity: '1-2 Guests',
+    guestsValue: '1 Guest',
+    tag: 'Coffee Connoisseurs',
+    badge: 'Live Brewing View',
+    image: 'https://images.unsplash.com/photo-1442512595331-e89e73853f31?auto=format&fit=crop&w=800&q=80',
+    description: 'Front-row view of our custom Slayer espresso machine and siphon bar. Watch single-origin extractions up close.',
+    perks: ['Direct barista interaction', 'Siphon & pour-over showcase', 'Complimentary tasting shots']
+  },
+  {
+    id: 'T-07',
+    tableNumber: 'Table 07',
+    name: 'Private Royal Celebration Suite',
+    zone: 'vip',
+    zoneName: 'Suites & Celebrations',
+    capacity: '8-12 Guests',
+    guestsValue: '5+ Guests (Private Area)',
+    tag: 'VIP Private Salon',
+    badge: 'Private Room',
+    image: 'https://images.unsplash.com/photo-1578474846511-04ba529f0b88?auto=format&fit=crop&w=800&q=80',
+    description: 'Completely private salon room with antique gilded mirrors, bespoke audio controls, and custom floral installations.',
+    perks: ['Complete private dining room', 'Personalized menu printing', 'VIP concierge service']
+  },
+  {
+    id: 'T-08',
+    tableNumber: 'Table 08',
+    name: 'The Heritage Library Alcove',
+    zone: 'booth',
+    zoneName: 'Velvet Booths',
+    capacity: '2-4 Guests',
+    guestsValue: '4 Guests',
+    tag: 'Quiet Sanctuary',
+    badge: 'Book Lovers Corner',
+    image: 'https://images.unsplash.com/photo-1520250497591-112f2f40a3f4?auto=format&fit=crop&w=800&q=80',
+    description: 'Surrounded by rare culinary tomes, aged oak bookshelves, warm banker lamps, and butter-soft cognac leather chairs.',
+    perks: ['Whisper-quiet acoustic zone', 'Library collection access', 'Leather lounge chairs']
+  }
+];
+
 export default function HomePage() {
   const navigate = useNavigate();
   const location = useLocation();
@@ -215,7 +331,7 @@ export default function HomePage() {
   const [loading, setLoading] = useState(false);
   const [quickViewProduct, setQuickViewProduct] = useState(null);
 
-  // Reservation form state
+  // Reservation & Table form state
   const [reservationName, setReservationName] = useState('');
   const [reservationPhone, setReservationPhone] = useState('');
   const [reservationEmail, setReservationEmail] = useState('');
@@ -223,8 +339,23 @@ export default function HomePage() {
   const [reservationTime, setReservationTime] = useState('');
   const [reservationLocation, setReservationLocation] = useState('Veloura Flagship Roastery • Bandra West, Mumbai');
   const [reservationType, setReservationType] = useState('Table Reservation');
-  const [reservationGuests, setReservationGuests] = useState('2 Guests');
+  const [reservationGuests, setReservationGuests] = useState('4 Guests');
   const [reservationSuccess, setReservationSuccess] = useState(false);
+  const [selectedTableId, setSelectedTableId] = useState('T-02');
+  const [activeZoneFilter, setActiveZoneFilter] = useState('all');
+  const [tableModal, setTableModal] = useState(null);
+  const [confirmedBookingData, setConfirmedBookingData] = useState(null);
+
+  const selectedTable = RESTAURANT_TABLES.find((t) => t.id === selectedTableId) || RESTAURANT_TABLES[1];
+
+  const handleSelectTable = (table) => {
+    setSelectedTableId(table.id);
+    setReservationGuests(table.guestsValue);
+    const formEl = document.getElementById('reservation-booking-form');
+    if (formEl) {
+      formEl.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    }
+  };
 
   // Floating Chat State
   const [isChatOpen, setIsChatOpen] = useState(false);
@@ -259,13 +390,26 @@ export default function HomePage() {
 
   const handleReservationSubmit = (e) => {
     e.preventDefault();
+    const token = 'VL-' + Math.floor(100000 + Math.random() * 900000);
+    setConfirmedBookingData({
+      token,
+      name: reservationName,
+      phone: reservationPhone,
+      email: reservationEmail,
+      date: reservationDate,
+      time: reservationTime,
+      type: reservationType,
+      guests: reservationGuests,
+      location: reservationLocation,
+      table: selectedTable
+    });
     setReservationSuccess(true);
     setTimeout(() => {
       setReservationSuccess(false);
       setReservationName('');
       setReservationPhone('');
       setReservationEmail('');
-    }, 6000);
+    }, 12000);
   };
 
   const handleSendChat = (e) => {
@@ -681,10 +825,171 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* 6. RESERVATION & BESPOKE INQUIRY SECTION (Latte Global Cafe Arch Card Section) */}
+      {/* 6. RESERVATION & BESPOKE INQUIRY SECTION (Latte Global Cafe Arch Card Section with Table Selection) */}
       <section className="py-20 sm:py-28 leaf-pattern-light border-t border-[#EFE8DF]" id="reservation">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-start">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-16">
+          
+          {/* Section Header */}
+          <div className="text-center max-w-3xl mx-auto space-y-4">
+            <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-[#FAF5EE] border border-[#E8DEC8] text-[#8C6D4C] text-[11px] font-bold uppercase tracking-[0.25em]">
+              <Sparkles className="w-3.5 h-3.5 text-[#C5A059]" />
+              <span>Salon Seating & Ambience</span>
+            </div>
+            <h2 className="font-serif text-3xl sm:text-5xl font-bold text-[#3D121A] leading-tight">
+              Select Your Table & Reserve an Experience
+            </h2>
+            <div className="flex items-center justify-center gap-3 pt-1">
+              <span className="h-px w-12 bg-[#C5A059]/40" />
+              <span className="w-2 h-2 rotate-45 border border-[#C5A059] bg-[#FAF6EE]" />
+              <span className="h-px w-12 bg-[#C5A059]/40" />
+            </div>
+            <p className="text-xs sm:text-sm text-gray-600 leading-relaxed font-normal">
+              Every table at Veloura offers a distinct sensory mood. Choose your preferred seat from sunlit botanical alcoves to plush velvet booths, and preview its authentic setting before you arrive.
+            </p>
+
+            {/* Zone Filter Buttons */}
+            <div className="flex flex-wrap items-center justify-center gap-2 pt-4">
+              {[
+                { id: 'all', label: 'All Tables (8)' },
+                { id: 'window', label: 'Window & Light' },
+                { id: 'booth', label: 'Velvet Booths' },
+                { id: 'terrace', label: 'Courtyard Terrace' },
+                { id: 'vip', label: 'Suites & Celebrations' }
+              ].map((zone) => (
+                <button
+                  key={zone.id}
+                  onClick={() => setActiveZoneFilter(zone.id)}
+                  className={`px-4 py-2 rounded-full text-xs font-semibold tracking-wider transition-all duration-300 ${
+                    activeZoneFilter === zone.id
+                      ? 'bg-[#3D121A] text-[#FAF5EE] shadow-md scale-105 border border-[#3D121A]'
+                      : 'bg-white/80 hover:bg-white text-gray-700 border border-[#E8DEC8] hover:border-[#C5A059]'
+                  }`}
+                >
+                  {zone.label}
+                </button>
+              ))}
+            </div>
+          </div>
+
+          {/* Tables Showcase Grid */}
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+            {RESTAURANT_TABLES.filter(t => activeZoneFilter === 'all' || t.zone === activeZoneFilter).map((table) => {
+              const isSelected = selectedTableId === table.id;
+              return (
+                <div
+                  key={table.id}
+                  className={`group rounded-3xl overflow-hidden bg-white transition-all duration-300 flex flex-col justify-between border ${
+                    isSelected
+                      ? 'border-[#C5A059] shadow-2xl ring-2 ring-[#C5A059]/30 translate-y-[-4px]'
+                      : 'border-[#E8DEC8] hover:border-[#C5A059] shadow-sm hover:shadow-xl'
+                  }`}
+                >
+                  {/* Photo Container with Table Number badge */}
+                  <div className="relative aspect-4/3 overflow-hidden bg-gray-100">
+                    <img
+                      src={table.image}
+                      alt={`${table.tableNumber} - ${table.name}`}
+                      className="w-full h-full object-cover group-hover:scale-108 transition-transform duration-700"
+                      loading="lazy"
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-black/20" />
+                    
+                    {/* Top Left: Table Number Badge */}
+                    <div className="absolute top-3 left-3 bg-[#3D121A]/90 backdrop-blur-md text-[#FAF5EE] border border-[#C5A059]/60 px-2.5 py-1 rounded-xl shadow-lg flex items-center gap-1.5">
+                      <span className="w-1.5 h-1.5 rounded-full bg-[#C5A059]" />
+                      <span className="text-[10px] font-bold tracking-widest uppercase">{table.tableNumber}</span>
+                    </div>
+
+                    {/* Top Right: Badge */}
+                    <div className="absolute top-3 right-3 bg-white/90 backdrop-blur-md text-[#3D121A] text-[9px] font-bold uppercase tracking-wider px-2 py-0.5 rounded-full shadow-sm">
+                      {table.badge}
+                    </div>
+
+                    {/* Quick View Button */}
+                    <button
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        setTableModal(table);
+                      }}
+                      className="absolute bottom-3 right-3 p-2 rounded-full bg-white/80 hover:bg-white text-[#3D121A] backdrop-blur-md shadow-md transition-transform hover:scale-110 active:scale-95"
+                      title="View full setting photo"
+                    >
+                      <Eye className="w-3.5 h-3.5" />
+                    </button>
+
+                    {/* Capacity Indicator on bottom left */}
+                    <div className="absolute bottom-3 left-3 flex items-center gap-1 text-[10px] font-medium text-white/90 bg-black/40 backdrop-blur-sm px-2 py-0.5 rounded-full">
+                      <Users className="w-3 h-3 text-[#C5A059]" />
+                      <span>{table.capacity}</span>
+                    </div>
+                  </div>
+
+                  {/* Card Details */}
+                  <div className="p-5 flex-1 flex flex-col justify-between space-y-4">
+                    <div className="space-y-2">
+                      <div className="flex items-center justify-between">
+                        <span className="text-[10px] font-bold uppercase tracking-widest text-[#8C6D4C]">
+                          {table.zoneName}
+                        </span>
+                        <span className="text-[10px] text-gray-500 font-medium">
+                          {table.tag}
+                        </span>
+                      </div>
+                      <h3 className="font-serif text-lg font-bold text-[#3D121A] leading-snug">
+                        {table.name}
+                      </h3>
+                      <p className="text-xs text-gray-600 line-clamp-2 leading-relaxed">
+                        {table.description}
+                      </p>
+
+                      {/* Perks */}
+                      <div className="pt-1 space-y-1">
+                        {table.perks.slice(0, 2).map((perk, i) => (
+                          <div key={i} className="flex items-center gap-1.5 text-[10px] text-gray-600">
+                            <span className="text-[#C5A059]">✦</span>
+                            <span>{perk}</span>
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+
+                    {/* Action Buttons */}
+                    <div className="pt-2 flex items-center gap-2">
+                      <button
+                        onClick={() => handleSelectTable(table)}
+                        className={`flex-1 py-2.5 px-3 rounded-xl text-xs font-bold tracking-wider uppercase transition-all duration-300 flex items-center justify-center gap-1.5 ${
+                          isSelected
+                            ? 'bg-[#C5A059] text-[#2B0E16] shadow-md hover:bg-[#d6b168]'
+                            : 'bg-[#FAF5EE] hover:bg-[#3D121A] text-[#3D121A] hover:text-white border border-[#E8DEC8]'
+                        }`}
+                      >
+                        {isSelected ? (
+                          <>
+                            <CheckCircle2 className="w-3.5 h-3.5" />
+                            <span>Selected</span>
+                          </>
+                        ) : (
+                          <span>Reserve Seat</span>
+                        )}
+                      </button>
+
+                      <button
+                        onClick={() => setTableModal(table)}
+                        className="px-2.5 py-2.5 rounded-xl border border-[#E8DEC8] hover:border-[#C5A059] text-gray-600 hover:text-[#3D121A] bg-white transition"
+                        title="Preview table photography"
+                      >
+                        <Eye className="w-3.5 h-3.5" />
+                      </button>
+                    </div>
+
+                  </div>
+                </div>
+              );
+            })}
+          </div>
+
+          {/* Form and Locations Grid */}
+          <div id="reservation-booking-form" className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-start pt-6 scroll-mt-24">
             
             {/* Left Column: Arch Card with Reservation Form */}
             <div className="lg:col-span-6 bg-[#2B0E16] text-[#FAF5EE] p-8 sm:p-12 rounded-[2.5rem] shadow-2xl relative overflow-hidden border border-[#431622]">
@@ -705,14 +1010,76 @@ export default function HomePage() {
                   </p>
                 </div>
 
+                {/* Selected Table Preview Banner */}
+                {selectedTable && (
+                  <div className="p-3.5 rounded-2xl bg-white/10 border border-[#C5A059]/40 flex items-center justify-between gap-3">
+                    <div className="flex items-center gap-3">
+                      <img
+                        src={selectedTable.image}
+                        alt={selectedTable.name}
+                        className="w-14 h-14 rounded-xl object-cover border border-[#C5A059]/50 shadow-md"
+                      />
+                      <div>
+                        <div className="flex items-center gap-2">
+                          <span className="text-[10px] font-bold uppercase tracking-wider text-[#C5A059]">
+                            {selectedTable.tableNumber}
+                          </span>
+                          <span className="text-[10px] text-white/60">
+                            • {selectedTable.capacity}
+                          </span>
+                        </div>
+                        <h4 className="font-serif text-sm font-bold text-white leading-tight">
+                          {selectedTable.name}
+                        </h4>
+                        <p className="text-[10px] text-white/70">{selectedTable.zoneName}</p>
+                      </div>
+                    </div>
+                    <button
+                      type="button"
+                      onClick={() => {
+                        const el = document.getElementById('reservation');
+                        if (el) el.scrollIntoView({ behavior: 'smooth' });
+                      }}
+                      className="text-[10px] font-bold uppercase tracking-wider text-[#C5A059] hover:underline shrink-0"
+                    >
+                      Change Table
+                    </button>
+                  </div>
+                )}
+
                 {reservationSuccess ? (
-                  <div className="p-6 rounded-2xl bg-[#3B1520] border border-[#C5A059] text-center space-y-3 animate-in fade-in">
-                    <div className="w-12 h-12 rounded-full bg-[#C5A059] text-[#2B0E16] flex items-center justify-center mx-auto font-bold text-xl">
+                  <div className="p-6 rounded-2xl bg-[#3B1520] border border-[#C5A059] text-center space-y-4 animate-in fade-in">
+                    <div className="w-12 h-12 rounded-full bg-[#C5A059] text-[#2B0E16] flex items-center justify-center mx-auto font-bold text-xl shadow-lg">
                       ✓
                     </div>
-                    <h4 className="font-serif text-xl font-bold text-white">Reservation Confirmed!</h4>
+                    <div className="space-y-1">
+                      <span className="text-[10px] uppercase font-bold tracking-widest text-[#C5A059]">
+                        Booking Confirmed • Token {confirmedBookingData?.token || 'VL-882190'}
+                      </span>
+                      <h4 className="font-serif text-xl sm:text-2xl font-bold text-white">
+                        Table Reserved Successfully!
+                      </h4>
+                    </div>
+
+                    {confirmedBookingData?.table && (
+                      <div className="p-3 rounded-xl bg-black/30 border border-white/10 flex items-center gap-3 text-left">
+                        <img
+                          src={confirmedBookingData.table.image}
+                          alt={confirmedBookingData.table.name}
+                          className="w-16 h-16 rounded-lg object-cover border border-[#C5A059]/40"
+                        />
+                        <div className="space-y-0.5 text-xs text-white">
+                          <p className="font-bold text-[#C5A059] uppercase text-[10px] tracking-wider">
+                            {confirmedBookingData.table.tableNumber} — {confirmedBookingData.table.name}
+                          </p>
+                          <p className="text-white/80">{confirmedBookingData.date} at {confirmedBookingData.time}</p>
+                          <p className="text-white/60 text-[10px]">{confirmedBookingData.guests} • {confirmedBookingData.location}</p>
+                        </div>
+                      </div>
+                    )}
+
                     <p className="text-xs text-white/80 leading-relaxed">
-                      Thank you, {reservationName}. Your booking details have been confirmed. Our concierge will send a confirmation summary directly to your phone.
+                      Thank you, {reservationName}. Your table has been reserved in our salon system. Our concierge will send your arrival token directly to {reservationPhone || 'your phone'}.
                     </p>
                   </div>
                 ) : (
@@ -770,6 +1137,28 @@ export default function HomePage() {
                       </div>
                     </div>
 
+                    {/* Table Select Dropdown */}
+                    <div className="space-y-1">
+                      <label className="text-[10px] text-white/70 uppercase tracking-wider">Reserved Table Setting</label>
+                      <select
+                        value={selectedTableId}
+                        onChange={(e) => {
+                          const tbl = RESTAURANT_TABLES.find(t => t.id === e.target.value);
+                          if (tbl) {
+                            setSelectedTableId(tbl.id);
+                            setReservationGuests(tbl.guestsValue);
+                          }
+                        }}
+                        className="w-full px-4 py-3 bg-[#2B0E16] border border-[#C5A059]/40 rounded-xl text-xs text-white focus:outline-none focus:border-[#C5A059]"
+                      >
+                        {RESTAURANT_TABLES.map(t => (
+                          <option key={t.id} value={t.id}>
+                            {t.tableNumber} — {t.name} ({t.capacity} • {t.zoneName})
+                          </option>
+                        ))}
+                      </select>
+                    </div>
+
                     <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                       <select
                         value={reservationType}
@@ -809,9 +1198,10 @@ export default function HomePage() {
 
                     <button
                       type="submit"
-                      className="w-full py-3.5 rounded-xl btn-cream font-bold text-xs uppercase tracking-wider shadow-xl transition"
+                      className="w-full py-3.5 rounded-xl btn-cream font-bold text-xs uppercase tracking-wider shadow-xl transition flex items-center justify-center gap-2"
                     >
-                      Book Your Experience
+                      <span>Reserve {selectedTable?.tableNumber || 'Selected Table'}</span>
+                      <ArrowRight className="w-4 h-4" />
                     </button>
 
                     <p className="text-[11px] text-white/60 text-center">
@@ -884,6 +1274,87 @@ export default function HomePage() {
           </div>
         </div>
       </section>
+
+      {/* Table Ambiance Photo Modal / Lightbox */}
+      {tableModal && (
+        <div className="fixed inset-0 z-50 bg-black/80 backdrop-blur-md flex items-center justify-center p-4 animate-in fade-in">
+          <div className="bg-[#FAF6EE] max-w-2xl w-full rounded-3xl overflow-hidden shadow-2xl border border-[#E8DEC8] flex flex-col relative animate-in zoom-in-95">
+            
+            {/* Modal Image Header */}
+            <div className="relative aspect-16/10 w-full overflow-hidden bg-black">
+              <img
+                src={tableModal.image}
+                alt={tableModal.name}
+                className="w-full h-full object-cover"
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-black/30" />
+              
+              <button
+                onClick={() => setTableModal(null)}
+                className="absolute top-4 right-4 w-9 h-9 rounded-full bg-black/50 hover:bg-black/80 text-white flex items-center justify-center transition"
+              >
+                <X className="w-5 h-5" />
+              </button>
+
+              <div className="absolute bottom-4 left-6 right-6 text-white space-y-1">
+                <div className="flex items-center gap-2">
+                  <span className="px-2.5 py-0.5 rounded-md bg-[#C5A059] text-[#2B0E16] text-[10px] font-bold tracking-widest uppercase">
+                    {tableModal.tableNumber}
+                  </span>
+                  <span className="text-xs text-white/80 font-medium">
+                    {tableModal.zoneName} • {tableModal.capacity}
+                  </span>
+                </div>
+                <h3 className="font-serif text-2xl sm:text-3xl font-bold text-white">
+                  {tableModal.name}
+                </h3>
+              </div>
+            </div>
+
+            {/* Modal Body */}
+            <div className="p-6 sm:p-8 space-y-6">
+              <p className="text-xs sm:text-sm text-gray-700 leading-relaxed font-normal">
+                {tableModal.description}
+              </p>
+
+              <div className="space-y-2">
+                <h5 className="text-[11px] font-bold uppercase tracking-wider text-[#8C6D4C]">
+                  Seating Ambiance & Perks
+                </h5>
+                <div className="grid grid-cols-1 sm:grid-cols-3 gap-2">
+                  {tableModal.perks.map((perk, i) => (
+                    <div key={i} className="p-3 rounded-xl bg-white border border-[#E8DEC8] text-xs text-gray-800 flex items-center gap-2 shadow-2xs">
+                      <span className="text-[#C5A059] font-bold">✦</span>
+                      <span>{perk}</span>
+                    </div>
+                  ))}
+                </div>
+              </div>
+
+              <div className="pt-2 flex items-center justify-between gap-4 border-t border-[#E8DEC8]">
+                <button
+                  onClick={() => setTableModal(null)}
+                  className="px-5 py-2.5 rounded-xl border border-[#E8DEC8] hover:bg-gray-100 text-xs font-semibold text-gray-700"
+                >
+                  Close Preview
+                </button>
+                <button
+                  onClick={() => {
+                    handleSelectTable(tableModal);
+                    setTableModal(null);
+                  }}
+                  className="px-6 py-2.5 rounded-xl btn-maroon text-xs font-bold tracking-wider uppercase shadow-lg flex items-center gap-2"
+                >
+                  <span>Reserve {tableModal.tableNumber}</span>
+                  <ArrowRight className="w-3.5 h-3.5" />
+                </button>
+              </div>
+
+            </div>
+
+          </div>
+        </div>
+      )}
 
       {/* Quick View Modal */}
       {quickViewProduct && (
