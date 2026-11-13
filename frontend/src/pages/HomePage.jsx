@@ -194,59 +194,63 @@ const GALLERY_IMAGES = [
   }
 ];
 
-// Automatic 4-Slide Luxury Hero Carousel Dataset
+// Automatic 4-Slide Luxury Hero Carousel Dataset (Promotional Cake & Pastry Collection)
 const HERO_SLIDES = [
   {
     id: 1,
-    tag: 'HAUTE PÂTISSERIE • ARTISAN GATEAUX',
-    pillNumber: '01',
-    pillTitle: 'Signature Gateaux',
-    title: 'An Exceptional Journey of',
-    italicWord: 'Sweetness & Taste',
-    desc: 'Handcrafted celebration gateaux layered with pure Callebaut chocolate, French raspberry coulis, and edible gold leaf — baked fresh daily in small batches.',
+    category: 'Luxury Chocolate Cakes',
+    tag: 'HAUTE CHOCOLATERIE • 70% BELGIAN CALLEBAUT',
+    headline: 'Luxury Belgian Chocolate Cakes',
+    italicWord: 'Pure Dark Indulgence',
+    desc: 'Crafted with 70% pure Callebaut Belgian dark cocoa, silky truffle ganache layers, and delicate 24K edible gold leaf for true chocolate connoisseurs.',
     image: 'https://images.unsplash.com/photo-1578985545062-69928b1d9587?auto=format&fit=crop&w=2000&q=85',
-    ctaPrimary: { text: 'Explore Signature Cakes', link: '/#cakes' },
-    ctaSecondary: { text: 'Reserve Bespoke Gateau', link: '/#reservation' },
-    badges: ['100% Belgian Callebaut', '2-Hour Express Delivery', 'Eggless Creations Available']
+    buttonText: 'Shop Now',
+    buttonLink: '/products?category=chocolate-cakes',
+    secondaryButtonText: 'Explore Collection',
+    secondaryButtonLink: '/products',
+    badge: '70% Callebaut Belgian Ganache'
   },
   {
     id: 2,
-    tag: 'SPECIALTY ROASTERY • SINGLE-ORIGIN BREWS',
-    pillNumber: '02',
-    pillTitle: 'Specialty Coffee',
-    title: 'Precision Roasts & Pure',
-    italicWord: 'Single-Origin Arabica',
-    desc: 'Micro-lot beans sourced from premier high-altitude estates, precision roasted in small batches and extracted on our bespoke Slayer espresso bar.',
-    image: 'https://images.unsplash.com/photo-1442512595331-e89e73853f31?auto=format&fit=crop&w=2000&q=85',
-    ctaPrimary: { text: 'Discover Specialty Coffee', link: '/coffee' },
-    ctaSecondary: { text: 'Reserve Barista Tasting', link: '/#reservation' },
-    badges: ['Single-Origin Arabica', 'Siphon & Pour-Over Rituals', 'Fresh Roasted Weekly']
+    category: 'Strawberry and Fruit Cakes',
+    tag: 'FRESH HARVEST • SUMMER BERRY COLLECTION',
+    headline: 'Fresh Strawberry & Summer Fruit Cakes',
+    italicWord: 'Chantilly Cream Elegance',
+    desc: 'Delicate Madagascar vanilla sponge layered with hand-picked strawberries, wild forest raspberries, and light whipped mascarpone chantilly cream.',
+    image: 'https://images.unsplash.com/photo-1565958011703-44f9829ba187?auto=format&fit=crop&w=2000&q=85',
+    buttonText: 'Shop Now',
+    buttonLink: '/products',
+    secondaryButtonText: 'Explore Collection',
+    secondaryButtonLink: '/products',
+    badge: 'Farm-Fresh Strawberries & Berries'
   },
   {
     id: 3,
-    tag: 'FRENCH BOULANGERIE • VIENNOISERIE',
-    pillNumber: '03',
-    pillTitle: 'Boulangerie & Flakes',
-    title: 'Golden Honeycomb Lamination &',
-    italicWord: 'Normandy Butter',
-    desc: 'Laminated over 72 slow hours with pure cultured Normandy butter. Ultra-crisp golden exterior with a delicate, melt-in-your-mouth honeycomb crumb.',
-    image: 'https://images.unsplash.com/photo-1555507036-ab1f4038808a?auto=format&fit=crop&w=2000&q=85',
-    ctaPrimary: { text: 'Explore Boulangerie', link: '/#boulangerie' },
-    ctaSecondary: { text: 'Order Fresh Morning Basket', link: '/products?category=pastries' },
-    badges: ['Cultured Normandy Butter', '72-Hour Fermentation', 'Baked Fresh at 6:00 AM']
+    category: 'French Pastries and Macarons',
+    tag: 'PARISIAN BOULANGERIE • HAUTE PÂTISSERIE',
+    headline: 'Artisan French Pastries & Macarons',
+    italicWord: 'Crisp & Melt-in-Mouth',
+    desc: 'Delicate almond meringue macarons with pistachio, salted caramel, and dark chocolate ganache, alongside golden flaky morning viennoiserie.',
+    image: 'https://images.unsplash.com/photo-1569864358642-9d1684040f43?auto=format&fit=crop&w=2000&q=85',
+    buttonText: 'Shop Now',
+    buttonLink: '/products?category=pastries',
+    secondaryButtonText: 'Explore Collection',
+    secondaryButtonLink: '/products',
+    badge: 'Parisian Macarons & Viennoiserie'
   },
   {
     id: 4,
-    tag: 'GRAND RESERVE SALON • JUBILEE HILLS & METROS',
-    pillNumber: '04',
-    pillTitle: 'Dining Salons',
-    title: 'An Atmospheric Sanctuary of',
-    italicWord: 'Warmth & Elegance',
-    desc: 'Reserve a bespoke table at our flagship Jubilee Hills salon in Hyderabad or metro dining rooms. Experience tableside high tea rituals and velvet booth seating.',
-    image: 'https://images.unsplash.com/photo-1550966871-3ed3cdb5ed0c?auto=format&fit=crop&w=2000&q=85',
-    ctaPrimary: { text: 'Reserve Your Table', link: '/#reservation' },
-    ctaSecondary: { text: 'Explore Salon Seating', link: '/#reservation' },
-    badges: ['Jubilee Hills, Hyderabad', 'Plush Velvet Alcoves', 'Dedicated Concierge']
+    category: 'Birthday and Celebration Cakes',
+    tag: 'CELEBRATION GRAND • BESPOKE DESIGNS',
+    headline: 'Sculpted Celebration & Birthday Gateaux',
+    italicWord: 'For Milestone Memories',
+    desc: 'Bespoke multi-tiered showstoppers designed to make birthdays, anniversaries, and milestones extraordinary, with 2-hour express delivery across Hyderabad and metros.',
+    image: 'https://images.unsplash.com/photo-1621303837174-89787a7d4729?auto=format&fit=crop&w=2000&q=85',
+    buttonText: 'Shop Now',
+    buttonLink: '/products?category=birthday-cakes',
+    secondaryButtonText: 'Explore Collection',
+    secondaryButtonLink: '/products',
+    badge: 'Custom Celebration Tiered Designs'
   }
 ];
 
@@ -395,7 +399,7 @@ export default function HomePage() {
     if (!isHeroAutoPlaying) return;
     const timer = setInterval(() => {
       setCurrentHeroSlide((prev) => (prev + 1) % HERO_SLIDES.length);
-    }, 6000);
+    }, 4500);
     return () => clearInterval(timer);
   }, [isHeroAutoPlaying]);
 
@@ -503,174 +507,135 @@ export default function HomePage() {
   return (
     <div className="space-y-0 pb-16 bg-[#FAF8F5] text-[#2D2020]">
       
-      {/* 1. CINEMATIC HERO SECTION (Automatic 4-Slide International Standard Carousel) */}
+      {/* 1. CINEMATIC HERO SECTION (Full-Width Hero Image Carousel with Slide & Fade Transitions) */}
       <section 
-        className="relative min-h-[90vh] sm:min-h-[92vh] flex items-center justify-center bg-[#18060D] text-white overflow-hidden select-none"
+        className="relative w-full min-h-[85vh] sm:min-h-[90vh] lg:min-h-[92vh] flex items-center justify-center bg-[#15050C] text-white overflow-hidden select-none"
         onMouseEnter={() => setIsHeroAutoPlaying(false)}
         onMouseLeave={() => setIsHeroAutoPlaying(true)}
       >
         
-        {/* Background Slides with Cross-Fade & Ken Burns Zoom */}
-        {HERO_SLIDES.map((slide, idx) => {
-          const isActive = currentHeroSlide === idx;
-          return (
-            <div
-              key={slide.id}
-              className={`absolute inset-0 transition-opacity duration-1000 ease-in-out ${
-                isActive ? 'opacity-100 z-0' : 'opacity-0 -z-10 pointer-events-none'
-              }`}
-            >
-              <img
-                src={slide.image}
-                alt={slide.title}
-                className={`w-full h-full object-cover object-center transition-transform duration-[7000ms] ease-out ${
-                  isActive ? 'scale-105' : 'scale-100'
-                }`}
-              />
-              {/* Luxury Vignette & Starry Texture Overlay */}
-              <div className="absolute inset-0 bg-gradient-to-t from-[#18060D] via-[#240B13]/75 to-[#18060D]/65" />
-              <div className="absolute inset-0 bg-gradient-to-r from-[#18060D]/80 via-transparent to-[#18060D]/80" />
-              <div className="absolute inset-0 bg-[radial-gradient(#C5A059_0.8px,transparent_0.8px)] [background-size:24px_24px] opacity-15 pointer-events-none" />
-            </div>
-          );
-        })}
-
-        {/* Carousel Content Container */}
-        <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 text-center relative z-10 py-24 sm:py-32 space-y-6">
-          
-          {/* Eyebrow Tag with Sparkle */}
-          <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white/10 backdrop-blur-md border border-white/20 text-[#FFDFB3] text-[11px] sm:text-xs font-semibold uppercase tracking-[0.25em] shadow-lg animate-in fade-in slide-in-from-bottom-2 duration-500">
-            <Sparkles className="w-3.5 h-3.5 text-[#C5A059]" />
-            <span>{HERO_SLIDES[currentHeroSlide].tag}</span>
-          </div>
-
-          {/* Main Title with Serif & Italic Accent */}
-          <h1 className="font-serif text-3xl sm:text-5xl md:text-6xl lg:text-7xl font-bold text-white tracking-tight leading-[1.12] drop-shadow-md max-w-4xl mx-auto transition-all duration-500">
-            {HERO_SLIDES[currentHeroSlide].title} <br className="hidden sm:inline" />
-            <em className="text-[#F8E7C5] font-serif not-italic italic font-normal">
-              {HERO_SLIDES[currentHeroSlide].italicWord}
-            </em>
-          </h1>
-
-          {/* Subtitle */}
-          <p className="text-xs sm:text-base lg:text-lg text-white/85 max-w-2xl mx-auto font-normal leading-relaxed transition-all duration-500">
-            {HERO_SLIDES[currentHeroSlide].desc}
-          </p>
-
-          {/* Dual Action CTAs */}
-          <div className="pt-3 flex flex-wrap items-center justify-center gap-3 sm:gap-4">
-            {HERO_SLIDES[currentHeroSlide].ctaPrimary.link.startsWith('#') || HERO_SLIDES[currentHeroSlide].ctaPrimary.link.startsWith('/#') ? (
-              <a
-                href={HERO_SLIDES[currentHeroSlide].ctaPrimary.link}
-                className="px-7 sm:px-9 py-3 sm:py-3.5 rounded-full text-xs sm:text-sm font-bold uppercase tracking-wider btn-cream shadow-2xl hover:scale-105 transition-all flex items-center gap-2"
+        {/* Full-Width Sliding Track with Smooth CSS Transform */}
+        <div 
+          className="flex w-full h-full transition-transform duration-700 ease-in-out"
+          style={{ transform: `translateX(-${currentHeroSlide * 100}%)` }}
+        >
+          {HERO_SLIDES.map((slide, idx) => {
+            const isActive = currentHeroSlide === idx;
+            return (
+              <div
+                key={slide.id}
+                className="w-full min-w-full flex-shrink-0 relative min-h-[85vh] sm:min-h-[90vh] lg:min-h-[92vh] flex items-center justify-center overflow-hidden"
               >
-                <span>{HERO_SLIDES[currentHeroSlide].ctaPrimary.text}</span>
-                <ArrowRight className="w-4 h-4 text-[#2B0E16]" />
-              </a>
-            ) : (
-              <Link
-                to={HERO_SLIDES[currentHeroSlide].ctaPrimary.link}
-                className="px-7 sm:px-9 py-3 sm:py-3.5 rounded-full text-xs sm:text-sm font-bold uppercase tracking-wider btn-cream shadow-2xl hover:scale-105 transition-all flex items-center gap-2"
-              >
-                <span>{HERO_SLIDES[currentHeroSlide].ctaPrimary.text}</span>
-                <ArrowRight className="w-4 h-4 text-[#2B0E16]" />
-              </Link>
-            )}
+                {/* Background Image */}
+                <img
+                  src={slide.image}
+                  alt={slide.headline}
+                  className={`absolute inset-0 w-full h-full object-cover object-center transition-transform duration-[7000ms] ease-out ${
+                    isActive ? 'scale-105' : 'scale-100'
+                  }`}
+                  loading={idx === 0 ? 'eager' : 'lazy'}
+                />
 
-            {HERO_SLIDES[currentHeroSlide].ctaSecondary.link.startsWith('#') || HERO_SLIDES[currentHeroSlide].ctaSecondary.link.startsWith('/#') ? (
-              <a
-                href={HERO_SLIDES[currentHeroSlide].ctaSecondary.link}
-                className="px-7 sm:px-9 py-3 sm:py-3.5 rounded-full text-xs sm:text-sm font-bold uppercase tracking-wider btn-outline-light shadow-lg hover:scale-105 transition-all"
-              >
-                {HERO_SLIDES[currentHeroSlide].ctaSecondary.text}
-              </a>
-            ) : (
-              <Link
-                to={HERO_SLIDES[currentHeroSlide].ctaSecondary.link}
-                className="px-7 sm:px-9 py-3 sm:py-3.5 rounded-full text-xs sm:text-sm font-bold uppercase tracking-wider btn-outline-light shadow-lg hover:scale-105 transition-all"
-              >
-                {HERO_SLIDES[currentHeroSlide].ctaSecondary.text}
-              </Link>
-            )}
-          </div>
+                {/* Subtle Dark Luxury Overlay for Text Readability */}
+                <div className="absolute inset-0 bg-gradient-to-t from-[#15050C] via-[#220813]/65 to-[#15050C]/55" />
+                <div className="absolute inset-0 bg-gradient-to-r from-[#15050C]/85 via-transparent to-[#15050C]/85" />
+                <div className="absolute inset-0 bg-[radial-gradient(#C5A059_0.8px,transparent_0.8px)] [background-size:24px_24px] opacity-15 pointer-events-none" />
 
-          {/* Provenance Feature Badges */}
-          <div className="pt-6 sm:pt-8 flex flex-wrap items-center justify-center gap-2 sm:gap-5 text-[11px] sm:text-xs text-white/80 font-medium">
-            {HERO_SLIDES[currentHeroSlide].badges.map((badge, bIdx) => (
-              <React.Fragment key={bIdx}>
-                {bIdx > 0 && <span className="hidden sm:inline text-[#C5A059]/40">•</span>}
-                <div className="flex items-center gap-1.5 px-3 py-1 rounded-full bg-white/5 backdrop-blur-xs border border-white/10">
-                  <span className="w-1.5 h-1.5 rounded-full bg-[#C5A059]" />
-                  <span>{badge}</span>
+                {/* Slide Content */}
+                <div className={`max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 text-center relative z-10 py-24 sm:py-32 space-y-6 transition-all duration-700 ${
+                  isActive ? 'opacity-100 translate-y-0' : 'opacity-40 translate-y-2'
+                }`}>
+                  
+                  {/* Eyebrow Tag */}
+                  <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white/10 backdrop-blur-md border border-white/20 text-[#FFDFB3] text-[11px] sm:text-xs font-semibold uppercase tracking-[0.25em] shadow-lg animate-in fade-in duration-500">
+                    <Sparkles className="w-3.5 h-3.5 text-[#C5A059]" />
+                    <span>{slide.tag}</span>
+                  </div>
+
+                  {/* Main Premium Headline */}
+                  <h1 className="font-serif text-3xl sm:text-5xl md:text-6xl lg:text-7xl font-bold text-white tracking-tight leading-[1.12] drop-shadow-md max-w-4xl mx-auto">
+                    {slide.headline} <br className="hidden sm:inline" />
+                    <em className="text-[#F8E7C5] font-serif not-italic italic font-normal">
+                      {slide.italicWord}
+                    </em>
+                  </h1>
+
+                  {/* Short Description */}
+                  <p className="text-xs sm:text-base lg:text-lg text-white/90 max-w-2xl mx-auto font-normal leading-relaxed">
+                    {slide.desc}
+                  </p>
+
+                  {/* Action Buttons (Shop Now & Explore Collection) */}
+                  <div className="pt-3 flex flex-wrap items-center justify-center gap-3 sm:gap-4">
+                    <Link
+                      to={slide.buttonLink}
+                      className="px-7 sm:px-9 py-3 sm:py-3.5 rounded-full text-xs sm:text-sm font-bold uppercase tracking-wider btn-cream shadow-2xl hover:scale-105 transition-all flex items-center gap-2"
+                    >
+                      <span>{slide.buttonText}</span>
+                      <ArrowRight className="w-4 h-4 text-[#2B0E16]" />
+                    </Link>
+
+                    <Link
+                      to={slide.secondaryButtonLink}
+                      className="px-7 sm:px-9 py-3 sm:py-3.5 rounded-full text-xs sm:text-sm font-bold uppercase tracking-wider btn-outline-light shadow-lg hover:scale-105 transition-all"
+                    >
+                      {slide.secondaryButtonText}
+                    </Link>
+                  </div>
+
+                  {/* Feature Badge */}
+                  <div className="pt-4 flex items-center justify-center">
+                    <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-black/40 backdrop-blur-xs border border-white/15 text-[11px] text-[#FAF5EE]">
+                      <span className="w-1.5 h-1.5 rounded-full bg-[#C5A059]" />
+                      <span>{slide.badge}</span>
+                      <span className="text-white/40">•</span>
+                      <span className="text-[#C5A059] font-medium">Guaranteed 2-Hour Delivery</span>
+                    </div>
+                  </div>
+
                 </div>
-              </React.Fragment>
-            ))}
-          </div>
-
+              </div>
+            );
+          })}
         </div>
 
-        {/* Carousel Arrow Controls (Left / Right) */}
+        {/* Manual Navigation Arrows (Left & Right) */}
         <button
           onClick={handlePrevHeroSlide}
-          className="absolute left-4 sm:left-8 top-1/2 -translate-y-1/2 z-20 w-11 h-11 sm:w-13 sm:h-13 rounded-full bg-black/35 hover:bg-black/70 backdrop-blur-md border border-white/20 text-white flex items-center justify-center transition-all hover:scale-110 active:scale-95 shadow-xl hover:border-[#C5A059]"
-          title="Previous experience"
-          aria-label="Previous slide"
+          aria-label="Previous promotional slide"
+          className="absolute left-3 sm:left-6 top-1/2 -translate-y-1/2 z-20 w-11 h-11 sm:w-13 sm:h-13 rounded-full bg-[#1F0A11]/60 hover:bg-[#C5A059] text-white hover:text-[#1F0A11] backdrop-blur-md border border-[#C5A059]/40 hover:border-[#C5A059] flex items-center justify-center transition-all duration-300 shadow-xl hover:scale-110 active:scale-95"
+          title="Previous slide"
         >
           <ChevronLeft className="w-5 h-5 sm:w-6 sm:h-6" />
         </button>
 
         <button
           onClick={handleNextHeroSlide}
-          className="absolute right-4 sm:right-8 top-1/2 -translate-y-1/2 z-20 w-11 h-11 sm:w-13 sm:h-13 rounded-full bg-black/35 hover:bg-black/70 backdrop-blur-md border border-white/20 text-white flex items-center justify-center transition-all hover:scale-110 active:scale-95 shadow-xl hover:border-[#C5A059]"
-          title="Next experience"
-          aria-label="Next slide"
+          aria-label="Next promotional slide"
+          className="absolute right-3 sm:right-6 top-1/2 -translate-y-1/2 z-20 w-11 h-11 sm:w-13 sm:h-13 rounded-full bg-[#1F0A11]/60 hover:bg-[#C5A059] text-white hover:text-[#1F0A11] backdrop-blur-md border border-[#C5A059]/40 hover:border-[#C5A059] flex items-center justify-center transition-all duration-300 shadow-xl hover:scale-110 active:scale-95"
+          title="Next slide"
         >
           <ChevronRight className="w-5 h-5 sm:w-6 sm:h-6" />
         </button>
 
-        {/* Bottom Slide Progress Tabs (International Bakery Standard) */}
-        <div className="absolute bottom-6 sm:bottom-8 left-0 right-0 z-20 max-w-4xl mx-auto px-4">
-          <div className="grid grid-cols-4 gap-2 sm:gap-3 bg-black/40 backdrop-blur-md p-2 rounded-2xl border border-white/15">
-            {HERO_SLIDES.map((slide, sIdx) => {
-              const isSelected = currentHeroSlide === sIdx;
-              return (
-                <button
-                  key={slide.id}
-                  onClick={() => setCurrentHeroSlide(sIdx)}
-                  className={`text-left p-2 sm:p-2.5 rounded-xl transition-all duration-300 relative overflow-hidden group ${
-                    isSelected ? 'bg-white/15 shadow-inner' : 'hover:bg-white/5 opacity-70 hover:opacity-100'
-                  }`}
-                >
-                  <div className="flex items-center justify-between mb-1">
-                    <span className={`text-[10px] font-bold tracking-wider font-mono ${
-                      isSelected ? 'text-[#C5A059]' : 'text-white/60'
-                    }`}>
-                      {slide.pillNumber}
-                    </span>
-                    {isSelected && (
-                      <span className="w-1.5 h-1.5 rounded-full bg-[#C5A059] animate-ping" />
-                    )}
-                  </div>
-                  <p className={`text-[11px] sm:text-xs font-semibold truncate transition-colors ${
-                    isSelected ? 'text-white' : 'text-white/70 group-hover:text-white'
-                  }`}>
-                    {slide.pillTitle}
-                  </p>
-
-                  {/* Progress Line */}
-                  <div className="mt-2 h-0.5 w-full bg-white/20 rounded-full overflow-hidden">
-                    {isSelected ? (
-                      <div 
-                        className="h-full bg-gradient-to-r from-[#C5A059] to-[#FFDFB3] animate-[heroProgress_6000ms_linear_infinite]"
-                      />
-                    ) : (
-                      <div className="h-full w-0" />
-                    )}
-                  </div>
-                </button>
-              );
-            })}
-          </div>
+        {/* 4 Small Pagination Dots at Bottom */}
+        <div className="absolute bottom-6 sm:bottom-8 left-0 right-0 z-20 flex items-center justify-center gap-2.5">
+          {HERO_SLIDES.map((slide, sIdx) => {
+            const isSelected = currentHeroSlide === sIdx;
+            return (
+              <button
+                key={slide.id}
+                onClick={() => setCurrentHeroSlide(sIdx)}
+                aria-label={`Go to slide ${sIdx + 1}: ${slide.category}`}
+                className={`transition-all duration-300 rounded-full focus:outline-none ${
+                  isSelected
+                    ? 'w-8 h-2.5 bg-[#C5A059] shadow-[0_0_12px_rgba(197,160,89,0.7)]'
+                    : 'w-2.5 h-2.5 bg-white/40 hover:bg-white/80 hover:scale-125'
+                }`}
+                title={slide.category}
+              />
+            );
+          })}
         </div>
 
       </section>
