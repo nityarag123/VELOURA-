@@ -575,42 +575,49 @@ export default function HomePage() {
           </p>
         </div>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 items-stretch">
           {SIGNATURE_COLLECTIONS.map((col) => (
             <Link
               key={col.id}
               to={col.link}
-              className="group relative rounded-3xl overflow-hidden bg-white border border-[#EAE3D5] hover:border-[#D8B879] shadow-sm hover:shadow-2xl transition-all duration-500 flex flex-col justify-between"
+              className="group relative rounded-3xl overflow-hidden h-[460px] sm:h-[480px] flex flex-col justify-between p-6 sm:p-7 border border-[#EAE3D5] hover:border-[#D8B879] shadow-sm hover:shadow-2xl transition-all duration-500 bg-[#160B0D]"
             >
-              <div className="relative aspect-4/5 overflow-hidden bg-[#FAF6EE]">
-                <img
-                  src={col.image}
-                  alt={col.title}
-                  className="w-full h-full object-cover group-hover:scale-108 transition-transform duration-700 ease-out"
-                  loading="lazy"
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-[#160B0D]/90 via-[#160B0D]/30 to-transparent" />
-                
-                {/* Floating Tag */}
-                <div className="absolute top-4 left-4 bg-white/95 backdrop-blur-md px-3 py-1 rounded-full text-[9px] font-bold uppercase tracking-wider text-[#260D16] shadow-md">
-                  {col.tag}
-                </div>
+              {/* Full-Bleed Background Image (fills 100% of the card, zero white gaps) */}
+              <img
+                src={col.image}
+                alt={col.title}
+                className="absolute inset-0 w-full h-full object-cover group-hover:scale-108 transition-transform duration-700 ease-out"
+                loading="lazy"
+              />
 
-                {/* Content Overlay */}
-                <div className="absolute bottom-5 left-5 right-5 text-white space-y-1.5">
-                  <span className="text-[10px] font-bold uppercase tracking-wider text-[#D8B879]">
-                    {col.subtitle}
-                  </span>
-                  <h3 className="font-serif text-xl font-bold leading-snug group-hover:text-[#F8E7C5] transition-colors">
-                    {col.title}
-                  </h3>
-                  <p className="text-xs text-white/80 line-clamp-2 leading-relaxed">
-                    {col.desc}
-                  </p>
-                  <div className="pt-2 flex items-center gap-1.5 text-xs font-bold text-[#D8B879] group-hover:translate-x-1 transition-transform">
-                    <span>Explore Selection</span>
-                    <ArrowRight className="w-3.5 h-3.5" />
-                  </div>
+              {/* Multi-layer Dark Gradient for Flawless Readability */}
+              <div className="absolute inset-0 bg-gradient-to-t from-[#160B0D] via-[#160B0D]/55 to-transparent" />
+              <div className="absolute inset-0 bg-gradient-to-b from-black/40 via-transparent to-transparent" />
+              
+              {/* Top: Luxury Pill Tag */}
+              <div className="relative z-10 flex items-center justify-between">
+                <span className="bg-[#160B0D]/80 backdrop-blur-md text-[#D8B879] border border-[#D8B879]/40 px-3 py-1 rounded-full text-[9px] font-bold uppercase tracking-wider shadow-sm">
+                  {col.tag}
+                </span>
+                <span className="w-8 h-8 rounded-full bg-white/10 backdrop-blur-md border border-white/20 text-white flex items-center justify-center opacity-0 group-hover:opacity-100 group-hover:translate-x-0 -translate-x-2 transition-all duration-300">
+                  <ArrowRight className="w-4 h-4 text-[#D8B879]" />
+                </span>
+              </div>
+
+              {/* Bottom: Cohesive Balanced Content */}
+              <div className="relative z-10 space-y-2 text-white">
+                <span className="text-[10px] font-bold uppercase tracking-[0.2em] text-[#D8B879] block">
+                  {col.subtitle}
+                </span>
+                <h3 className="font-serif text-2xl font-bold leading-snug group-hover:text-[#F8E7C5] transition-colors">
+                  {col.title}
+                </h3>
+                <p className="text-xs text-white/80 line-clamp-2 leading-relaxed">
+                  {col.desc}
+                </p>
+                <div className="pt-2 flex items-center gap-1.5 text-xs font-bold text-[#D8B879] group-hover:translate-x-1 transition-transform">
+                  <span>Explore Selection</span>
+                  <ArrowRight className="w-3.5 h-3.5" />
                 </div>
               </div>
             </Link>
