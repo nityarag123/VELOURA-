@@ -582,27 +582,6 @@ export default function HomePage() {
         >
           <ChevronRight className="w-6 h-6 sm:w-7 sm:h-7 pointer-events-none" />
         </button>
-
-        {/* 4 Small Pagination Dots at Bottom */}
-        <div className="absolute bottom-6 sm:bottom-8 left-0 right-0 z-40 flex items-center justify-center gap-2.5">
-          {HERO_SLIDES.map((slide, sIdx) => {
-            const isSelected = currentHeroSlide === sIdx;
-            return (
-              <button
-                key={slide.id}
-                type="button"
-                onClick={() => handleGoToHeroSlide(sIdx)}
-                aria-label={`Go to slide ${sIdx + 1}: ${slide.category}`}
-                className={`transition-all duration-300 rounded-full focus:outline-none cursor-pointer ${
-                  isSelected
-                    ? 'w-8 h-2.5 bg-[#D8B879] shadow-[0_0_12px_rgba(216,184,121,0.8)]'
-                    : 'w-2.5 h-2.5 bg-white/40 hover:bg-white/80 hover:scale-125'
-                }`}
-                title={slide.category}
-              />
-            );
-          })}
-        </div>
       </section>
 
       {/* ============================================================
