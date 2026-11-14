@@ -156,7 +156,7 @@ export default function CoffeeExperiencePage() {
   };
 
   return (
-    <div className="bg-[#FAF6EE] text-[#2D2020] min-h-screen luxury-cream-texture">
+    <div className="bg-[#D8C7B5] text-[#2D2020] min-h-screen luxury-cream-texture">
       
       {/* Toast Notification */}
       {toastMessage && (
@@ -426,7 +426,7 @@ export default function CoffeeExperiencePage() {
       </section>
 
       {/* 6. SIGNATURE COFFEE VARIETIES GRID (Direct match to Latte Global Cafe 4 Varieties) */}
-      <section className="py-20 sm:py-28 luxury-cream-texture border-t border-[#EAE2D5]">
+      <section className="py-20 sm:py-28 luxury-cream-texture border-t border-[#C4B19F]">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           
           <div className="text-center max-w-2xl mx-auto mb-16 space-y-2">

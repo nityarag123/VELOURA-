@@ -177,7 +177,7 @@ export default function ChocolateExperiencePage() {
   };
 
   return (
-    <div className="bg-[#FAF6EE] text-[#2D2020] min-h-screen luxury-cream-texture">
+    <div className="bg-[#D8C7B5] text-[#2D2020] min-h-screen luxury-cream-texture">
       
       {/* Toast Notification */}
       {toastMessage && (
@@ -249,7 +249,7 @@ export default function ChocolateExperiencePage() {
           </p>
 
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4 sm:gap-6 pt-10 text-left">
-            <div className="bg-white/80 p-5 rounded-2xl border border-[#EAE2D5] shadow-xs hover:border-[#C5A059] transition-all">
+            <div className="bg-white/80 p-5 rounded-2xl border border-[#C4B19F] shadow-xs hover:border-[#C5A059] transition-all">
               <div className="w-10 h-10 rounded-xl bg-[#3D121A]/5 flex items-center justify-center text-[#C5A059] mb-3">
                 <Droplets className="w-5 h-5" />
               </div>
@@ -257,7 +257,7 @@ export default function ChocolateExperiencePage() {
               <p className="text-xs text-gray-600 mt-1">Zero hydrogenated vegetable oils, zero palm oil, and zero synthetic emulsifiers.</p>
             </div>
 
-            <div className="bg-white/80 p-5 rounded-2xl border border-[#EAE2D5] shadow-xs hover:border-[#C5A059] transition-all">
+            <div className="bg-white/80 p-5 rounded-2xl border border-[#C4B19F] shadow-xs hover:border-[#C5A059] transition-all">
               <div className="w-10 h-10 rounded-xl bg-[#3D121A]/5 flex items-center justify-center text-[#C5A059] mb-3">
                 <Compass className="w-5 h-5" />
               </div>
@@ -265,7 +265,7 @@ export default function ChocolateExperiencePage() {
               <p className="text-xs text-gray-600 mt-1">Traceable criollo cacao from Madagascar Sambirano and Ghanaian estate farms.</p>
             </div>
 
-            <div className="bg-white/80 p-5 rounded-2xl border border-[#EAE2D5] shadow-xs hover:border-[#C5A059] transition-all">
+            <div className="bg-white/80 p-5 rounded-2xl border border-[#C4B19F] shadow-xs hover:border-[#C5A059] transition-all">
               <div className="w-10 h-10 rounded-xl bg-[#3D121A]/5 flex items-center justify-center text-[#C5A059] mb-3">
                 <Flame className="w-5 h-5" />
               </div>
@@ -273,7 +273,7 @@ export default function ChocolateExperiencePage() {
               <p className="text-xs text-gray-600 mt-1">Traditional granite roller conching eliminates astringency for micro-fine silkiness.</p>
             </div>
 
-            <div className="bg-white/80 p-5 rounded-2xl border border-[#EAE2D5] shadow-xs hover:border-[#C5A059] transition-all">
+            <div className="bg-white/80 p-5 rounded-2xl border border-[#C4B19F] shadow-xs hover:border-[#C5A059] transition-all">
               <div className="w-10 h-10 rounded-xl bg-[#3D121A]/5 flex items-center justify-center text-[#C5A059] mb-3">
                 <Award className="w-5 h-5" />
               </div>
@@ -288,7 +288,7 @@ export default function ChocolateExperiencePage() {
       <section className="py-16 sm:py-24 space-y-16 sm:space-y-24 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         
         {/* Block 01: Chocolate Bars */}
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 sm:gap-12 items-center bg-[#FAF6F0] rounded-3xl p-6 sm:p-12 border border-[#EAE2D5] shadow-xs">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 sm:gap-12 items-center bg-[#FAF6F0] rounded-3xl p-6 sm:p-12 border border-[#C4B19F] shadow-xs">
           <div className="lg:col-span-6 rounded-2xl overflow-hidden aspect-4/3 shadow-md bg-stone-200">
             <img
               src="https://images.unsplash.com/photo-1606313564200-e75d5e30476c?auto=format&fit=crop&w=1000&q=80"
@@ -304,16 +304,16 @@ export default function ChocolateExperiencePage() {
               Every bar is a snapshot of its estate soil, rainfall, and sunshine. Hand-harvested criollo cacao conched slowly for 72 hours to unlock layers of sun-dried red cherries, warm brioche, and smoky bourbon vanilla. Tempered for an unmistakable musical snap and pure, lingering melt.
             </p>
             <div className="pt-2 flex flex-wrap gap-2 text-xs font-semibold">
-              <span className="px-4 py-1.5 rounded-full bg-white border border-[#E8DEC8] text-[#3D121A]">70% Dark Callebaut</span>
-              <span className="px-4 py-1.5 rounded-full bg-white border border-[#E8DEC8] text-[#3D121A]">38% Madagascar Milk</span>
-              <span className="px-4 py-1.5 rounded-full bg-white border border-[#E8DEC8] text-[#3D121A]">Pure Cocoa Butter</span>
-              <span className="px-4 py-1.5 rounded-full bg-white border border-[#E8DEC8] text-[#3D121A]">72h Conched Silk</span>
+              <span className="px-4 py-1.5 rounded-full bg-white border border-[#C4B19F] text-[#3D121A]">70% Dark Callebaut</span>
+              <span className="px-4 py-1.5 rounded-full bg-white border border-[#C4B19F] text-[#3D121A]">38% Madagascar Milk</span>
+              <span className="px-4 py-1.5 rounded-full bg-white border border-[#C4B19F] text-[#3D121A]">Pure Cocoa Butter</span>
+              <span className="px-4 py-1.5 rounded-full bg-white border border-[#C4B19F] text-[#3D121A]">72h Conched Silk</span>
             </div>
           </div>
         </div>
 
         {/* Block 02: Artisanal Chocolates (Reverse) */}
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 sm:gap-12 items-center bg-[#FAF6F0] rounded-3xl p-6 sm:p-12 border border-[#EAE2D5] shadow-xs">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 sm:gap-12 items-center bg-[#FAF6F0] rounded-3xl p-6 sm:p-12 border border-[#C4B19F] shadow-xs">
           <div className="lg:col-span-6 lg:order-2 rounded-2xl overflow-hidden aspect-4/3 shadow-md bg-stone-200">
             <img
               src="https://images.unsplash.com/photo-1548848221-0c2e497ed557?auto=format&fit=crop&w=1000&q=80"
@@ -329,16 +329,16 @@ export default function ChocolateExperiencePage() {
               Micro-thin chocolate shells hand-cast with surgical precision, yielding effortlessly to sumptuous centers. Featuring French Guérande sea-salt Fleur de Sel caramel, slow-emulsified single-origin espresso ganache, roasted Piedmont hazelnut gianduja, and crowned by hand with 24-karat edible gold leaf.
             </p>
             <div className="pt-2 flex flex-wrap gap-2 text-xs font-semibold">
-              <span className="px-4 py-1.5 rounded-full bg-white border border-[#E8DEC8] text-[#3D121A]">Fleur de Sel Ganache</span>
-              <span className="px-4 py-1.5 rounded-full bg-white border border-[#E8DEC8] text-[#3D121A]">Piedmont Gianduja</span>
-              <span className="px-4 py-1.5 rounded-full bg-white border border-[#E8DEC8] text-[#3D121A]">Espresso Truffles</span>
-              <span className="px-4 py-1.5 rounded-full bg-white border border-[#E8DEC8] text-[#3D121A]">24k Gold Embellishment</span>
+              <span className="px-4 py-1.5 rounded-full bg-white border border-[#C4B19F] text-[#3D121A]">Fleur de Sel Ganache</span>
+              <span className="px-4 py-1.5 rounded-full bg-white border border-[#C4B19F] text-[#3D121A]">Piedmont Gianduja</span>
+              <span className="px-4 py-1.5 rounded-full bg-white border border-[#C4B19F] text-[#3D121A]">Espresso Truffles</span>
+              <span className="px-4 py-1.5 rounded-full bg-white border border-[#C4B19F] text-[#3D121A]">24k Gold Embellishment</span>
             </div>
           </div>
         </div>
 
         {/* Block 03: Gifting Collection (REPLACED: Luxury Chocolate Hamper Box) */}
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 sm:gap-12 items-center bg-[#FAF6F0] rounded-3xl p-6 sm:p-12 border border-[#EAE2D5] shadow-xs">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 sm:gap-12 items-center bg-[#FAF6F0] rounded-3xl p-6 sm:p-12 border border-[#C4B19F] shadow-xs">
           <div className="lg:col-span-6 rounded-2xl overflow-hidden aspect-4/3 shadow-md bg-stone-200">
             <img
               src="https://images.unsplash.com/photo-1549465220-1a8b9238cd48?auto=format&fit=crop&w=1000&q=80"
@@ -354,16 +354,16 @@ export default function ChocolateExperiencePage() {
               Designed for life's most unforgettable milestones, wedding favors, and distinguished corporate gifting. Royal velvet-lined presentation trunks housing an opulent curation of single-origin tablets, couture bonbons, and stone-ground spreads. Finished with wax-sealed tasting menus and personalized calligraphed cards.
             </p>
             <div className="pt-2 flex flex-wrap gap-2 text-xs font-semibold">
-              <span className="px-4 py-1.5 rounded-full bg-white border border-[#E8DEC8] text-[#3D121A]">Velvet Keepsake Trunks</span>
-              <span className="px-4 py-1.5 rounded-full bg-white border border-[#E8DEC8] text-[#3D121A]">Personalized Monograms</span>
-              <span className="px-4 py-1.5 rounded-full bg-white border border-[#E8DEC8] text-[#3D121A]">Curated Tasting Menus</span>
-              <span className="px-4 py-1.5 rounded-full bg-white border border-[#E8DEC8] text-[#3D121A]">Executive Gifting</span>
+              <span className="px-4 py-1.5 rounded-full bg-white border border-[#C4B19F] text-[#3D121A]">Velvet Keepsake Trunks</span>
+              <span className="px-4 py-1.5 rounded-full bg-white border border-[#C4B19F] text-[#3D121A]">Personalized Monograms</span>
+              <span className="px-4 py-1.5 rounded-full bg-white border border-[#C4B19F] text-[#3D121A]">Curated Tasting Menus</span>
+              <span className="px-4 py-1.5 rounded-full bg-white border border-[#C4B19F] text-[#3D121A]">Executive Gifting</span>
             </div>
           </div>
         </div>
 
         {/* Block 04: Chocolate Spreads (REPLACED: Authentic Hazelnut Cocoa Spread Jar) */}
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 sm:gap-12 items-center bg-[#FAF6F0] rounded-3xl p-6 sm:p-12 border border-[#EAE2D5] shadow-xs">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 sm:gap-12 items-center bg-[#FAF6F0] rounded-3xl p-6 sm:p-12 border border-[#C4B19F] shadow-xs">
           <div className="lg:col-span-6 lg:order-2 rounded-2xl overflow-hidden aspect-4/3 shadow-md bg-stone-200">
             <img
               src="https://images.unsplash.com/photo-1582293041079-7814c2f12063?auto=format&fit=crop&w=1000&q=80"
@@ -379,10 +379,10 @@ export default function ChocolateExperiencePage() {
               A revelation in pure indulgence. We roast certified Italian Piedmont IGP hazelnuts to a golden amber and stone-grind them slowly for 48 hours with Dutch Callebaut cocoa, real bourbon vanilla pods, and unrefined cane sugar. Spoonable, glossy, deeply aromatic, and strictly 100% palm-oil free.
             </p>
             <div className="pt-2 flex flex-wrap gap-2 text-xs font-semibold">
-              <span className="px-4 py-1.5 rounded-full bg-white border border-[#E8DEC8] text-[#3D121A]">45% Roasted Hazelnuts</span>
-              <span className="px-4 py-1.5 rounded-full bg-white border border-[#E8DEC8] text-[#3D121A]">Zero Palm Oil</span>
-              <span className="px-4 py-1.5 rounded-full bg-white border border-[#E8DEC8] text-[#3D121A]">Stone Ground 48 Hours</span>
-              <span className="px-4 py-1.5 rounded-full bg-white border border-[#E8DEC8] text-[#3D121A]">Pure Callebaut Cocoa</span>
+              <span className="px-4 py-1.5 rounded-full bg-white border border-[#C4B19F] text-[#3D121A]">45% Roasted Hazelnuts</span>
+              <span className="px-4 py-1.5 rounded-full bg-white border border-[#C4B19F] text-[#3D121A]">Zero Palm Oil</span>
+              <span className="px-4 py-1.5 rounded-full bg-white border border-[#C4B19F] text-[#3D121A]">Stone Ground 48 Hours</span>
+              <span className="px-4 py-1.5 rounded-full bg-white border border-[#C4B19F] text-[#3D121A]">Pure Callebaut Cocoa</span>
             </div>
           </div>
         </div>

@@ -506,7 +506,7 @@ export default function BakeryExperiencePage() {
   };
 
   return (
-    <div className="bg-[#FAF6EE] text-[#160B0D] min-h-screen luxury-cream-texture">
+    <div className="bg-[#D8C7B5] text-[#160B0D] min-h-screen luxury-cream-texture">
       
       {/* Toast Notification */}
       {toastMessage && (
@@ -568,7 +568,7 @@ export default function BakeryExperiencePage() {
       </section>
 
       {/* 2. INTRO SECTION (Matching Latte Global Cafe) */}
-      <section className="py-14 sm:py-20 leaf-pattern-light border-b border-[#E8DEC8]">
+      <section className="py-14 sm:py-20 leaf-pattern-light border-b border-[#C4B19F]">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 text-center space-y-4">
           <span className="text-[11px] font-bold uppercase tracking-[0.25em] text-[#9E7D46]">
             Fresh From The Oven
@@ -583,7 +583,7 @@ export default function BakeryExperiencePage() {
       </section>
 
       {/* 3. CATEGORY PILLS BAR (Quick Column Navigation - No Painful Scrolling) */}
-      <div className="sticky top-20 z-20 bg-white/95 backdrop-blur-md border-b border-[#E8DEC8] py-3 px-4 shadow-xs">
+      <div className="sticky top-20 z-20 bg-white/95 backdrop-blur-md border-b border-[#C4B19F] py-3 px-4 shadow-xs">
         <div className="max-w-7xl mx-auto flex items-center justify-start md:justify-center gap-2 overflow-x-auto scrollbar-none">
           <span className="text-[10px] uppercase font-bold tracking-widest text-[#9E7D46] mr-2 shrink-0 hidden sm:inline">
             Category Columns:
@@ -601,7 +601,7 @@ export default function BakeryExperiencePage() {
               className={`px-4 py-1.5 rounded-full text-xs font-semibold uppercase tracking-wider transition-all whitespace-nowrap shrink-0 ${
                 activeCategory === cat.key
                   ? 'bg-[#260D16] text-[#F6EAD5] border border-[#D8B879] shadow-sm'
-                  : 'bg-[#FAF6EE] text-[#4A3B34] hover:bg-white hover:text-[#260D16] border border-[#E8DEC8]'
+                  : 'bg-[#D8C7B5] text-[#4A3B34] hover:bg-white hover:text-[#260D16] border border-[#C4B19F]'
               }`}
             >
               {cat.label}
@@ -756,7 +756,7 @@ export default function BakeryExperiencePage() {
           COLUMN 2: DESSERTS & PETIT FOURS (Warm Light Section matching Latte Global Cafe)
       ========================================================================= */}
       {(activeCategory === 'all' || activeCategory === 'desserts') && (
-        <section id="desserts" className="py-20 sm:py-28 bg-[#FAF6EE] text-[#160B0D] relative overflow-hidden border-b border-[#E8DEC8]">
+        <section id="desserts" className="py-20 sm:py-28 bg-[#D8C7B5] text-[#160B0D] relative overflow-hidden border-b border-[#C4B19F]">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
             
             {/* Category Header */}
@@ -777,14 +777,14 @@ export default function BakeryExperiencePage() {
               <div className="flex items-center gap-3 shrink-0">
                 <button
                   onClick={() => handleScroll(dessertsRef, 'left', 'desserts')}
-                  className="w-10 h-10 rounded-full bg-white hover:bg-[#260D16] text-[#260D16] hover:text-[#F6EAD5] border border-[#E8DEC8] flex items-center justify-center transition-all shadow-xs"
+                  className="w-10 h-10 rounded-full bg-white hover:bg-[#260D16] text-[#260D16] hover:text-[#F6EAD5] border border-[#C4B19F] flex items-center justify-center transition-all shadow-xs"
                   aria-label="Previous desserts"
                 >
                   <ChevronLeft className="w-5 h-5" />
                 </button>
                 <button
                   onClick={() => handleScroll(dessertsRef, 'right', 'desserts')}
-                  className="w-10 h-10 rounded-full bg-white hover:bg-[#260D16] text-[#260D16] hover:text-[#F6EAD5] border border-[#E8DEC8] flex items-center justify-center transition-all shadow-xs"
+                  className="w-10 h-10 rounded-full bg-white hover:bg-[#260D16] text-[#260D16] hover:text-[#F6EAD5] border border-[#C4B19F] flex items-center justify-center transition-all shadow-xs"
                   aria-label="Next desserts"
                 >
                   <ChevronRight className="w-5 h-5" />
@@ -801,7 +801,7 @@ export default function BakeryExperiencePage() {
               {/* Floating Side Navigation Arrows */}
               <button
                 onClick={() => handleScroll(dessertsRef, 'left', 'desserts')}
-                className="absolute -left-3 sm:-left-5 top-1/2 -translate-y-1/2 z-20 w-11 h-11 rounded-full bg-white/95 text-[#260D16] border border-[#E8DEC8] flex items-center justify-center hover:border-[#D8B879] hover:bg-[#FAF6EE] shadow-xl transition opacity-75 group-hover/desserts:opacity-100"
+                className="absolute -left-3 sm:-left-5 top-1/2 -translate-y-1/2 z-20 w-11 h-11 rounded-full bg-white/95 text-[#260D16] border border-[#C4B19F] flex items-center justify-center hover:border-[#D8B879] hover:bg-[#D8C7B5] shadow-xl transition opacity-75 group-hover/desserts:opacity-100"
                 aria-label="Previous desserts"
               >
                 <ChevronLeft className="w-5 h-5" />
@@ -809,7 +809,7 @@ export default function BakeryExperiencePage() {
 
               <button
                 onClick={() => handleScroll(dessertsRef, 'right', 'desserts')}
-                className="absolute -right-3 sm:-right-5 top-1/2 -translate-y-1/2 z-20 w-11 h-11 rounded-full bg-white/95 text-[#260D16] border border-[#E8DEC8] flex items-center justify-center hover:border-[#D8B879] hover:bg-[#FAF6EE] shadow-xl transition opacity-75 group-hover/desserts:opacity-100"
+                className="absolute -right-3 sm:-right-5 top-1/2 -translate-y-1/2 z-20 w-11 h-11 rounded-full bg-white/95 text-[#260D16] border border-[#C4B19F] flex items-center justify-center hover:border-[#D8B879] hover:bg-[#D8C7B5] shadow-xl transition opacity-75 group-hover/desserts:opacity-100"
                 aria-label="Next desserts"
               >
                 <ChevronRight className="w-5 h-5" />
@@ -822,7 +822,7 @@ export default function BakeryExperiencePage() {
                 {BAKERY_DESSERTS.concat(BAKERY_DESSERTS).map((item, idx) => (
                   <div
                     key={`${item.id}-${idx}`}
-                    className="shrink-0 w-72 sm:w-80 group rounded-3xl overflow-hidden bg-white border border-[#E8DEC8] hover:border-[#D8B879] shadow-md hover:shadow-xl transition-all duration-300 flex flex-col justify-between"
+                    className="shrink-0 w-72 sm:w-80 group rounded-3xl overflow-hidden bg-white border border-[#C4B19F] hover:border-[#D8B879] shadow-md hover:shadow-xl transition-all duration-300 flex flex-col justify-between"
                   >
                   <div className="relative aspect-[4/3.8] overflow-hidden bg-[#F6EAD5]">
                     <img
@@ -833,7 +833,7 @@ export default function BakeryExperiencePage() {
                     />
                     <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent" />
                     
-                    <span className="absolute top-3 left-3 px-3 py-1 rounded-full text-[10px] uppercase font-bold tracking-widest bg-white/90 backdrop-blur-md text-[#260D16] border border-[#E8DEC8]">
+                    <span className="absolute top-3 left-3 px-3 py-1 rounded-full text-[10px] uppercase font-bold tracking-widest bg-white/90 backdrop-blur-md text-[#260D16] border border-[#C4B19F]">
                       {item.tag}
                     </span>
 
@@ -848,7 +848,7 @@ export default function BakeryExperiencePage() {
                         rating: 4.9,
                         is_eggless_available: true
                       })}
-                      className="absolute top-3 right-3 w-8 h-8 rounded-full bg-white/90 text-[#260D16] hover:text-[#D8B879] flex items-center justify-center backdrop-blur-md border border-[#E8DEC8] transition-all opacity-0 group-hover:opacity-100 shadow-sm"
+                      className="absolute top-3 right-3 w-8 h-8 rounded-full bg-white/90 text-[#260D16] hover:text-[#D8B879] flex items-center justify-center backdrop-blur-md border border-[#C4B19F] transition-all opacity-0 group-hover:opacity-100 shadow-sm"
                       title="Quick View"
                     >
                       <Eye className="w-4 h-4" />
@@ -878,7 +878,7 @@ export default function BakeryExperiencePage() {
                       </button>
                       <Link
                         to={`/product/${item.slug}`}
-                        className="p-2.5 rounded-full bg-[#FAF6EE] hover:bg-[#F2ECE0] text-[#260D16] transition border border-[#E8DEC8]"
+                        className="p-2.5 rounded-full bg-[#D8C7B5] hover:bg-[#F2ECE0] text-[#260D16] transition border border-[#C4B19F]"
                         title="View details"
                       >
                         <ArrowRight className="w-4 h-4" />
@@ -1080,13 +1080,13 @@ export default function BakeryExperiencePage() {
 
                 {/* 3 Italian Gelato Craft Pillars */}
                 <div className="pt-2 flex flex-wrap items-center gap-2.5 sm:gap-4 text-[11px] font-semibold text-[#664638]">
-                  <span className="inline-flex items-center gap-1.5 bg-white/70 px-3 py-1 rounded-full border border-[#E8DEC8]">
+                  <span className="inline-flex items-center gap-1.5 bg-white/70 px-3 py-1 rounded-full border border-[#C4B19F]">
                     <span className="text-[#C5A059]">✦</span> Zero Artificial Emulsifiers
                   </span>
-                  <span className="inline-flex items-center gap-1.5 bg-white/70 px-3 py-1 rounded-full border border-[#E8DEC8]">
+                  <span className="inline-flex items-center gap-1.5 bg-white/70 px-3 py-1 rounded-full border border-[#C4B19F]">
                     <span className="text-[#C5A059]">✦</span> Pure Sicilian Bronte DOP Pistachios
                   </span>
-                  <span className="inline-flex items-center gap-1.5 bg-white/70 px-3 py-1 rounded-full border border-[#E8DEC8]">
+                  <span className="inline-flex items-center gap-1.5 bg-white/70 px-3 py-1 rounded-full border border-[#C4B19F]">
                     <span className="text-[#C5A059]">✦</span> 100% Dairy-Free Fruit Sorbets
                   </span>
                 </div>
@@ -1205,7 +1205,7 @@ export default function BakeryExperiencePage() {
                       </button>
                       <Link
                         to={`/product/${item.slug}`}
-                        className="p-2.5 rounded-full bg-[#FAF6EE] hover:bg-[#F2ECE0] text-[#260D16] transition border border-[#E8DEC8] hover:border-[#D8B879]"
+                        className="p-2.5 rounded-full bg-[#D8C7B5] hover:bg-[#F2ECE0] text-[#260D16] transition border border-[#C4B19F] hover:border-[#D8B879]"
                         title="View details"
                       >
                         <ArrowRight className="w-4 h-4" />

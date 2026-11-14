@@ -29,7 +29,7 @@ export default function ProductCard({ product, onQuickView }) {
     <div className="group relative bg-white rounded-2xl overflow-hidden border border-[#EAE3D5] hover:border-[#D8B879] hover:shadow-[0_16px_40px_rgba(38,13,22,0.09)] transition-all duration-500 flex flex-col justify-between">
       
       {/* Product Image Box with subtle zoom */}
-      <div className="relative aspect-4/3 sm:aspect-square overflow-hidden bg-[#FAF6EE]">
+      <div className="relative aspect-4/3 sm:aspect-square overflow-hidden bg-[#D8C7B5]">
         <Link to={`/product/${product.slug}`} className="block w-full h-full">
           <img
             src={product.image_url}
@@ -114,7 +114,7 @@ export default function ProductCard({ product, onQuickView }) {
                 e.preventDefault();
                 toggleWishlist(product);
               }}
-              className={`p-1.5 rounded-full hover:bg-[#FAF6EE] text-gray-400 hover:text-[#260D16] transition ${
+              className={`p-1.5 rounded-full hover:bg-[#D8C7B5] text-gray-400 hover:text-[#260D16] transition ${
                 isFavorited ? 'text-[#260D16]' : ''
               }`}
               title={isFavorited ? "Remove from wishlist" : "Add to wishlist"}

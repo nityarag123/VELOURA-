@@ -17,7 +17,10 @@ export default {
           // Backwards compatibility
           maroon: '#260D16',
           deep: '#160B0D',
-          linen: '#FAF6EE',
+          linen: '#D8C7B5',
+          mocha: '#D8C7B5',
+          mochaLight: '#E8DDD2',
+          mochaDark: '#BFA995',
           sand: '#ECE5D8',
           charcoal: '#160B0D',
         }

@@ -307,13 +307,13 @@ export default function Header() {
       </div>
 
       {/* 2. MAIN LUXURY NAVBAR (Matching Latte Global Cafe aesthetic) */}
-      <header className="sticky top-0 z-30 luxury-nav-surface border-b border-[#E8DEC8] shadow-[0_2px_18px_rgba(74,21,37,0.04)] transition-all">
+      <header className="sticky top-0 z-30 luxury-nav-surface border-b border-[#C4B19F] shadow-[0_2px_18px_rgba(74,21,37,0.04)] transition-all">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between gap-4">
           
           {/* Mobile menu trigger */}
           <button 
             onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-            className="p-2 text-[#3D121A] hover:bg-[#FAF5EE] rounded-xl lg:hidden transition"
+            className="p-2 text-[#3D121A] hover:bg-[#E8DDD2] rounded-xl lg:hidden transition"
             aria-label="Toggle menu"
           >
             {isMobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
@@ -391,10 +391,10 @@ export default function Header() {
                   <Link
                     to="/coffee"
                     onClick={() => setIsIndulgenceOpen(false)}
-                    className="flex items-center justify-between px-4 py-2.5 text-xs text-[#2D2020] hover:bg-[#FAF5EE] hover:text-[#3D121A] transition group"
+                    className="flex items-center justify-between px-4 py-2.5 text-xs text-[#2D2020] hover:bg-[#E8DDD2] hover:text-[#3D121A] transition group"
                   >
                     <div className="flex items-center gap-2.5">
-                      <div className="w-7 h-7 rounded-lg bg-[#FAF5EE] flex items-center justify-center text-[#C5A059] group-hover:bg-white group-hover:shadow-xs transition">
+                      <div className="w-7 h-7 rounded-lg bg-[#E8DDD2] flex items-center justify-center text-[#C5A059] group-hover:bg-white group-hover:shadow-xs transition">
                         <LuxuryCoffeeIcon className="w-3.5 h-3.5" />
                       </div>
                       <div>
@@ -407,10 +407,10 @@ export default function Header() {
                   <Link
                     to="/bakery?category=cakes"
                     onClick={() => setIsIndulgenceOpen(false)}
-                    className="flex items-center justify-between px-4 py-2.5 text-xs text-[#2D2020] hover:bg-[#FAF5EE] hover:text-[#3D121A] transition group"
+                    className="flex items-center justify-between px-4 py-2.5 text-xs text-[#2D2020] hover:bg-[#E8DDD2] hover:text-[#3D121A] transition group"
                   >
                     <div className="flex items-center gap-2.5">
-                      <div className="w-7 h-7 rounded-lg bg-[#FAF5EE] flex items-center justify-center text-[#C5A059] group-hover:bg-white group-hover:shadow-xs transition">
+                      <div className="w-7 h-7 rounded-lg bg-[#E8DDD2] flex items-center justify-center text-[#C5A059] group-hover:bg-white group-hover:shadow-xs transition">
                         <LuxuryCakeIcon className="w-3.5 h-3.5" />
                       </div>
                       <div>
@@ -423,10 +423,10 @@ export default function Header() {
                   <Link
                     to="/bakery?category=boulangerie"
                     onClick={() => setIsIndulgenceOpen(false)}
-                    className="flex items-center justify-between px-4 py-2.5 text-xs text-[#2D2020] hover:bg-[#FAF5EE] hover:text-[#3D121A] transition group"
+                    className="flex items-center justify-between px-4 py-2.5 text-xs text-[#2D2020] hover:bg-[#E8DDD2] hover:text-[#3D121A] transition group"
                   >
                     <div className="flex items-center gap-2.5">
-                      <div className="w-7 h-7 rounded-lg bg-[#FAF5EE] flex items-center justify-center text-[#C5A059] group-hover:bg-white group-hover:shadow-xs transition">
+                      <div className="w-7 h-7 rounded-lg bg-[#E8DDD2] flex items-center justify-center text-[#C5A059] group-hover:bg-white group-hover:shadow-xs transition">
                         <LuxuryCroissantIcon className="w-3.5 h-3.5" />
                       </div>
                       <div>
@@ -439,10 +439,10 @@ export default function Header() {
                   <Link
                     to="/bakery?category=gelato"
                     onClick={() => setIsIndulgenceOpen(false)}
-                    className="flex items-center justify-between px-4 py-2.5 text-xs text-[#2D2020] hover:bg-[#FAF5EE] hover:text-[#3D121A] transition group"
+                    className="flex items-center justify-between px-4 py-2.5 text-xs text-[#2D2020] hover:bg-[#E8DDD2] hover:text-[#3D121A] transition group"
                   >
                     <div className="flex items-center gap-2.5">
-                      <div className="w-7 h-7 rounded-lg bg-[#FAF5EE] flex items-center justify-center text-[#C5A059] group-hover:bg-white group-hover:shadow-xs transition">
+                      <div className="w-7 h-7 rounded-lg bg-[#E8DDD2] flex items-center justify-center text-[#C5A059] group-hover:bg-white group-hover:shadow-xs transition">
                         <LuxuryGelatoIcon className="w-3.5 h-3.5" />
                       </div>
                       <div>
@@ -455,10 +455,10 @@ export default function Header() {
                   <Link
                     to="/chocolate"
                     onClick={() => setIsIndulgenceOpen(false)}
-                    className="flex items-center justify-between px-4 py-2.5 text-xs text-[#2D2020] hover:bg-[#FAF5EE] hover:text-[#3D121A] transition group"
+                    className="flex items-center justify-between px-4 py-2.5 text-xs text-[#2D2020] hover:bg-[#E8DDD2] hover:text-[#3D121A] transition group"
                   >
                     <div className="flex items-center gap-2.5">
-                      <div className="w-7 h-7 rounded-lg bg-[#FAF5EE] flex items-center justify-center text-[#C5A059] group-hover:bg-white group-hover:shadow-xs transition">
+                      <div className="w-7 h-7 rounded-lg bg-[#E8DDD2] flex items-center justify-center text-[#C5A059] group-hover:bg-white group-hover:shadow-xs transition">
                         <LuxuryChocolateIcon className="w-3.5 h-3.5" />
                       </div>
                       <div>
@@ -530,7 +530,7 @@ export default function Header() {
                           key={item.id}
                           to={`/product/${item.slug}`}
                           onClick={() => setShowSearchDropdown(false)}
-                          className="flex items-center gap-3 px-4 py-2 hover:bg-[#FAF5EE] transition"
+                          className="flex items-center gap-3 px-4 py-2 hover:bg-[#E8DDD2] transition"
                         >
                           <img 
                             src={item.image_url} 
@@ -566,7 +566,7 @@ export default function Header() {
             {/* Mobile Search Toggle Button */}
             <button 
               onClick={() => setIsSearchOpenMobile(!isSearchOpenMobile)}
-              className="p-2 text-[#3D121A] hover:bg-[#FAF5EE] rounded-full md:hidden transition"
+              className="p-2 text-[#3D121A] hover:bg-[#E8DDD2] rounded-full md:hidden transition"
               aria-label="Search"
             >
               <Search className="w-5 h-5" />
@@ -575,7 +575,7 @@ export default function Header() {
             {/* Shopping Bag Trigger */}
             <button
               onClick={() => setIsCartOpen(true)}
-              className="p-2 text-[#3D121A] hover:text-[#250910] hover:bg-[#FAF5EE] rounded-full relative transition-all border border-transparent hover:border-[#E8DEC8]"
+              className="p-2 text-[#3D121A] hover:text-[#250910] hover:bg-[#E8DDD2] rounded-full relative transition-all border border-transparent hover:border-[#E8DEC8]"
               aria-label="Shopping Bag"
             >
               <ShoppingCart className="w-5 h-5" />
@@ -620,7 +620,7 @@ export default function Header() {
                   <Link
                     to="/profile"
                     onClick={() => setIsUserMenuOpen(false)}
-                    className="flex items-center gap-2 px-4 py-2 text-xs text-gray-700 hover:bg-[#FAF5EE] hover:text-[#4A1525] transition"
+                    className="flex items-center gap-2 px-4 py-2 text-xs text-gray-700 hover:bg-[#E8DDD2] hover:text-[#4A1525] transition"
                   >
                     <UserIcon className="w-3.5 h-3.5" />
                     <span>My Profile & Orders</span>
@@ -630,7 +630,7 @@ export default function Header() {
                     <Link
                       to="/admin"
                       onClick={() => setIsUserMenuOpen(false)}
-                      className="flex items-center gap-2 px-4 py-2 text-xs text-[#4A1525] font-bold hover:bg-[#FAF5EE] transition"
+                      className="flex items-center gap-2 px-4 py-2 text-xs text-[#4A1525] font-bold hover:bg-[#E8DDD2] transition"
                     >
                       <Shield className="w-3.5 h-3.5 text-[#C5A059]" />
                       <span>👑 Admin Console & Catalog</span>
@@ -639,7 +639,7 @@ export default function Header() {
                     <Link
                       to="/login?tab=admin"
                       onClick={() => setIsUserMenuOpen(false)}
-                      className="flex items-center gap-2 px-4 py-2 text-xs text-[#8C6D4C] font-bold hover:bg-[#FAF5EE] transition"
+                      className="flex items-center gap-2 px-4 py-2 text-xs text-[#8C6D4C] font-bold hover:bg-[#E8DDD2] transition"
                     >
                       <Shield className="w-3.5 h-3.5" />
                       <span>Switch to Admin Console</span>
@@ -676,7 +676,7 @@ export default function Header() {
         </div>
 
         {/* 3. LUXURY HORIZONTAL CATEGORY MENU BAR WITH 1-CLICK DIRECT NAVIGATION */}
-        <nav aria-label="Curated Categories" className="bg-gradient-to-r from-[#F4EEE2] via-[#FAF6EE] to-[#F4EEE2] border-t border-[#E8DEC8] border-b border-[#DFD3C0] px-4 sm:px-8 py-2.5 sm:py-3 overflow-x-auto scrollbar-none shadow-[0_2px_8px_rgba(43,14,22,0.02)]">
+        <nav aria-label="Curated Categories" className="bg-gradient-to-r from-[#D0BEAB] via-[#D8C7B5] to-[#D0BEAB] border-t border-[#C4B19F] border-b border-[#B8A490] px-4 sm:px-8 py-2.5 sm:py-3 overflow-x-auto scrollbar-none shadow-[0_2px_8px_rgba(43,14,22,0.02)]">
           <div className="max-w-7xl mx-auto flex items-center justify-start md:justify-center gap-1.5 sm:gap-2 text-xs font-semibold whitespace-nowrap">
             {CATEGORY_NAV_ITEMS.map((item, index) => {
               const active = item.isActive(location);
@@ -694,7 +694,7 @@ export default function Header() {
                     className={`nav-word-link word-click group flex items-center gap-2 py-1.5 px-3.5 rounded-full transition-all duration-300 ${
                       active
                         ? 'bg-gradient-to-r from-[#3D121A] via-[#4D1726] to-[#340C16] text-[#FFFDF9] border border-[#C5A059]/70 shadow-[0_3px_12px_rgba(61,18,26,0.22)] ring-1 ring-[#C5A059]/25 font-bold'
-                        : 'text-[#4A3B34] hover:text-[#280911] hover:bg-white/90 hover:border-[#E5DAC8] border border-transparent shadow-none hover:shadow-2xs font-medium'
+                        : 'text-[#4A3B34] hover:text-[#280911] hover:bg-[#E8DDD2]/90 hover:border-[#C4B19F] border border-transparent shadow-none hover:shadow-2xs font-medium'
                     }`}
                   >
                     <IconComp
@@ -716,7 +716,7 @@ export default function Header() {
 
         {/* Mobile Search Input Drawer */}
         {isSearchOpenMobile && (
-          <div className="md:hidden border-t border-[#EFE8DF] bg-[#FAF5EE] px-4 py-2.5">
+          <div className="md:hidden border-t border-[#EFE8DF] bg-[#E8DDD2] px-4 py-2.5">
             <form onSubmit={handleSearchSubmit} className="relative">
               <input
                 type="text"
@@ -763,27 +763,27 @@ export default function Header() {
               <div className="py-2 border-b border-[#F4EFEA]">
                 <p className="text-xs uppercase tracking-widest text-[#8C6D4C] font-bold mb-2">Curated Collections</p>
                 <div className="grid grid-cols-2 gap-2 text-xs font-medium">
-                  <Link to="/bakery?category=cakes" onClick={() => setIsMobileMenuOpen(false)} className="flex items-center gap-2 p-2.5 rounded-xl bg-[#FAF5EE] hover:bg-[#F2ECE0] text-[#3D121A] border border-[#E8DEC8]/60 font-semibold">
+                  <Link to="/bakery?category=cakes" onClick={() => setIsMobileMenuOpen(false)} className="flex items-center gap-2 p-2.5 rounded-xl bg-[#E8DDD2] hover:bg-[#F2ECE0] text-[#3D121A] border border-[#E8DEC8]/60 font-semibold">
                     <LuxuryCakeIcon className="w-4 h-4 text-[#C5A059]" />
                     <span>Cakes & Gateaux</span>
                   </Link>
-                  <Link to="/coffee" onClick={() => setIsMobileMenuOpen(false)} className="flex items-center gap-2 p-2.5 rounded-xl bg-[#FAF5EE] hover:bg-[#F2ECE0] text-[#3D121A] border border-[#E8DEC8]/60 font-semibold">
+                  <Link to="/coffee" onClick={() => setIsMobileMenuOpen(false)} className="flex items-center gap-2 p-2.5 rounded-xl bg-[#E8DDD2] hover:bg-[#F2ECE0] text-[#3D121A] border border-[#E8DEC8]/60 font-semibold">
                     <LuxuryCoffeeIcon className="w-4 h-4 text-[#C5A059]" />
                     <span>Specialty Coffee</span>
                   </Link>
-                  <Link to="/bakery?category=boulangerie" onClick={() => setIsMobileMenuOpen(false)} className="flex items-center gap-2 p-2.5 rounded-xl bg-[#FAF5EE] hover:bg-[#F2ECE0] text-[#3D121A] border border-[#E8DEC8]/60 font-medium">
+                  <Link to="/bakery?category=boulangerie" onClick={() => setIsMobileMenuOpen(false)} className="flex items-center gap-2 p-2.5 rounded-xl bg-[#E8DDD2] hover:bg-[#F2ECE0] text-[#3D121A] border border-[#E8DEC8]/60 font-medium">
                     <LuxuryCroissantIcon className="w-4 h-4 text-[#C5A059]" />
                     <span>Boulangerie</span>
                   </Link>
-                  <Link to="/bakery?category=gelato" onClick={() => setIsMobileMenuOpen(false)} className="flex items-center gap-2 p-2.5 rounded-xl bg-[#FAF5EE] hover:bg-[#F2ECE0] text-[#3D121A] border border-[#E8DEC8]/60 font-medium">
+                  <Link to="/bakery?category=gelato" onClick={() => setIsMobileMenuOpen(false)} className="flex items-center gap-2 p-2.5 rounded-xl bg-[#E8DDD2] hover:bg-[#F2ECE0] text-[#3D121A] border border-[#E8DEC8]/60 font-medium">
                     <LuxuryGelatoIcon className="w-4 h-4 text-[#C5A059]" />
                     <span>Gelato</span>
                   </Link>
-                  <Link to="/products?category=cafe-savory" onClick={() => setIsMobileMenuOpen(false)} className="flex items-center gap-2 p-2.5 rounded-xl bg-[#FAF5EE] hover:bg-[#F2ECE0] text-[#3D121A] border border-[#E8DEC8]/60 font-medium">
+                  <Link to="/products?category=cafe-savory" onClick={() => setIsMobileMenuOpen(false)} className="flex items-center gap-2 p-2.5 rounded-xl bg-[#E8DDD2] hover:bg-[#F2ECE0] text-[#3D121A] border border-[#E8DEC8]/60 font-medium">
                     <LuxuryCuisineIcon className="w-4 h-4 text-[#C5A059]" />
                     <span>Global Cuisine</span>
                   </Link>
-                  <Link to="/chocolate" onClick={() => setIsMobileMenuOpen(false)} className="flex items-center gap-2 p-2.5 rounded-xl bg-[#FAF5EE] hover:bg-[#F2ECE0] text-[#3D121A] border border-[#E8DEC8]/60 font-semibold">
+                  <Link to="/chocolate" onClick={() => setIsMobileMenuOpen(false)} className="flex items-center gap-2 p-2.5 rounded-xl bg-[#E8DDD2] hover:bg-[#F2ECE0] text-[#3D121A] border border-[#E8DEC8]/60 font-semibold">
                     <LuxuryChocolateIcon className="w-4 h-4 text-[#C5A059]" />
                     <span>Chocolates</span>
                   </Link>
@@ -879,7 +879,7 @@ export default function Header() {
             </button>
 
             <div className="text-center mb-5">
-              <div className="w-12 h-12 rounded-full bg-[#FAF5EE] text-[#4A1525] flex items-center justify-center mx-auto mb-2 border border-[#E8DEC8]">
+              <div className="w-12 h-12 rounded-full bg-[#E8DDD2] text-[#4A1525] flex items-center justify-center mx-auto mb-2 border border-[#E8DEC8]">
                 <MapPin className="w-6 h-6 text-[#C5A059]" />
               </div>
               <h3 className="font-serif text-2xl font-bold text-[#3D121A]">Select Delivery Destination</h3>
@@ -894,7 +894,7 @@ export default function Header() {
                   <button
                     key={c.name}
                     onClick={() => handleCitySelect(c)}
-                    className="flex flex-col items-start p-2.5 rounded-xl border border-[#EFE8DF] hover:border-[#4A1525] hover:bg-[#FAF5EE] text-left transition"
+                    className="flex flex-col items-start p-2.5 rounded-xl border border-[#EFE8DF] hover:border-[#4A1525] hover:bg-[#E8DDD2] text-left transition"
                   >
                     <span className="text-xs font-bold text-gray-900">{c.name}</span>
                     <span className="text-[10px] text-gray-400">Pincode {c.pincode}</span>

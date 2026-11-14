@@ -75,7 +75,7 @@ export default function AutoScrollCarousel({
     <section
       id={id}
       className={`py-16 sm:py-24 relative overflow-hidden transition-colors ${
-        isDark ? 'bg-[#2A0B13] text-[#FAF5EE]' : 'bg-[#FAF6EE] text-[#2D2020] luxury-cream-texture border-y border-[#EAE2D5]'
+        isDark ? 'bg-[#2A0B13] text-[#FAF5EE]' : 'bg-[#D8C7B5] text-[#160B0D] luxury-cream-texture border-y border-[#C4B19F]'
       }`}
     >
       <div

@@ -439,7 +439,7 @@ export default function HomePage() {
   };
 
   return (
-    <div className="space-y-0 pb-16 bg-[#FAF6EE] text-[#160B0D]">
+    <div className="space-y-0 pb-16 bg-[#D8C7B5] text-[#160B0D]">
       
       {/* ============================================================
           SECTION 1: FULL-WIDTH EDITORIAL HERO CAROUSEL
@@ -588,10 +588,10 @@ export default function HomePage() {
           </h2>
           <div className="flex items-center justify-center gap-3 pt-1">
             <span className="h-px w-12 bg-[#D8B879]/50" />
-            <span className="w-2 h-2 rotate-45 border border-[#D8B879] bg-[#FAF6EE]" />
+            <span className="w-2 h-2 rotate-45 border border-[#D8B879] bg-[#D8C7B5]" />
             <span className="h-px w-12 bg-[#D8B879]/50" />
           </div>
-          <p className="text-xs sm:text-sm text-gray-600 leading-relaxed font-normal">
+          <p className="text-xs sm:text-sm text-[#3D2820] leading-relaxed font-normal">
             From single-estate Belgian chocolate gateaux to delicate morning viennoiserie, every creation is handcrafted daily with noble ingredients.
           </p>
         </div>
@@ -601,7 +601,7 @@ export default function HomePage() {
             <Link
               key={col.id}
               to={col.link}
-              className="group relative rounded-3xl overflow-hidden h-[460px] sm:h-[480px] flex flex-col justify-between p-6 sm:p-7 border border-[#EAE3D5] hover:border-[#D8B879] shadow-sm hover:shadow-2xl transition-all duration-500 bg-[#160B0D]"
+              className="group relative rounded-3xl overflow-hidden h-[460px] sm:h-[480px] flex flex-col justify-between p-6 sm:p-7 border border-[#C4B19F] hover:border-[#D8B879] shadow-sm hover:shadow-2xl transition-all duration-500 bg-[#160B0D]"
             >
               {/* Full-Bleed Background Image (fills 100% of the card, zero white gaps) */}
               <img
@@ -649,7 +649,7 @@ export default function HomePage() {
       {/* ============================================================
           SECTION 3: BESTSELLING CREATIONS (Dynamic Menu with Tabs & Cards)
           ============================================================ */}
-      <section className="py-20 sm:py-28 bg-white border-y border-[#EAE3D5]" id="cakes">
+      <section className="py-20 sm:py-28 bg-[#D8C7B5] border-y border-[#C4B19F]" id="cakes">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-12">
           
           <div className="flex flex-col md:flex-row items-center justify-between gap-6">
@@ -681,7 +681,7 @@ export default function HomePage() {
                   className={`px-4 py-2 rounded-full text-xs font-semibold tracking-wider transition-all duration-300 ${
                     activeCategoryTab === tab.id
                       ? 'bg-[#260D16] text-[#FAF5EE] shadow-md border border-[#260D16] scale-105'
-                      : 'bg-[#FAF6EE] hover:bg-white text-gray-700 border border-[#EAE3D5] hover:border-[#D8B879]'
+                      : 'bg-[#E8DDD2] hover:bg-[#F3ECE4] text-[#260D16] border border-[#C4B19F] hover:border-[#D8B879]'
                   }`}
                 >
                   {tab.label}
@@ -815,10 +815,10 @@ export default function HomePage() {
           </h2>
           <div className="flex items-center justify-center gap-3 pt-1">
             <span className="h-px w-12 bg-[#D8B879]/50" />
-            <span className="w-2 h-2 rotate-45 border border-[#D8B879] bg-[#FAF6EE]" />
+            <span className="w-2 h-2 rotate-45 border border-[#D8B879] bg-[#D8C7B5]" />
             <span className="h-px w-12 bg-[#D8B879]/50" />
           </div>
-          <p className="text-xs sm:text-sm text-gray-600 leading-relaxed font-normal">
+          <p className="text-xs sm:text-sm text-[#3D2820] leading-relaxed font-normal">
             Laminated over 72 hours with pure cultured Normandy butter. Ultra-crisp exterior with a warm, melt-in-your-mouth honeycomb crumb.
           </p>
         </div>
@@ -999,10 +999,10 @@ export default function HomePage() {
               </h2>
             </div>
 
-            <p className="text-xs sm:text-sm text-gray-600 leading-relaxed font-normal">
+            <p className="text-xs sm:text-sm text-[#3D2820] leading-relaxed font-normal">
               A boutique studio of plated desserts, ceremonial teas, and French pâtisserie — where slow craftsmanship, noble ingredients, and the warm nostalgia of European dining salons are reinterpreted through an editorial lens.
             </p>
-            <p className="text-xs sm:text-sm text-gray-600 leading-relaxed font-normal">
+            <p className="text-xs sm:text-sm text-[#3D2820] leading-relaxed font-normal">
               Established with an unyielding dedication to purity, every creation is baked daily in small batches with cultured Normandy butter, Callebaut Belgian cocoa, and farm-fresh harvest berries. We never cut corners with premixes or synthetic essences.
             </p>
 
@@ -1041,7 +1041,7 @@ export default function HomePage() {
       {/* ============================================================
           SECTION 8: CHEF'S SIGNATURE CREATIONS
           ============================================================ */}
-      <section className="py-20 sm:py-28 bg-white border-y border-[#EAE3D5]">
+      <section className="py-20 sm:py-28 bg-[#D8C7B5] border-y border-[#C4B19F]">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-12">
           
           <div className="text-center max-w-3xl mx-auto space-y-3">
@@ -1053,7 +1053,7 @@ export default function HomePage() {
             </h2>
             <div className="flex items-center justify-center gap-3 pt-1">
               <span className="h-px w-12 bg-[#D8B879]/50" />
-              <span className="w-2 h-2 rotate-45 border border-[#D8B879] bg-white" />
+              <span className="w-2 h-2 rotate-45 border border-[#D8B879] bg-[#D8C7B5]" />
               <span className="h-px w-12 bg-[#D8B879]/50" />
             </div>
             <p className="text-xs sm:text-sm text-gray-600 font-normal">
@@ -1065,7 +1065,7 @@ export default function HomePage() {
             {CHEF_SIGNATURES.map((sig) => (
               <div 
                 key={sig.id}
-                className="group rounded-3xl overflow-hidden bg-[#FAF6EE] border border-[#EAE3D5] hover:border-[#D8B879] shadow-sm hover:shadow-2xl transition-all duration-500 flex flex-col justify-between"
+                className="group rounded-3xl overflow-hidden bg-[#E8DDD2] border border-[#C4B19F] hover:border-[#D8B879] shadow-sm hover:shadow-2xl transition-all duration-500 flex flex-col justify-between"
               >
                 <div className="relative aspect-4/3 overflow-hidden bg-black/10">
                   <img
@@ -1177,7 +1177,7 @@ export default function HomePage() {
       {/* ============================================================
           SECTION 10: CUSTOMER TESTIMONIALS & PRESS MENTIONS
           ============================================================ */}
-      <section className="py-20 sm:py-28 bg-[#FAF6EE] border-t border-[#EAE3D5]">
+      <section className="py-20 sm:py-28 bg-[#D8C7B5] border-t border-[#C4B19F]">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-12">
           
           <div className="text-center max-w-3xl mx-auto space-y-3">
@@ -1189,7 +1189,7 @@ export default function HomePage() {
             </h2>
             <div className="flex items-center justify-center gap-3 pt-1">
               <span className="h-px w-12 bg-[#D8B879]/50" />
-              <span className="w-2 h-2 rotate-45 border border-[#D8B879] bg-[#FAF6EE]" />
+              <span className="w-2 h-2 rotate-45 border border-[#D8B879] bg-[#D8C7B5]" />
               <span className="h-px w-12 bg-[#D8B879]/50" />
             </div>
           </div>
@@ -1239,10 +1239,10 @@ export default function HomePage() {
             </h2>
             <div className="flex items-center justify-center gap-3 pt-1">
               <span className="h-px w-12 bg-[#C5A059]/40" />
-              <span className="w-2 h-2 rotate-45 border border-[#C5A059] bg-[#FAF6EE]" />
+              <span className="w-2 h-2 rotate-45 border border-[#C5A059] bg-[#D8C7B5]" />
               <span className="h-px w-12 bg-[#C5A059]/40" />
             </div>
-            <p className="text-xs sm:text-sm text-gray-600 leading-relaxed font-normal">
+            <p className="text-xs sm:text-sm text-[#3D2820] leading-relaxed font-normal">
               Every table at Veloura offers a distinct sensory mood. Choose your preferred seat from sunlit botanical alcoves to plush velvet booths, and preview its authentic setting before you arrive.
             </p>
 
@@ -1261,7 +1261,7 @@ export default function HomePage() {
                   className={`px-4 py-2 rounded-full text-xs font-semibold tracking-wider transition-all duration-300 ${
                     activeZoneFilter === zone.id
                       ? 'bg-[#260D16] text-[#FAF5EE] shadow-md scale-105 border border-[#260D16]'
-                      : 'bg-white/80 hover:bg-white text-gray-700 border border-[#E8DEC8] hover:border-[#C5A059]'
+                      : 'bg-[#E8DDD2] hover:bg-[#F3ECE4] text-[#260D16] border border-[#C4B19F] hover:border-[#C5A059]'
                   }`}
                 >
                   {zone.label}
@@ -1277,7 +1277,7 @@ export default function HomePage() {
               return (
                 <div
                   key={table.id}
-                  className={`group rounded-3xl overflow-hidden bg-white transition-all duration-300 flex flex-col justify-between border ${
+                  className={`group rounded-3xl overflow-hidden bg-[#E8DDD2] transition-all duration-300 flex flex-col justify-between border ${
                     isSelected
                       ? 'border-[#C5A059] shadow-2xl ring-2 ring-[#C5A059]/30 translate-y-[-4px]'
                       : 'border-[#E8DEC8] hover:border-[#C5A059] shadow-sm hover:shadow-xl'
@@ -1359,7 +1359,7 @@ export default function HomePage() {
                         className={`flex-1 py-2.5 px-3 rounded-xl text-xs font-bold tracking-wider uppercase transition-all duration-300 flex items-center justify-center gap-1.5 ${
                           isSelected
                             ? 'bg-[#C5A059] text-[#2B0E16] shadow-md hover:bg-[#d6b168]'
-                            : 'bg-[#FAF5EE] hover:bg-[#260D16] text-[#260D16] hover:text-white border border-[#E8DEC8]'
+                            : 'bg-[#E8DDD2] hover:bg-[#260D16] text-[#260D16] hover:text-white border border-[#C4B19F]'
                         }`}
                       >
                         {isSelected ? (
@@ -1621,7 +1621,7 @@ export default function HomePage() {
                 <h2 className="font-serif text-3xl sm:text-5xl font-bold text-[#160B0D] leading-tight">
                   Where everyday moments feel elevated
                 </h2>
-                <p className="text-xs sm:text-sm text-gray-600 leading-relaxed font-normal">
+                <p className="text-xs sm:text-sm text-[#3D2820] leading-relaxed font-normal">
                   Visit Veloura Pâtisserie & Cafe across major metro destinations to experience handcrafted desserts, specialty roastery coffees, and warm hospitality in spaces created for connection.
                 </p>
               </div>
@@ -1638,7 +1638,7 @@ export default function HomePage() {
                   <p className="text-xs text-gray-600 font-medium">Road No. 36, Jubilee Hills, Hyderabad, Telangana – 500033</p>
                 </div>
 
-                <div className="p-4 rounded-2xl bg-white border border-[#E8DEC8] space-y-1">
+                <div className="p-4 rounded-2xl bg-[#E8DDD2] border border-[#C4B19F] space-y-1">
                   <div className="flex items-center justify-between">
                     <h5 className="font-serif font-bold text-base text-[#160B0D]">Veloura Flagship Roastery</h5>
                     <span className="text-[10px] font-bold text-[#C5A059] uppercase tracking-wider bg-[#FAF5EE] px-2 py-0.5 rounded-full">Mumbai</span>
@@ -1646,7 +1646,7 @@ export default function HomePage() {
                   <p className="text-xs text-gray-600">Turner Road, Bandra West, Mumbai, Maharashtra – 400050</p>
                 </div>
 
-                <div className="p-4 rounded-2xl bg-white border border-[#E8DEC8] space-y-1">
+                <div className="p-4 rounded-2xl bg-[#E8DDD2] border border-[#C4B19F] space-y-1">
                   <div className="flex items-center justify-between">
                     <h5 className="font-serif font-bold text-base text-[#160B0D]">Veloura Pâtisserie & Tea Salon</h5>
                     <span className="text-[10px] font-bold text-[#C5A059] uppercase tracking-wider bg-[#FAF5EE] px-2 py-0.5 rounded-full">Bengaluru</span>
@@ -1654,7 +1654,7 @@ export default function HomePage() {
                   <p className="text-xs text-gray-600">100 Feet Road, Indiranagar, Bengaluru, Karnataka – 560038</p>
                 </div>
 
-                <div className="p-4 rounded-2xl bg-white border border-[#E8DEC8] space-y-1">
+                <div className="p-4 rounded-2xl bg-[#E8DDD2] border border-[#C4B19F] space-y-1">
                   <div className="flex items-center justify-between">
                     <h5 className="font-serif font-bold text-base text-[#160B0D]">Veloura Bistro & Bakehouse</h5>
                     <span className="text-[10px] font-bold text-[#C5A059] uppercase tracking-wider bg-[#FAF5EE] px-2 py-0.5 rounded-full">New Delhi</span>
@@ -1686,7 +1686,7 @@ export default function HomePage() {
       {/* Table Ambiance Photo Modal / Lightbox */}
       {tableModal && (
         <div className="fixed inset-0 z-50 bg-black/80 backdrop-blur-md flex items-center justify-center p-4 animate-in fade-in">
-          <div className="bg-[#FAF6EE] max-w-2xl w-full rounded-3xl overflow-hidden shadow-2xl border border-[#E8DEC8] flex flex-col relative animate-in zoom-in-95">
+          <div className="bg-[#E8DDD2] max-w-2xl w-full rounded-3xl overflow-hidden shadow-2xl border border-[#C4B19F] flex flex-col relative animate-in zoom-in-95">
             <div className="relative aspect-16/10 w-full overflow-hidden bg-black">
               <img
                 src={tableModal.image}
@@ -1771,14 +1771,14 @@ export default function HomePage() {
       {/* Floating Concierge Chat Widget */}
       <div className="fixed bottom-6 right-6 z-50 flex flex-col items-end">
         {!isChatOpen && (
-          <div className="mb-2 bg-white px-3 py-1.5 rounded-2xl shadow-xl border border-[#EFE8DF] text-xs font-semibold text-[#160B0D] flex items-center gap-1.5 animate-bounce">
+          <div className="mb-2 bg-[#E8DDD2] px-3 py-1.5 rounded-2xl shadow-xl border border-[#C4B19F] text-xs font-semibold text-[#160B0D] flex items-center gap-1.5 animate-bounce">
             <span>Celebration assistance?</span>
             <span className="w-2 h-2 rounded-full bg-emerald-500" />
           </div>
         )}
 
         {isChatOpen && (
-          <div className="mb-3 w-80 sm:w-96 bg-white rounded-3xl shadow-2xl border border-[#EFE8DF] overflow-hidden flex flex-col animate-in fade-in zoom-in-95">
+          <div className="mb-3 w-80 sm:w-96 bg-[#E8DDD2] rounded-3xl shadow-2xl border border-[#C4B19F] overflow-hidden flex flex-col animate-in fade-in zoom-in-95">
             <div className="bg-[#160B0D] text-white p-4 flex items-center justify-between">
               <div className="flex items-center gap-2">
                 <div className="w-8 h-8 rounded-full bg-[#D8B879] text-[#160B0D] flex items-center justify-center font-bold text-xs">
@@ -1794,7 +1794,7 @@ export default function HomePage() {
               </button>
             </div>
 
-            <div className="p-4 h-64 overflow-y-auto space-y-3 bg-[#FAF8F5] text-xs">
+            <div className="p-4 h-64 overflow-y-auto space-y-3 bg-[#D8C7B5] text-xs">
               {chatMessages.map((msg, idx) => (
                 <div
                   key={idx}
@@ -1804,7 +1804,7 @@ export default function HomePage() {
                     className={`max-w-[80%] p-3 rounded-2xl leading-relaxed ${
                       msg.from === 'user'
                         ? 'bg-[#260D16] text-white rounded-br-none'
-                        : 'bg-white text-gray-800 border border-[#EFE8DF] rounded-bl-none shadow-2xs'
+                        : 'bg-[#E8DDD2] text-[#260D16] border border-[#C4B19F] rounded-bl-none shadow-2xs'
                     }`}
                   >
                     {msg.text}
@@ -1813,7 +1813,7 @@ export default function HomePage() {
               ))}
             </div>
 
-            <form onSubmit={handleSendChat} className="p-3 border-t border-[#EFE8DF] bg-white flex gap-2">
+            <form onSubmit={handleSendChat} className="p-3 border-t border-[#C4B19F] bg-[#E8DDD2] flex gap-2">
               <input
                 type="text"
                 placeholder="Ask about flavours, cakes, or slots..."

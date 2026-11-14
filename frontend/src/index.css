@@ -11,7 +11,7 @@
   
   body {
     font-family: var(--font-sans);
-    background-color: #FAF6EE;
+    background-color: #D8C7B5; /* Luxury Muted Mocha */
     color: #160B0D;
     overflow-x: hidden;
     margin: 0;
@@ -108,18 +108,18 @@
 
 /* Luxury theme buttons inspired by Latte Global Cafe */
 .btn-cream {
-  background-color: #FAF5EE;
-  color: #3D121A;
-  border: 1px solid #E8DEC8;
+  background-color: #E8DDD2;
+  color: #260D16;
+  border: 1px solid #C4B19F;
   font-weight: 600;
   letter-spacing: 0.05em;
   transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
 }
 .btn-cream:hover {
-  background-color: #FFFFFF;
-  color: #230A10;
-  border-color: #C5A059;
-  box-shadow: 0 8px 24px rgba(197, 160, 89, 0.25);
+  background-color: #F3ECE4;
+  color: #160B0D;
+  border-color: #BFA995;
+  box-shadow: 0 8px 24px rgba(140, 94, 67, 0.2);
   transform: translateY(-1px);
 }
 
@@ -169,17 +169,17 @@
 }
 
 /* Haute Luxury Creamy Alabaster Texture with subtle French botanical watermark */
-.luxury-cream-texture, .leaf-pattern-light {
-  background-color: #FAF6EE;
+.luxury-cream-texture, .leaf-pattern-light, .luxury-mocha-texture {
+  background-color: #D8C7B5;
   background-image: 
-    radial-gradient(ellipse at 50% 0%, rgba(255, 255, 255, 0.75) 0%, rgba(250, 246, 238, 0.94) 80%),
-    url("data:image/svg+xml,%3Csvg width='56' height='56' viewBox='0 0 56 56' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' stroke='%23C5A059' stroke-width='0.75' stroke-opacity='0.08'%3E%3Cpath d='M28 8c3 7 8 11 16 11-8 0-13 4-16 11-3-7-8-11-16-11 8 0 13-4 16-11z' /%3E%3Ccircle cx='28' cy='28' r='1.2' fill='%23C5A059' fill-opacity='0.1' /%3E%3Cpath d='M0 28h6M50 28h6M28 0v6M28 50v6' /%3E%3C/g%3E%3C/svg%3E");
+    radial-gradient(ellipse at 50% 0%, rgba(246, 238, 230, 0.55) 0%, rgba(216, 199, 181, 0.96) 80%),
+    url("data:image/svg+xml,%3Csvg width='56' height='56' viewBox='0 0 56 56' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' stroke='%238C5E43' stroke-width='0.75' stroke-opacity='0.09'%3E%3Cpath d='M28 8c3 7 8 11 16 11-8 0-13 4-16 11-3-7-8-11-16-11 8 0 13-4 16-11z' /%3E%3Ccircle cx='28' cy='28' r='1.2' fill='%238C5E43' fill-opacity='0.12' /%3E%3Cpath d='M0 28h6M50 28h6M28 0v6M28 50v6' /%3E%3C/g%3E%3C/svg%3E");
   background-size: 100% 100%, 56px 56px;
 }
 
 /* Warm Silk Travertine Header & Bar */
 .luxury-nav-surface {
-  background-color: rgba(250, 246, 238, 0.96);
+  background-color: rgba(224, 211, 198, 0.97);
   backdrop-filter: blur(16px);
   -webkit-backdrop-filter: blur(16px);
 }
@@ -195,10 +195,10 @@
   width: 8px;
 }
 ::-webkit-scrollbar-track {
-  background: #FAF3EB;
+  background: #CDBBA8;
 }
 ::-webkit-scrollbar-thumb {
-  background: #D9B7BE;
+  background: #A6917E;
   border-radius: 4px;
 }
 ::-webkit-scrollbar-thumb:hover {
