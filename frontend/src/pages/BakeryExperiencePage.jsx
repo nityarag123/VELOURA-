@@ -352,6 +352,96 @@ export default function BakeryExperiencePage() {
   const boulangerieRef = useRef(null);
   const gelatoRef = useRef(null);
 
+  // Auto-movement pause states (pauses on hover just like Coffee menu)
+  const [isCakesPaused, setIsCakesPaused] = useState(false);
+  const [isDessertsPaused, setIsDessertsPaused] = useState(false);
+  const [isBoulangeriePaused, setIsBoulangeriePaused] = useState(false);
+  const [isGelatoPaused, setIsGelatoPaused] = useState(false);
+
+  // 1. Continuous Auto-Movement for CAKES (Direct match to Coffee menu)
+  useEffect(() => {
+    const el = cakesRef.current;
+    if (!el) return;
+
+    let animId;
+    const step = () => {
+      if (!isCakesPaused && el) {
+        if (el.scrollLeft >= el.scrollWidth - el.clientWidth - 2) {
+          el.scrollLeft = 0;
+        } else {
+          el.scrollLeft += 1.0;
+        }
+      }
+      animId = requestAnimationFrame(step);
+    };
+
+    animId = requestAnimationFrame(step);
+    return () => cancelAnimationFrame(animId);
+  }, [isCakesPaused]);
+
+  // 2. Continuous Auto-Movement for DESSERTS
+  useEffect(() => {
+    const el = dessertsRef.current;
+    if (!el) return;
+
+    let animId;
+    const step = () => {
+      if (!isDessertsPaused && el) {
+        if (el.scrollLeft >= el.scrollWidth - el.clientWidth - 2) {
+          el.scrollLeft = 0;
+        } else {
+          el.scrollLeft += 1.0;
+        }
+      }
+      animId = requestAnimationFrame(step);
+    };
+
+    animId = requestAnimationFrame(step);
+    return () => cancelAnimationFrame(animId);
+  }, [isDessertsPaused]);
+
+  // 3. Continuous Auto-Movement for BOULANGERIE
+  useEffect(() => {
+    const el = boulangerieRef.current;
+    if (!el) return;
+
+    let animId;
+    const step = () => {
+      if (!isBoulangeriePaused && el) {
+        if (el.scrollLeft >= el.scrollWidth - el.clientWidth - 2) {
+          el.scrollLeft = 0;
+        } else {
+          el.scrollLeft += 1.0;
+        }
+      }
+      animId = requestAnimationFrame(step);
+    };
+
+    animId = requestAnimationFrame(step);
+    return () => cancelAnimationFrame(animId);
+  }, [isBoulangeriePaused]);
+
+  // 4. Continuous Auto-Movement for GELATO
+  useEffect(() => {
+    const el = gelatoRef.current;
+    if (!el) return;
+
+    let animId;
+    const step = () => {
+      if (!isGelatoPaused && el) {
+        if (el.scrollLeft >= el.scrollWidth - el.clientWidth - 2) {
+          el.scrollLeft = 0;
+        } else {
+          el.scrollLeft += 1.0;
+        }
+      }
+      animId = requestAnimationFrame(step);
+    };
+
+    animId = requestAnimationFrame(step);
+    return () => cancelAnimationFrame(animId);
+  }, [isGelatoPaused]);
+
   useEffect(() => {
     if (categoryParam) {
       setActiveCategory(categoryParam);
@@ -366,7 +456,7 @@ export default function BakeryExperiencePage() {
   const handleScroll = (ref, dir) => {
     if (!ref.current) return;
     ref.current.scrollBy({
-      left: dir === 'left' ? -380 : 380,
+      left: dir === 'left' ? -350 : 350,
       behavior: 'smooth'
     });
   };
@@ -541,16 +631,38 @@ export default function BakeryExperiencePage() {
               </div>
             </div>
 
-            {/* Horizontal Column Swiper / Scroll */}
-            <div
-              ref={cakesRef}
-              className="flex items-stretch gap-6 overflow-x-auto scrollbar-none py-2 select-none"
+            {/* Continuous Auto-Moving Carousel for Cakes (Like Coffee Menu) */}
+            <div 
+              className="relative group/cakes"
+              onMouseEnter={() => setIsCakesPaused(true)}
+              onMouseLeave={() => setIsCakesPaused(false)}
             >
-              {BAKERY_CAKES.map((cake) => (
-                <div
-                  key={cake.id}
-                  className="shrink-0 w-72 sm:w-80 group rounded-3xl overflow-hidden bg-[#240D15] border border-white/10 hover:border-[#D8B879]/60 shadow-xl transition-all duration-300 flex flex-col justify-between"
-                >
+              {/* Floating Side Navigation Arrows */}
+              <button
+                onClick={() => handleScroll(cakesRef, 'left')}
+                className="absolute -left-3 sm:-left-5 top-1/2 -translate-y-1/2 z-20 w-11 h-11 rounded-full bg-[#160B0D]/90 text-white border border-white/20 flex items-center justify-center hover:border-[#D8B879] hover:bg-[#260D16] shadow-2xl transition opacity-75 group-hover/cakes:opacity-100"
+                aria-label="Previous cakes"
+              >
+                <ChevronLeft className="w-5 h-5" />
+              </button>
+
+              <button
+                onClick={() => handleScroll(cakesRef, 'right')}
+                className="absolute -right-3 sm:-right-5 top-1/2 -translate-y-1/2 z-20 w-11 h-11 rounded-full bg-[#160B0D]/90 text-white border border-white/20 flex items-center justify-center hover:border-[#D8B879] hover:bg-[#260D16] shadow-2xl transition opacity-75 group-hover/cakes:opacity-100"
+                aria-label="Next cakes"
+              >
+                <ChevronRight className="w-5 h-5" />
+              </button>
+
+              <div
+                ref={cakesRef}
+                className="flex items-stretch gap-6 overflow-x-auto scrollbar-none py-4 px-1 select-none"
+              >
+                {BAKERY_CAKES.concat(BAKERY_CAKES).map((cake, idx) => (
+                  <div
+                    key={`${cake.id}-${idx}`}
+                    className="shrink-0 w-72 sm:w-80 group rounded-3xl overflow-hidden bg-[#240D15] border border-white/10 hover:border-[#D8B879]/60 shadow-xl transition-all duration-300 flex flex-col justify-between"
+                  >
                   <div className="relative aspect-[4/3.8] overflow-hidden bg-black/40">
                     <img
                       src={cake.image}
@@ -614,6 +726,7 @@ export default function BakeryExperiencePage() {
                   </div>
                 </div>
               ))}
+              </div>
             </div>
 
           </div>
@@ -660,16 +773,38 @@ export default function BakeryExperiencePage() {
               </div>
             </div>
 
-            {/* Horizontal Column Swiper / Scroll */}
-            <div
-              ref={dessertsRef}
-              className="flex items-stretch gap-6 overflow-x-auto scrollbar-none py-2 select-none"
+            {/* Continuous Auto-Moving Carousel for Desserts */}
+            <div 
+              className="relative group/desserts"
+              onMouseEnter={() => setIsDessertsPaused(true)}
+              onMouseLeave={() => setIsDessertsPaused(false)}
             >
-              {BAKERY_DESSERTS.map((item) => (
-                <div
-                  key={item.id}
-                  className="shrink-0 w-72 sm:w-80 group rounded-3xl overflow-hidden bg-white border border-[#E8DEC8] hover:border-[#D8B879] shadow-md hover:shadow-xl transition-all duration-300 flex flex-col justify-between"
-                >
+              {/* Floating Side Navigation Arrows */}
+              <button
+                onClick={() => handleScroll(dessertsRef, 'left')}
+                className="absolute -left-3 sm:-left-5 top-1/2 -translate-y-1/2 z-20 w-11 h-11 rounded-full bg-white/95 text-[#260D16] border border-[#E8DEC8] flex items-center justify-center hover:border-[#D8B879] hover:bg-[#FAF6EE] shadow-xl transition opacity-75 group-hover/desserts:opacity-100"
+                aria-label="Previous desserts"
+              >
+                <ChevronLeft className="w-5 h-5" />
+              </button>
+
+              <button
+                onClick={() => handleScroll(dessertsRef, 'right')}
+                className="absolute -right-3 sm:-right-5 top-1/2 -translate-y-1/2 z-20 w-11 h-11 rounded-full bg-white/95 text-[#260D16] border border-[#E8DEC8] flex items-center justify-center hover:border-[#D8B879] hover:bg-[#FAF6EE] shadow-xl transition opacity-75 group-hover/desserts:opacity-100"
+                aria-label="Next desserts"
+              >
+                <ChevronRight className="w-5 h-5" />
+              </button>
+
+              <div
+                ref={dessertsRef}
+                className="flex items-stretch gap-6 overflow-x-auto scrollbar-none py-4 px-1 select-none"
+              >
+                {BAKERY_DESSERTS.concat(BAKERY_DESSERTS).map((item, idx) => (
+                  <div
+                    key={`${item.id}-${idx}`}
+                    className="shrink-0 w-72 sm:w-80 group rounded-3xl overflow-hidden bg-white border border-[#E8DEC8] hover:border-[#D8B879] shadow-md hover:shadow-xl transition-all duration-300 flex flex-col justify-between"
+                  >
                   <div className="relative aspect-[4/3.8] overflow-hidden bg-[#F6EAD5]">
                     <img
                       src={item.image}
@@ -733,6 +868,7 @@ export default function BakeryExperiencePage() {
                   </div>
                 </div>
               ))}
+              </div>
             </div>
 
           </div>
@@ -779,16 +915,38 @@ export default function BakeryExperiencePage() {
               </div>
             </div>
 
-            {/* Horizontal Column Swiper / Scroll */}
-            <div
-              ref={boulangerieRef}
-              className="flex items-stretch gap-6 overflow-x-auto scrollbar-none py-2 select-none"
+            {/* Continuous Auto-Moving Carousel for Boulangerie */}
+            <div 
+              className="relative group/boulangerie"
+              onMouseEnter={() => setIsBoulangeriePaused(true)}
+              onMouseLeave={() => setIsBoulangeriePaused(false)}
             >
-              {BAKERY_BOULANGERIE.map((item) => (
-                <div
-                  key={item.id}
-                  className="shrink-0 w-72 sm:w-80 group rounded-3xl overflow-hidden bg-[#240D15] border border-white/10 hover:border-[#D8B879]/60 shadow-xl transition-all duration-300 flex flex-col justify-between"
-                >
+              {/* Floating Side Navigation Arrows */}
+              <button
+                onClick={() => handleScroll(boulangerieRef, 'left')}
+                className="absolute -left-3 sm:-left-5 top-1/2 -translate-y-1/2 z-20 w-11 h-11 rounded-full bg-[#160B0D]/90 text-white border border-white/20 flex items-center justify-center hover:border-[#D8B879] hover:bg-[#260D16] shadow-2xl transition opacity-75 group-hover/boulangerie:opacity-100"
+                aria-label="Previous boulangerie"
+              >
+                <ChevronLeft className="w-5 h-5" />
+              </button>
+
+              <button
+                onClick={() => handleScroll(boulangerieRef, 'right')}
+                className="absolute -right-3 sm:-right-5 top-1/2 -translate-y-1/2 z-20 w-11 h-11 rounded-full bg-[#160B0D]/90 text-white border border-white/20 flex items-center justify-center hover:border-[#D8B879] hover:bg-[#260D16] shadow-2xl transition opacity-75 group-hover/boulangerie:opacity-100"
+                aria-label="Next boulangerie"
+              >
+                <ChevronRight className="w-5 h-5" />
+              </button>
+
+              <div
+                ref={boulangerieRef}
+                className="flex items-stretch gap-6 overflow-x-auto scrollbar-none py-4 px-1 select-none"
+              >
+                {BAKERY_BOULANGERIE.concat(BAKERY_BOULANGERIE).map((item, idx) => (
+                  <div
+                    key={`${item.id}-${idx}`}
+                    className="shrink-0 w-72 sm:w-80 group rounded-3xl overflow-hidden bg-[#240D15] border border-white/10 hover:border-[#D8B879]/60 shadow-xl transition-all duration-300 flex flex-col justify-between"
+                  >
                   <div className="relative aspect-[4/3.8] overflow-hidden bg-black/40">
                     <img
                       src={item.image}
@@ -852,6 +1010,7 @@ export default function BakeryExperiencePage() {
                   </div>
                 </div>
               ))}
+              </div>
             </div>
 
           </div>
@@ -898,16 +1057,38 @@ export default function BakeryExperiencePage() {
               </div>
             </div>
 
-            {/* Horizontal Column Swiper / Scroll */}
-            <div
-              ref={gelatoRef}
-              className="flex items-stretch gap-6 overflow-x-auto scrollbar-none py-2 select-none"
+            {/* Continuous Auto-Moving Carousel for Gelato */}
+            <div 
+              className="relative group/gelato"
+              onMouseEnter={() => setIsGelatoPaused(true)}
+              onMouseLeave={() => setIsGelatoPaused(false)}
             >
-              {BAKERY_GELATO.map((item) => (
-                <div
-                  key={item.id}
-                  className="shrink-0 w-72 sm:w-80 group rounded-3xl overflow-hidden bg-white border border-[#E8DEC8] hover:border-[#D8B879] shadow-md hover:shadow-xl transition-all duration-300 flex flex-col justify-between"
-                >
+              {/* Floating Side Navigation Arrows */}
+              <button
+                onClick={() => handleScroll(gelatoRef, 'left')}
+                className="absolute -left-3 sm:-left-5 top-1/2 -translate-y-1/2 z-20 w-11 h-11 rounded-full bg-white/95 text-[#260D16] border border-[#E8DEC8] flex items-center justify-center hover:border-[#D8B879] hover:bg-[#FAF6EE] shadow-xl transition opacity-75 group-hover/gelato:opacity-100"
+                aria-label="Previous gelato"
+              >
+                <ChevronLeft className="w-5 h-5" />
+              </button>
+
+              <button
+                onClick={() => handleScroll(gelatoRef, 'right')}
+                className="absolute -right-3 sm:-right-5 top-1/2 -translate-y-1/2 z-20 w-11 h-11 rounded-full bg-white/95 text-[#260D16] border border-[#E8DEC8] flex items-center justify-center hover:border-[#D8B879] hover:bg-[#FAF6EE] shadow-xl transition opacity-75 group-hover/gelato:opacity-100"
+                aria-label="Next gelato"
+              >
+                <ChevronRight className="w-5 h-5" />
+              </button>
+
+              <div
+                ref={gelatoRef}
+                className="flex items-stretch gap-6 overflow-x-auto scrollbar-none py-4 px-1 select-none"
+              >
+                {BAKERY_GELATO.concat(BAKERY_GELATO).map((item, idx) => (
+                  <div
+                    key={`${item.id}-${idx}`}
+                    className="shrink-0 w-72 sm:w-80 group rounded-3xl overflow-hidden bg-white border border-[#E8DEC8] hover:border-[#D8B879] shadow-md hover:shadow-xl transition-all duration-300 flex flex-col justify-between"
+                  >
                   <div className="relative aspect-[4/3.8] overflow-hidden bg-[#F6EAD5]">
                     <img
                       src={item.image}
@@ -971,6 +1152,7 @@ export default function BakeryExperiencePage() {
                   </div>
                 </div>
               ))}
+              </div>
             </div>
 
           </div>
