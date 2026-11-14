@@ -317,7 +317,7 @@ export default function HomePage() {
     if (isHeroAutoPlaying) {
       heroTimerRef.current = setInterval(() => {
         setCurrentHeroSlide((prev) => (prev + 1) % HERO_SLIDES.length);
-      }, 5000);
+      }, 3000);
     }
   };
 
@@ -486,7 +486,7 @@ export default function HomePage() {
             return (
               <div
                 key={slide.id}
-                className={`absolute inset-0 w-full h-full flex items-center justify-center transition-opacity duration-1000 ease-in-out ${
+                className={`absolute inset-0 w-full h-full flex items-center justify-center transition-opacity duration-500 ease-in-out ${
                   isActive ? 'opacity-100 z-10 pointer-events-auto' : 'opacity-0 z-0 pointer-events-none'
                 }`}
                 aria-hidden={!isActive}
@@ -507,7 +507,7 @@ export default function HomePage() {
                 <div className="absolute inset-0 bg-[radial-gradient(#D8B879_0.8px,transparent_0.8px)] [background-size:24px_24px] opacity-15 pointer-events-none" />
 
                 {/* Slide Content with upward fade */}
-                <div className={`max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 text-center relative z-10 py-24 sm:py-32 space-y-6 transition-all duration-700 delay-100 ${
+                <div className={`max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 text-center relative z-10 py-24 sm:py-32 space-y-6 transition-all duration-500 ease-out ${
                   isActive ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'
                 }`}>
                   
