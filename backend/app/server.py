@@ -576,11 +576,23 @@ def admin_stats():
     c.execute("SELECT COUNT(*) FROM products")
     total_products = c.fetchone()[0]
 
+    c.execute("SELECT COUNT(*) FROM categories")
+    total_categories = c.fetchone()[0]
+
+    c.execute("SELECT COUNT(*) FROM reservations")
+    total_reservations = c.fetchone()[0]
+
     c.execute("SELECT * FROM orders ORDER BY created_at DESC LIMIT 10")
     recent_orders = [dict(r) for r in c.fetchall()]
     for o in recent_orders:
         c.execute("SELECT * FROM order_items WHERE order_id = ?", (o['id'],))
         o['items'] = [dict(it) for it in c.fetchall()]
+
+    c.execute("SELECT * FROM reservations ORDER BY created_at DESC LIMIT 10")
+    recent_reservations = [dict(r) for r in c.fetchall()]
+    for r in recent_reservations:
+        c.execute("SELECT * FROM reservation_items WHERE reservation_id = ?", (r['id'],))
+        r['items'] = [dict(it) for it in c.fetchall()]
 
     conn.close()
 
@@ -589,9 +601,128 @@ def admin_stats():
         "total_revenue": total_revenue,
         "total_customers": total_customers,
         "total_products": total_products,
-        "recent_orders": recent_orders
+        "total_categories": total_categories,
+        "total_reservations": total_reservations,
+        "recent_orders": recent_orders,
+        "recent_reservations": recent_reservations
     })
 
+# ================= ADMIN CATEGORY MANAGEMENT =================
+@app.route('/api/admin/categories', method='GET')
+def admin_get_categories():
+    admin = require_admin()
+    if not admin:
+        return error_response("Admin access required", 403)
+
+    conn = get_connection()
+    c = conn.cursor()
+    c.execute("""
+        SELECT c.*, COUNT(p.id) as product_count
+        FROM categories c
+        LEFT JOIN products p ON c.id = p.category_id
+        GROUP BY c.id
+        ORDER BY c.id ASC
+    """)
+    cats = [dict(row) for row in c.fetchall()]
+    conn.close()
+    return json_response(cats)
+
+@app.route('/api/admin/categories', method='POST')
+def admin_create_category():
+    admin = require_admin()
+    if not admin:
+        return error_response("Admin access required", 403)
+
+    data = get_json_body()
+    name = (data.get('name') or '').strip()
+    slug = (data.get('slug') or name.lower().replace(' ', '-').replace('&', 'and')).strip()
+    description = (data.get('description') or '').strip()
+    image_url = (data.get('image_url') or 'https://images.unsplash.com/photo-1578985545062-69928b1d9587?auto=format&fit=crop&w=800&q=80').strip()
+    is_featured = 1 if data.get('is_featured', True) else 0
+
+    if not name:
+        return error_response("Category name is required", 400)
+
+    conn = get_connection()
+    c = conn.cursor()
+    c.execute("SELECT id FROM categories WHERE name = ? OR slug = ?", (name, slug))
+    if c.fetchone():
+        conn.close()
+        return error_response("Category with this name or slug already exists", 400)
+
+    c.execute("""
+        INSERT INTO categories (name, slug, description, image_url, is_featured)
+        VALUES (?, ?, ?, ?, ?)
+    """, (name, slug, description, image_url, is_featured))
+    cat_id = c.lastrowid
+    conn.commit()
+
+    c.execute("SELECT * FROM categories WHERE id = ?", (cat_id,))
+    cat = dict(c.fetchone())
+    cat['product_count'] = 0
+    conn.close()
+    return json_response(cat, 201)
+
+@app.route('/api/admin/categories/<cat_id:int>', method='PUT')
+def admin_update_category(cat_id):
+    admin = require_admin()
+    if not admin:
+        return error_response("Admin access required", 403)
+
+    data = get_json_body()
+    conn = get_connection()
+    c = conn.cursor()
+    c.execute("SELECT * FROM categories WHERE id = ?", (cat_id,))
+    if not c.fetchone():
+        conn.close()
+        return error_response("Category not found", 404)
+
+    fields = []
+    params = []
+    for k in ['name', 'slug', 'description', 'image_url']:
+        if k in data:
+            fields.append(f"{k} = ?")
+            params.append(data[k])
+    if 'is_featured' in data:
+        fields.append("is_featured = ?")
+        params.append(1 if data['is_featured'] else 0)
+
+    if fields:
+        params.append(cat_id)
+        c.execute(f"UPDATE categories SET {', '.join(fields)} WHERE id = ?", params)
+        conn.commit()
+
+    c.execute("""
+        SELECT c.*, COUNT(p.id) as product_count
+        FROM categories c
+        LEFT JOIN products p ON c.id = p.category_id
+        WHERE c.id = ?
+        GROUP BY c.id
+    """, (cat_id,))
+    cat = dict(c.fetchone())
+    conn.close()
+    return json_response(cat)
+
+@app.route('/api/admin/categories/<cat_id:int>', method='DELETE')
+def admin_delete_category(cat_id):
+    admin = require_admin()
+    if not admin:
+        return error_response("Admin access required", 403)
+
+    conn = get_connection()
+    c = conn.cursor()
+    c.execute("SELECT COUNT(*) FROM products WHERE category_id = ?", (cat_id,))
+    prod_count = c.fetchone()[0]
+    if prod_count > 0:
+        conn.close()
+        return error_response(f"Cannot delete category: {prod_count} product(s) are currently assigned to it. Please reassign or delete these products first.", 400)
+
+    c.execute("DELETE FROM categories WHERE id = ?", (cat_id,))
+    conn.commit()
+    conn.close()
+    return json_response({"message": "Category deleted successfully"})
+
+# ================= ADMIN ORDER MANAGEMENT =================
 @app.route('/api/admin/orders', method='GET')
 def admin_orders():
     admin = require_admin()
@@ -638,7 +769,7 @@ def update_order_status(order_id):
 
     return json_response(order)
 
-# ================= DINING SALON RESERVATIONS =================
+# ================= DINING SALON RESERVATIONS & ATTACHED ITEMS =================
 @app.route('/api/reservations', method='POST')
 def create_reservation():
     data = get_json_body()
@@ -660,17 +791,18 @@ def create_reservation():
 
     conn = get_connection()
     c = conn.cursor()
-    c.execute('''
+    c.execute("""
         INSERT INTO reservations (
             token, guest_name, guest_phone, guest_email, reservation_date, reservation_time,
             location, guests_count, table_number, table_name, special_requests, pre_ordered_items, status
         ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, 'Confirmed')
-    ''', (token, guest_name, guest_phone, guest_email, reservation_date, reservation_time, location, guests_count, table_number, table_name, special_requests, pre_ordered_items))
+    """, (token, guest_name, guest_phone, guest_email, reservation_date, reservation_time, location, guests_count, table_number, table_name, special_requests, pre_ordered_items))
     res_id = c.lastrowid
     conn.commit()
 
     c.execute("SELECT * FROM reservations WHERE id = ?", (res_id,))
     res_data = dict(c.fetchone())
+    res_data['items'] = []
     conn.close()
     return json_response(res_data, 201)
 
@@ -684,6 +816,9 @@ def admin_reservations():
     c = conn.cursor()
     c.execute("SELECT * FROM reservations ORDER BY created_at DESC")
     reservations = [dict(r) for r in c.fetchall()]
+    for r in reservations:
+        c.execute("SELECT * FROM reservation_items WHERE reservation_id = ? ORDER BY id ASC", (r['id'],))
+        r['items'] = [dict(it) for it in c.fetchall()]
     conn.close()
     return json_response(reservations)
 
@@ -704,10 +839,14 @@ def update_reservation_status(res_id):
     conn.commit()
     c.execute("SELECT * FROM reservations WHERE id = ?", (res_id,))
     row = c.fetchone()
-    conn.close()
     if not row:
+        conn.close()
         return error_response("Reservation not found", 404)
-    return json_response(dict(row))
+    res_data = dict(row)
+    c.execute("SELECT * FROM reservation_items WHERE reservation_id = ? ORDER BY id ASC", (res_id,))
+    res_data['items'] = [dict(it) for it in c.fetchall()]
+    conn.close()
+    return json_response(res_data)
 
 @app.route('/api/admin/reservations', method='POST')
 def admin_create_reservation():
@@ -724,9 +863,128 @@ def admin_delete_reservation(res_id):
     conn = get_connection()
     c = conn.cursor()
     c.execute("DELETE FROM reservations WHERE id = ?", (res_id,))
+    c.execute("DELETE FROM reservation_items WHERE reservation_id = ?", (res_id,))
     conn.commit()
     conn.close()
     return json_response({"message": "Reservation deleted successfully"})
+
+# Attach Menu Items / Dishes to Individual Reservation
+@app.route('/api/admin/reservations/<res_id:int>/items', method='POST')
+def add_reservation_item(res_id):
+    admin = require_admin()
+    if not admin:
+        return error_response("Admin access required", 403)
+
+    data = get_json_body()
+    product_id = data.get('product_id')
+    product_name = (data.get('product_name') or 'Veloura Dish').strip()
+    unit_price = float(data.get('unit_price', 0))
+    quantity = int(data.get('quantity', 1))
+    notes = (data.get('notes') or '').strip()
+    total_price = round(unit_price * quantity, 2)
+
+    conn = get_connection()
+    c = conn.cursor()
+    c.execute("SELECT id FROM reservations WHERE id = ?", (res_id,))
+    if not c.fetchone():
+        conn.close()
+        return error_response("Reservation not found", 404)
+
+    c.execute("""
+        INSERT INTO reservation_items (reservation_id, product_id, product_name, unit_price, quantity, total_price, notes)
+        VALUES (?, ?, ?, ?, ?, ?, ?)
+    """, (res_id, product_id, product_name, unit_price, quantity, total_price, notes))
+    item_id = c.lastrowid
+
+    # Update summary string on reservation record
+    c.execute("SELECT product_name, quantity FROM reservation_items WHERE reservation_id = ?", (res_id,))
+    all_items = c.fetchall()
+    summary = ", ".join([f"{it['product_name']} (x{it['quantity']})" for it in all_items])
+    c.execute("UPDATE reservations SET pre_ordered_items = ? WHERE id = ?", (summary, res_id))
+    conn.commit()
+
+    c.execute("SELECT * FROM reservation_items WHERE id = ?", (item_id,))
+    created_item = dict(c.fetchone())
+    conn.close()
+    return json_response(created_item, 201)
+
+@app.route('/api/admin/reservations/<res_id:int>/items/<item_id:int>', method='DELETE')
+def delete_reservation_item(res_id, item_id):
+    admin = require_admin()
+    if not admin:
+        return error_response("Admin access required", 403)
+
+    conn = get_connection()
+    c = conn.cursor()
+    c.execute("DELETE FROM reservation_items WHERE id = ? AND reservation_id = ?", (item_id, res_id))
+    
+    c.execute("SELECT product_name, quantity FROM reservation_items WHERE reservation_id = ?", (res_id,))
+    all_items = c.fetchall()
+    summary = ", ".join([f"{it['product_name']} (x{it['quantity']})" for it in all_items])
+    c.execute("UPDATE reservations SET pre_ordered_items = ? WHERE id = ?", (summary, res_id))
+    conn.commit()
+    conn.close()
+    return json_response({"message": "Menu item removed from reservation successfully"})
+
+# ================= CUSTOMER MANAGEMENT =================
+@app.route('/api/admin/customers', method='GET')
+def admin_customers():
+    admin = require_admin()
+    if not admin:
+        return error_response("Admin access required", 403)
+
+    conn = get_connection()
+    c = conn.cursor()
+    c.execute("""
+        SELECT u.id, u.email, u.full_name, u.phone, u.address, u.city, u.pincode, u.created_at,
+               COUNT(DISTINCT o.id) as total_orders,
+               COALESCE(SUM(o.total_amount), 0.0) as total_spent
+        FROM users u
+        LEFT JOIN orders o ON u.id = o.user_id OR u.email = o.customer_email
+        WHERE u.is_admin = 0
+        GROUP BY u.id
+        ORDER BY u.created_at DESC
+    """)
+    customers = [dict(r) for r in c.fetchall()]
+    conn.close()
+    return json_response(customers)
+
+@app.route('/api/admin/customers/<user_id:int>', method='GET')
+def admin_customer_detail(user_id):
+    admin = require_admin()
+    if not admin:
+        return error_response("Admin access required", 403)
+
+    conn = get_connection()
+    c = conn.cursor()
+    c.execute("SELECT id, email, full_name, phone, address, city, pincode, created_at FROM users WHERE id = ? AND is_admin = 0", (user_id,))
+    user_row = c.fetchone()
+    if not user_row:
+        conn.close()
+        return error_response("Customer not found", 404)
+
+    customer = dict(user_row)
+
+    # Orders history
+    c.execute("SELECT * FROM orders WHERE user_id = ? OR customer_email = ? ORDER BY created_at DESC", (user_id, customer['email']))
+    orders = [dict(r) for r in c.fetchall()]
+    for o in orders:
+        c.execute("SELECT * FROM order_items WHERE order_id = ?", (o['id'],))
+        o['items'] = [dict(it) for it in c.fetchall()]
+    customer['orders'] = orders
+    customer['total_orders'] = len(orders)
+    customer['total_spent'] = round(sum(o['total_amount'] for o in orders), 2)
+
+    # Table Reservations history
+    c.execute("SELECT * FROM reservations WHERE guest_email = ? OR guest_phone = ? ORDER BY created_at DESC", (customer['email'], customer['phone'] or ''))
+    reservations = [dict(r) for r in c.fetchall()]
+    for r in reservations:
+        c.execute("SELECT * FROM reservation_items WHERE reservation_id = ? ORDER BY id ASC", (r['id'],))
+        r['items'] = [dict(it) for it in c.fetchall()]
+    customer['reservations'] = reservations
+
+    conn.close()
+    return json_response(customer)
 
 # ================= CUSTOMER WORKS & BESPOKE INQUIRIES =================
 @app.route('/api/admin/works', method='GET')
@@ -768,12 +1026,12 @@ def admin_create_work():
 
     conn = get_connection()
     c = conn.cursor()
-    c.execute('''
+    c.execute("""
         INSERT INTO customer_works (
             work_code, client_name, client_phone, client_email, occasion, event_date,
             guest_count, flavour_profile, tier_count, dietary_spec, design_notes, estimated_budget, status
         ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
-    ''', (work_code, client_name, client_phone, client_email, occasion, event_date, guest_count, flavour_profile, tier_count, dietary_spec, design_notes, estimated_budget, status))
+    """, (work_code, client_name, client_phone, client_email, occasion, event_date, guest_count, flavour_profile, tier_count, dietary_spec, design_notes, estimated_budget, status))
     work_id = c.lastrowid
     conn.commit()
     c.execute("SELECT * FROM customer_works WHERE id = ?", (work_id,))
@@ -803,6 +1061,7 @@ def update_work_status(work_id):
         return error_response("Work not found", 404)
     return json_response(dict(row))
 
+# ================= ADMIN PRODUCT MANAGEMENT =================
 @app.route('/api/admin/products', method='POST')
 def admin_add_product():
     admin = require_admin()
@@ -811,27 +1070,33 @@ def admin_add_product():
 
     data = get_json_body()
     name = (data.get('name') or '').strip()
-    slug = (data.get('slug') or name.lower().replace(' ', '-')).strip()
+    slug = (data.get('slug') or name.lower().replace(' ', '-').replace('&', 'and')).strip()
     description = (data.get('description') or '').strip()
     category_id = int(data.get('category_id', 1))
     base_price = float(data.get('base_price', 499.0))
     discount_price = float(data.get('discount_price')) if data.get('discount_price') else None
     image_url = data.get('image_url') or 'https://images.unsplash.com/photo-1578985545062-69928b1d9587?auto=format&fit=crop&w=800&q=80'
-    gallery_json = json.dumps(data.get('gallery', [image_url]))
-    flavours_json = json.dumps(data.get('flavours', ["Classic Truffle", "Red Velvet"]))
-    weights_json = json.dumps(data.get('weights', ["0.5 kg", "1.0 kg", "1.5 kg"]))
+    gallery_json = json.dumps(data.get('gallery') if isinstance(data.get('gallery'), list) else [image_url])
+    flavours_json = json.dumps(data.get('flavours') if isinstance(data.get('flavours'), list) else ["Classic", "Signature"])
+    weights_json = json.dumps(data.get('weights') if isinstance(data.get('weights'), list) else ["Standard Serving"])
     is_bestseller = 1 if data.get('is_bestseller') else 0
     is_featured = 1 if data.get('is_featured') else 0
     is_eggless_available = 1 if data.get('is_eggless_available', True) else 0
+    in_stock = 1 if data.get('in_stock', True) else 0
+    stock_quantity = int(data.get('stock_quantity', 50))
+    tags = (data.get('tags') or '').strip()
+
+    if not name:
+        return error_response("Product name is required", 400)
 
     conn = get_connection()
     c = conn.cursor()
-    c.execute('''
+    c.execute("""
         INSERT INTO products (
             name, slug, description, category_id, base_price, discount_price, rating, review_count,
-            image_url, gallery_json, flavours_json, weights_json, is_bestseller, is_featured, is_eggless_available, in_stock
-        ) VALUES (?, ?, ?, ?, ?, ?, 5.0, 1, ?, ?, ?, ?, ?, ?, ?, 1)
-    ''', (name, slug, description, category_id, base_price, discount_price, image_url, gallery_json, flavours_json, weights_json, is_bestseller, is_featured, is_eggless_available))
+            image_url, gallery_json, flavours_json, weights_json, is_bestseller, is_featured, is_eggless_available, in_stock, stock_quantity, tags
+        ) VALUES (?, ?, ?, ?, ?, ?, 5.0, 1, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+    """, (name, slug, description, category_id, base_price, discount_price, image_url, gallery_json, flavours_json, weights_json, is_bestseller, is_featured, is_eggless_available, in_stock, stock_quantity, tags))
     prod_id = c.lastrowid
     conn.commit()
 
@@ -858,10 +1123,27 @@ def admin_update_product(product_id):
 
     fields = []
     params = []
-    for k in ['name', 'description', 'category_id', 'base_price', 'discount_price', 'image_url', 'is_bestseller', 'is_featured', 'is_eggless_available', 'in_stock']:
+    direct_fields = ['name', 'slug', 'description', 'category_id', 'base_price', 'discount_price', 'image_url', 'stock_quantity', 'tags']
+    for k in direct_fields:
         if k in data:
             fields.append(f"{k} = ?")
             params.append(data[k])
+
+    bool_fields = ['is_bestseller', 'is_featured', 'is_eggless_available', 'in_stock']
+    for k in bool_fields:
+        if k in data:
+            fields.append(f"{k} = ?")
+            params.append(1 if data[k] else 0)
+
+    if 'gallery' in data and isinstance(data['gallery'], list):
+        fields.append("gallery_json = ?")
+        params.append(json.dumps(data['gallery']))
+    if 'flavours' in data and isinstance(data['flavours'], list):
+        fields.append("flavours_json = ?")
+        params.append(json.dumps(data['flavours']))
+    if 'weights' in data and isinstance(data['weights'], list):
+        fields.append("weights_json = ?")
+        params.append(json.dumps(data['weights']))
 
     if fields:
         params.append(product_id)

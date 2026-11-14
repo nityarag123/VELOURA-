@@ -52,6 +52,8 @@ class Product(Base):
     is_featured = Column(Boolean, default=False)
     is_eggless_available = Column(Boolean, default=True)
     in_stock = Column(Boolean, default=True)
+    stock_quantity = Column(Integer, default=50)
+    tags = Column(String(255), default="")
     created_at = Column(DateTime, default=datetime.utcnow)
 
     category = relationship("Category", back_populates="products")
@@ -126,3 +128,41 @@ class Coupon(Base):
     max_discount = Column(Float, nullable=True)
     min_order_amount = Column(Float, default=0.0)
     is_active = Column(Boolean, default=True)
+
+class Reservation(Base):
+    __tablename__ = "reservations"
+
+    id = Column(Integer, primary_key=True, index=True)
+    token = Column(String(50), unique=True, index=True, nullable=False)
+    guest_name = Column(String(255), nullable=False)
+    guest_phone = Column(String(50), nullable=False)
+    guest_email = Column(String(255), nullable=True)
+    reservation_date = Column(String(50), nullable=False)
+    reservation_time = Column(String(50), nullable=False)
+    location = Column(String(255), nullable=False)
+    guests_count = Column(String(50), nullable=False)
+    table_number = Column(String(50), nullable=True)
+    table_name = Column(String(100), nullable=True)
+    special_requests = Column(Text, nullable=True)
+    pre_ordered_items = Column(Text, default="")
+    status = Column(String(50), default="Confirmed")
+    created_at = Column(DateTime, default=datetime.utcnow)
+
+    items = relationship("ReservationItem", back_populates="reservation", cascade="all, delete-orphan")
+
+class ReservationItem(Base):
+    __tablename__ = "reservation_items"
+
+    id = Column(Integer, primary_key=True, index=True)
+    reservation_id = Column(Integer, ForeignKey("reservations.id"), nullable=False)
+    product_id = Column(Integer, ForeignKey("products.id"), nullable=True)
+    product_name = Column(String(255), nullable=False)
+    unit_price = Column(Float, nullable=False)
+    quantity = Column(Integer, default=1)
+    total_price = Column(Float, nullable=False)
+    notes = Column(String(255), nullable=True)
+    created_at = Column(DateTime, default=datetime.utcnow)
+
+    reservation = relationship("Reservation", back_populates="items")
+    product = relationship("Product")
+

@@ -62,6 +62,8 @@ def init_db():
         is_featured BOOLEAN DEFAULT 0,
         is_eggless_available BOOLEAN DEFAULT 1,
         in_stock BOOLEAN DEFAULT 1,
+        stock_quantity INTEGER DEFAULT 50,
+        tags TEXT DEFAULT '',
         created_at TEXT DEFAULT CURRENT_TIMESTAMP,
         FOREIGN KEY(category_id) REFERENCES categories(id)
     )
@@ -153,6 +155,21 @@ def init_db():
         pre_ordered_items TEXT,
         status TEXT DEFAULT 'Confirmed',
         created_at TEXT DEFAULT CURRENT_TIMESTAMP
+    )
+    ''')
+
+    c.execute('''
+    CREATE TABLE IF NOT EXISTS reservation_items (
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        reservation_id INTEGER NOT NULL,
+        product_id INTEGER,
+        product_name TEXT NOT NULL,
+        unit_price REAL NOT NULL,
+        quantity INTEGER DEFAULT 1,
+        total_price REAL NOT NULL,
+        notes TEXT,
+        created_at TEXT DEFAULT CURRENT_TIMESTAMP,
+        FOREIGN KEY(reservation_id) REFERENCES reservations(id) ON DELETE CASCADE
     )
     ''')
 
