@@ -272,67 +272,73 @@ const BAKERY_BOULANGERIE = [
   }
 ];
 
-// 4. GELATO & ARTISANAL CONFECTIONS
+// 4. GELATO & ARTISANAL CONFECTIONS (Italian Gelateria Grand Cru Selection)
 const BAKERY_GELATO = [
   {
+    id: 'gl-pistachio',
+    name: 'Sicilian Bronte Pistachio Verde',
+    category: 'Gelato',
+    price: 290,
+    tag: 'DOP Certification',
+    origin: 'Bronte, Sicily',
+    desc: 'Slow-roasted pure Sicilian emerald pistachios stone-ground with farm dairy, topped with toasted pistachio praline.',
+    image: 'https://images.unsplash.com/photo-1580915411954-282cb1b0d780?auto=format&fit=crop&w=800&q=80',
+    slug: 'sicilian-bronte-pistachio-verde'
+  },
+  {
     id: 'gl-vanilla',
-    name: 'Madagascar French Vanilla Gelato',
+    name: 'Madagascar Bourbon Vanilla Bean',
     category: 'Gelato',
     price: 240,
-    tag: 'Slow Churned',
-    desc: 'Infused with whole bourbon vanilla pods and whole farm-fresh dairy for an ultra-dense, silky mouthfeel.',
+    tag: 'Slow Churned -11°C',
+    origin: 'Sambava Valley',
+    desc: 'Cold-churned with whole Madagascar bourbon vanilla pods, pure egg yolks, and organic farm cream for a dense, velvety mouthfeel.',
     image: 'https://images.unsplash.com/photo-1570197788417-0e82375c9371?auto=format&fit=crop&w=800&q=80',
-    slug: 'madagascar-french-vanilla-gelato'
-  },
-  {
-    id: 'gl-mint',
-    name: 'Fresh Garden Mint & Dark Cacao Gelato',
-    category: 'Gelato',
-    price: 260,
-    tag: 'Botanical Infusion',
-    desc: 'Natural garden mint steeped in organic cream, folded with crunchy fragments of 70% dark Belgian chocolate.',
-    image: 'https://images.unsplash.com/photo-1563805042-7684c019e1cb?auto=format&fit=crop&w=800&q=80',
-    slug: 'fresh-garden-mint-dark-cacao-gelato'
-  },
-  {
-    id: 'gl-lemon',
-    name: 'Sicilian Amalfi Lemon Sorbet',
-    category: 'Gelato',
-    price: 240,
-    tag: 'Dairy Free',
-    desc: 'Clean, palate-cleansing sorbet hand-churned with sun-ripened Amalfi lemons and a touch of wild mountain honey.',
-    image: 'https://images.unsplash.com/photo-1505394033641-40c6ad1178d7?auto=format&fit=crop&w=800&q=80',
-    slug: 'sicilian-amalfi-lemon-sorbet'
+    slug: 'madagascar-bourbon-vanilla-bean'
   },
   {
     id: 'gl-chocolate',
-    name: 'Noir 70% Callebaut Gelato',
+    name: 'Noir 70% Callebaut Dark Truffle',
     category: 'Gelato',
     price: 260,
-    tag: 'Intense Cocoa',
-    desc: 'Pure melted Belgian chocolate churned cold into a rich, deep gelato with zero artificial flavorings.',
-    image: 'https://images.unsplash.com/photo-1560008581-09826d1de69e?auto=format&fit=crop&w=800&q=80',
-    slug: 'noir-70-callebaut-gelato'
+    tag: 'Belgian Grand Cru',
+    origin: 'Callebaut Belgian Cacao',
+    desc: 'Melted 70% dark Belgian chocolate churned with organic whole milk and folded with crunchy roasted cocoa nibs.',
+    image: 'https://images.unsplash.com/photo-1563805042-7684c019e1cb?auto=format&fit=crop&w=800&q=80',
+    slug: 'noir-70-callebaut-dark-truffle'
   },
   {
-    id: 'gl-pistachio',
-    name: 'Bronte Pistachio Verde Gelato',
+    id: 'gl-lemon',
+    name: 'Amalfi Coast Sunlit Lemon Sorbet',
     category: 'Gelato',
-    price: 290,
-    tag: 'Sicilian DOP',
-    desc: 'Made exclusively with slow-roasted, pure Sicilian Bronte pistachio paste for an earthy, naturally emerald indulgence.',
-    image: 'https://images.unsplash.com/photo-1580915411954-282cb1b0d780?auto=format&fit=crop&w=800&q=80',
-    slug: 'bronte-pistachio-verde-gelato'
+    price: 240,
+    tag: 'Dairy-Free & Vegan',
+    origin: 'Amalfi Coast, Italy',
+    desc: 'Silky, palate-cleansing sorbet hand-churned from sun-drenched Amalfi lemons, candied lemon zest, and wild orange blossom.',
+    image: 'https://images.unsplash.com/photo-1534706936160-d5ee67737249?auto=format&fit=crop&w=800&q=80',
+    slug: 'amalfi-coast-sunlit-lemon-sorbet'
   },
   {
     id: 'gl-berry',
-    name: 'Wild Forest Berry Sorbet',
+    name: 'Wild Forest Berry & Hibiscus Sorbet',
     category: 'Gelato',
     price: 250,
-    tag: 'Fruit Sorbet',
-    desc: 'Vibrant blend of fresh blueberries, blackberries, and raspberries churned into a velvety, refreshing frozen treat.',
+    tag: 'Summer Harvest',
+    origin: 'Alpine Wild Berries',
+    desc: 'Intense ruby sorbet of crushed blackberries, wild raspberries, and mountain blueberries infused with hibiscus reduction.',
     image: 'https://images.unsplash.com/photo-1501443762994-82bd5dace89a?auto=format&fit=crop&w=800&q=80',
-    slug: 'wild-forest-berry-sorbet'
+    slug: 'wild-forest-berry-hibiscus-sorbet'
+  },
+  {
+    id: 'gl-caramel',
+    name: 'Salted Caramel Fleur de Sel Gelato',
+    category: 'Gelato',
+    price: 270,
+    tag: 'Chef Favorite',
+    origin: 'Guérande Sea Salt',
+    desc: 'Slow-cooked amber toffee ribboned through sweet cream gelato, balanced with crunchy Brittany Fleur de Sel crystals.',
+    image: 'https://images.unsplash.com/photo-1560008581-09826d1de69e?auto=format&fit=crop&w=800&q=80',
+    slug: 'salted-caramel-fleur-de-sel-gelato'
   }
 ];
 
@@ -1031,38 +1037,73 @@ export default function BakeryExperiencePage() {
       )}
 
       {/* =========================================================================
-          COLUMN 4: GELATO (Warm Light Section matching Latte Global Cafe)
+          COLUMN 4: ARTISANAL GELATERIA (Italian Luxury Sanctuary Aesthetic)
       ========================================================================= */}
       {(activeCategory === 'all' || activeCategory === 'gelato') && (
-        <section id="gelato" className="py-20 sm:py-28 bg-[#FAF6EE] text-[#160B0D] relative overflow-hidden border-b border-[#E8DEC8]">
+        <section id="gelato" className="py-20 sm:py-32 text-[#160B0D] relative overflow-hidden border-b border-[#E2D5C3] bg-gradient-to-b from-[#FFFDF9] via-[#F8EEE3] to-[#F1E4D2]">
+          
+          {/* Ambient Multi-Hue Gelateria Atmospheric Glows */}
+          <div className="absolute -top-24 -left-24 w-[28rem] h-[28rem] rounded-full bg-[#E5F0D8]/60 blur-[110px] pointer-events-none" />
+          <div className="absolute top-1/3 -right-28 w-[32rem] h-[32rem] rounded-full bg-[#FCE8B3]/55 blur-[120px] pointer-events-none" />
+          <div className="absolute -bottom-24 left-1/3 w-[26rem] h-[26rem] rounded-full bg-[#FCE1E8]/50 blur-[110px] pointer-events-none" />
+
+          {/* Italian Frost & Champagne Gold Speckle Pattern */}
+          <div className="absolute inset-0 bg-[radial-gradient(#C5A059_1px,transparent_1px)] [background-size:26px_26px] opacity-25 pointer-events-none" />
+          <div className="absolute inset-0 bg-gradient-to-r from-[#FFFDF9]/60 via-transparent to-[#FFFDF9]/60 pointer-events-none" />
+
+          {/* Watermark Crest Typography in Background */}
+          <div className="absolute right-6 top-8 opacity-[0.035] pointer-events-none select-none hidden lg:block">
+            <span className="font-serif text-[180px] font-black tracking-widest text-[#260D16] uppercase leading-none">
+              GELATO
+            </span>
+          </div>
+
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
             
             {/* Category Header */}
-            <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-12">
-              <div className="max-w-2xl space-y-2">
-                <span className="text-[10px] font-bold uppercase tracking-[0.25em] text-[#9E7D46]">
-                  Column 04 • Churned Confections
-                </span>
-                <h2 className="font-serif text-3xl sm:text-5xl font-normal text-[#260D16] tracking-tight">
-                  Gelato & Sorbets
+            <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-10">
+              <div className="max-w-3xl space-y-3">
+                <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-white/80 backdrop-blur-md border border-[#D8B879]/50 shadow-xs">
+                  <span className="w-2 h-2 rounded-full bg-[#3D8B37] animate-pulse" />
+                  <span className="text-[10px] font-bold uppercase tracking-[0.22em] text-[#8C6D4C]">
+                    ❄️ Artisanal Laboratorio • Churned Daily at -11°C
+                  </span>
+                </div>
+
+                <h2 className="font-serif text-3xl sm:text-5xl lg:text-6xl font-normal text-[#260D16] tracking-tight leading-none">
+                  Italian Artisanal Gelato & Sorbets
                 </h2>
-                <p className="text-xs sm:text-sm text-gray-700 font-normal leading-relaxed">
-                  Rich yet refreshing, our gelatos are designed to bring a playful layer of indulgence to the Veloura experience, with flavours that feel both comforting and memorable.
+
+                <p className="text-xs sm:text-sm text-gray-700 font-normal leading-relaxed max-w-2xl">
+                  Crafted following timeless Florentine methods with 70% less air overrun than conventional ice cream, yielding an ultra-dense, silky mouthfeel. Churned with pure single-origin ingredients, whole farm dairy, and hand-squeezed sunlit fruits.
                 </p>
+
+                {/* 3 Italian Gelato Craft Pillars */}
+                <div className="pt-2 flex flex-wrap items-center gap-2.5 sm:gap-4 text-[11px] font-semibold text-[#664638]">
+                  <span className="inline-flex items-center gap-1.5 bg-white/70 px-3 py-1 rounded-full border border-[#E8DEC8]">
+                    <span className="text-[#C5A059]">✦</span> Zero Artificial Emulsifiers
+                  </span>
+                  <span className="inline-flex items-center gap-1.5 bg-white/70 px-3 py-1 rounded-full border border-[#E8DEC8]">
+                    <span className="text-[#C5A059]">✦</span> Pure Sicilian Bronte DOP Pistachios
+                  </span>
+                  <span className="inline-flex items-center gap-1.5 bg-white/70 px-3 py-1 rounded-full border border-[#E8DEC8]">
+                    <span className="text-[#C5A059]">✦</span> 100% Dairy-Free Fruit Sorbets
+                  </span>
+                </div>
               </div>
 
               {/* Navigation Controls */}
               <div className="flex items-center gap-3 shrink-0">
                 <button
                   onClick={() => handleScroll(gelatoRef, 'left', 'gelato')}
-                  className="w-10 h-10 rounded-full bg-white hover:bg-[#260D16] text-[#260D16] hover:text-[#F6EAD5] border border-[#E8DEC8] flex items-center justify-center transition-all shadow-xs"
+                  className="w-11 h-11 rounded-full bg-white/90 hover:bg-[#260D16] text-[#260D16] hover:text-[#F6EAD5] border border-[#D8B879]/50 flex items-center justify-center transition-all shadow-md hover:scale-105 active:scale-95 cursor-pointer"
                   aria-label="Previous gelato"
                 >
                   <ChevronLeft className="w-5 h-5" />
                 </button>
                 <button
                   onClick={() => handleScroll(gelatoRef, 'right', 'gelato')}
-                  className="w-10 h-10 rounded-full bg-white hover:bg-[#260D16] text-[#260D16] hover:text-[#F6EAD5] border border-[#E8DEC8] flex items-center justify-center transition-all shadow-xs"
+                  className="w-11 h-11 rounded-full bg-white/90 hover:bg-[#260D16] text-[#260D16] hover:text-[#F6EAD5] border border-[#D8B879]/50 flex items-center justify-center transition-all shadow-md hover:scale-105 active:scale-95 cursor-pointer"
                   aria-label="Next gelato"
                 >
                   <ChevronRight className="w-5 h-5" />
@@ -1070,7 +1111,7 @@ export default function BakeryExperiencePage() {
               </div>
             </div>
 
-            {/* Continuous Auto-Moving Carousel for Gelato */}
+            {/* Continuous Auto-Moving Carousel for Gelato (Elevated Frosted Glass Cards) */}
             <div 
               className="relative group/gelato"
               onMouseEnter={() => setIsGelatoPaused(true)}
@@ -1079,7 +1120,7 @@ export default function BakeryExperiencePage() {
               {/* Floating Side Navigation Arrows */}
               <button
                 onClick={() => handleScroll(gelatoRef, 'left', 'gelato')}
-                className="absolute -left-3 sm:-left-5 top-1/2 -translate-y-1/2 z-20 w-11 h-11 rounded-full bg-white/95 text-[#260D16] border border-[#E8DEC8] flex items-center justify-center hover:border-[#D8B879] hover:bg-[#FAF6EE] shadow-xl transition opacity-75 group-hover/gelato:opacity-100"
+                className="absolute -left-3 sm:-left-5 top-1/2 -translate-y-1/2 z-20 w-12 h-12 rounded-full bg-white/95 text-[#260D16] border border-[#D8B879] flex items-center justify-center hover:bg-[#260D16] hover:text-[#F6EAD5] shadow-2xl transition opacity-80 group-hover/gelato:opacity-100 hover:scale-110 active:scale-95 cursor-pointer"
                 aria-label="Previous gelato"
               >
                 <ChevronLeft className="w-5 h-5" />
@@ -1087,7 +1128,7 @@ export default function BakeryExperiencePage() {
 
               <button
                 onClick={() => handleScroll(gelatoRef, 'right', 'gelato')}
-                className="absolute -right-3 sm:-right-5 top-1/2 -translate-y-1/2 z-20 w-11 h-11 rounded-full bg-white/95 text-[#260D16] border border-[#E8DEC8] flex items-center justify-center hover:border-[#D8B879] hover:bg-[#FAF6EE] shadow-xl transition opacity-75 group-hover/gelato:opacity-100"
+                className="absolute -right-3 sm:-right-5 top-1/2 -translate-y-1/2 z-20 w-12 h-12 rounded-full bg-white/95 text-[#260D16] border border-[#D8B879] flex items-center justify-center hover:bg-[#260D16] hover:text-[#F6EAD5] shadow-2xl transition opacity-80 group-hover/gelato:opacity-100 hover:scale-110 active:scale-95 cursor-pointer"
                 aria-label="Next gelato"
               >
                 <ChevronRight className="w-5 h-5" />
@@ -1095,12 +1136,12 @@ export default function BakeryExperiencePage() {
 
               <div
                 ref={gelatoRef}
-                className="flex items-stretch gap-6 overflow-x-auto scrollbar-none py-4 px-1 select-none"
+                className="flex items-stretch gap-6 overflow-x-auto scrollbar-none py-5 px-1 select-none"
               >
                 {BAKERY_GELATO.concat(BAKERY_GELATO).map((item, idx) => (
                   <div
                     key={`${item.id}-${idx}`}
-                    className="shrink-0 w-72 sm:w-80 group rounded-3xl overflow-hidden bg-white border border-[#E8DEC8] hover:border-[#D8B879] shadow-md hover:shadow-xl transition-all duration-300 flex flex-col justify-between"
+                    className="shrink-0 w-72 sm:w-80 group rounded-3xl overflow-hidden bg-white/90 backdrop-blur-xl border border-[#D8B879]/45 hover:border-[#D8B879] shadow-[0_10px_35px_rgba(50,20,30,0.06)] hover:shadow-[0_20px_50px_rgba(216,184,121,0.25)] transition-all duration-300 flex flex-col justify-between hover:-translate-y-1.5"
                   >
                   <div className="relative aspect-[4/3.8] overflow-hidden bg-[#F6EAD5]">
                     <img
@@ -1109,11 +1150,19 @@ export default function BakeryExperiencePage() {
                       className="w-full h-full object-cover group-hover:scale-108 transition-transform duration-700"
                       loading="lazy"
                     />
-                    <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent" />
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/45 via-transparent to-black/20" />
                     
-                    <span className="absolute top-3 left-3 px-3 py-1 rounded-full text-[10px] uppercase font-bold tracking-widest bg-white/90 backdrop-blur-md text-[#260D16] border border-[#E8DEC8]">
+                    {/* Tag badge with frosted gold border */}
+                    <span className="absolute top-3 left-3 px-3 py-1 rounded-full text-[10px] uppercase font-bold tracking-widest bg-white/95 backdrop-blur-md text-[#260D16] border border-[#D8B879]/70 shadow-xs">
                       {item.tag}
                     </span>
+
+                    {/* Origin Tag on bottom left of image */}
+                    {item.origin && (
+                      <span className="absolute bottom-3 left-3 px-2.5 py-0.5 rounded-md text-[9px] uppercase font-semibold tracking-wider bg-black/60 backdrop-blur-md text-[#F6EAD5] border border-white/20">
+                        📍 {item.origin}
+                      </span>
+                    )}
 
                     <button
                       onClick={() => setQuickViewProduct({
@@ -1123,10 +1172,10 @@ export default function BakeryExperiencePage() {
                         discount_price: item.price,
                         image_url: item.image,
                         description: item.desc,
-                        rating: 4.92,
+                        rating: 4.95,
                         is_eggless_available: true
                       })}
-                      className="absolute top-3 right-3 w-8 h-8 rounded-full bg-white/90 text-[#260D16] hover:text-[#D8B879] flex items-center justify-center backdrop-blur-md border border-[#E8DEC8] transition-all opacity-0 group-hover:opacity-100 shadow-sm"
+                      className="absolute top-3 right-3 w-8 h-8 rounded-full bg-white/95 text-[#260D16] hover:text-[#D8B879] flex items-center justify-center backdrop-blur-md border border-[#D8B879]/60 transition-all opacity-0 group-hover:opacity-100 shadow-md hover:scale-110"
                       title="Quick View"
                     >
                       <Eye className="w-4 h-4" />
@@ -1139,7 +1188,7 @@ export default function BakeryExperiencePage() {
                         <h4 className="font-serif text-lg sm:text-xl font-normal text-[#260D16] group-hover:text-[#9E7D46] transition-colors leading-snug">
                           {item.name}
                         </h4>
-                        <span className="text-sm font-bold text-[#260D16] shrink-0 ml-2">₹{item.price}</span>
+                        <span className="text-sm font-bold text-[#8C6D4C] shrink-0 ml-2">₹{item.price}</span>
                       </div>
                       <p className="text-xs text-gray-600 line-clamp-2 leading-relaxed font-normal">
                         {item.desc}
@@ -1149,14 +1198,14 @@ export default function BakeryExperiencePage() {
                     <div className="pt-2 flex items-center gap-2">
                       <button
                         onClick={() => handleQuickAdd(item)}
-                        className="flex-1 py-2.5 rounded-full text-xs font-bold uppercase tracking-wider bg-[#260D16] hover:bg-[#3D1423] text-[#F6EAD5] transition-all text-center flex items-center justify-center gap-1.5 shadow-xs"
+                        className="flex-1 py-2.5 rounded-full text-xs font-bold uppercase tracking-wider bg-[#260D16] hover:bg-[#3D1423] text-[#F6EAD5] transition-all text-center flex items-center justify-center gap-1.5 shadow-sm hover:shadow-md hover:scale-[1.02]"
                       >
-                        <ShoppingBag className="w-3.5 h-3.5" />
+                        <ShoppingBag className="w-3.5 h-3.5 text-[#D8B879]" />
                         <span>Add to Order</span>
                       </button>
                       <Link
                         to={`/product/${item.slug}`}
-                        className="p-2.5 rounded-full bg-[#FAF6EE] hover:bg-[#F2ECE0] text-[#260D16] transition border border-[#E8DEC8]"
+                        className="p-2.5 rounded-full bg-[#FAF6EE] hover:bg-[#F2ECE0] text-[#260D16] transition border border-[#E8DEC8] hover:border-[#D8B879]"
                         title="View details"
                       >
                         <ArrowRight className="w-4 h-4" />
