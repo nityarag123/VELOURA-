@@ -511,6 +511,10 @@ def apply_coupon():
         "message": f"Coupon {coupon['code']} applied successfully! You saved ₹{round(discount, 2)}"
     })
 
+@app.route('/api/coupons/validate', method='POST')
+def validate_coupon():
+    return apply_coupon()
+
 # ================= REVIEWS =================
 @app.route('/api/products/<product_id:int>/reviews', method='POST')
 def add_review(product_id):

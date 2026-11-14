@@ -1,5 +1,5 @@
-import React from 'react';
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import React, { useEffect } from 'react';
+import { BrowserRouter as Router, Routes, Route, useLocation } from 'react-router-dom';
 import { AuthProvider } from './context/AuthContext';
 import { CartProvider } from './context/CartContext';
 import { WishlistProvider } from './context/WishlistContext';
@@ -22,37 +22,55 @@ import CoffeeExperiencePage from './pages/CoffeeExperiencePage';
 import ChocolateExperiencePage from './pages/ChocolateExperiencePage';
 import BakeryExperiencePage from './pages/BakeryExperiencePage';
 
+function ScrollToTop() {
+  const { pathname } = useLocation();
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [pathname]);
+  return null;
+}
+
+function MainLayout() {
+  const location = useLocation();
+  const isAdmin = location.pathname.startsWith('/admin');
+
+  return (
+    <div className={`min-h-screen flex flex-col ${isAdmin ? 'bg-[#120D0D]' : 'bg-[#FAF6EE] text-[#2D2020] luxury-cream-texture'}`}>
+      <ScrollToTop />
+      {!isAdmin && <AnnouncementBar />}
+      {!isAdmin && <Header />}
+      {!isAdmin && <CartDrawer />}
+      
+      <main className={`flex-1 ${isAdmin ? '' : 'pb-16 md:pb-0'}`}>
+        <Routes>
+          <Route path="/" element={<HomePage />} />
+          <Route path="/bakery" element={<BakeryExperiencePage />} />
+          <Route path="/cakes" element={<BakeryExperiencePage />} />
+          <Route path="/coffee" element={<CoffeeExperiencePage />} />
+          <Route path="/chocolate" element={<ChocolateExperiencePage />} />
+          <Route path="/products" element={<ProductListingPage />} />
+          <Route path="/product/:slug" element={<ProductDetailPage />} />
+          <Route path="/checkout" element={<CheckoutPage />} />
+          <Route path="/order-confirmation/:orderNumber" element={<OrderConfirmationPage />} />
+          <Route path="/profile" element={<UserProfilePage />} />
+          <Route path="/login" element={<LoginPage />} />
+          <Route path="/admin" element={<AdminDashboardPage />} />
+        </Routes>
+      </main>
+
+      {!isAdmin && <Footer />}
+      {!isAdmin && <MobileHomeBar />}
+    </div>
+  );
+}
+
 function App() {
   return (
     <Router>
       <AuthProvider>
         <CartProvider>
           <WishlistProvider>
-            <div className="min-h-screen flex flex-col bg-[#FAF6EE] text-[#2D2020] luxury-cream-texture">
-              <AnnouncementBar />
-              <Header />
-              <CartDrawer />
-              
-              <main className="flex-1 pb-16 md:pb-0">
-                <Routes>
-                  <Route path="/" element={<HomePage />} />
-                  <Route path="/bakery" element={<BakeryExperiencePage />} />
-                  <Route path="/cakes" element={<BakeryExperiencePage />} />
-                  <Route path="/coffee" element={<CoffeeExperiencePage />} />
-                  <Route path="/chocolate" element={<ChocolateExperiencePage />} />
-                  <Route path="/products" element={<ProductListingPage />} />
-                  <Route path="/product/:slug" element={<ProductDetailPage />} />
-                  <Route path="/checkout" element={<CheckoutPage />} />
-                  <Route path="/order-confirmation/:orderNumber" element={<OrderConfirmationPage />} />
-                  <Route path="/profile" element={<UserProfilePage />} />
-                  <Route path="/login" element={<LoginPage />} />
-                  <Route path="/admin" element={<AdminDashboardPage />} />
-                </Routes>
-              </main>
-
-              <Footer />
-              <MobileHomeBar />
-            </div>
+            <MainLayout />
           </WishlistProvider>
         </CartProvider>
       </AuthProvider>

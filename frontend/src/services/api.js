@@ -124,8 +124,8 @@ function handleMockFallback(error) {
     return Promise.resolve({ data: filtered, status: 200, statusText: 'OK', headers: {}, config });
   }
 
-  // 4. Coupon Validation: POST /coupons/validate
-  if (method === 'post' && url.includes('/coupons/validate')) {
+  // 4. Coupon Validation: POST /coupons/validate or /coupons/apply
+  if (method === 'post' && (url.includes('/coupons/validate') || url.includes('/coupons/apply'))) {
     let body = {};
     try { body = typeof config.data === 'string' ? JSON.parse(config.data) : config.data || {}; } catch(e){}
     const code = (body.code || '').toUpperCase().trim();
@@ -691,6 +691,162 @@ function handleMockFallback(error) {
       data: { message: "Work status updated", status: body.status },
       status: 200, statusText: 'OK', headers: {}, config
     });
+  }
+
+  // 19. Admin Categories Fallback: GET /admin/categories
+  if (method === 'get' && url.includes('/admin/categories')) {
+    let cats = [...MOCK_CATEGORIES];
+    try {
+      const customCats = JSON.parse(localStorage.getItem('veloura_custom_categories') || '[]');
+      if (Array.isArray(customCats)) {
+        customCats.forEach(cc => {
+          const idx = cats.findIndex(c => c.id === cc.id);
+          if (idx !== -1) cats[idx] = { ...cats[idx], ...cc };
+          else cats.push(cc);
+        });
+      }
+    } catch(e) {}
+    try {
+      const deletedCats = JSON.parse(localStorage.getItem('veloura_deleted_cat_ids') || '[]');
+      if (Array.isArray(deletedCats)) {
+        cats = cats.filter(c => !deletedCats.includes(c.id));
+      }
+    } catch(e) {}
+    return Promise.resolve({ data: cats, status: 200, statusText: 'OK', headers: {}, config });
+  }
+
+  // Admin Create Category: POST /admin/categories
+  if (method === 'post' && url.includes('/admin/categories')) {
+    let body = {};
+    try { body = typeof config.data === 'string' ? JSON.parse(config.data) : config.data || {}; } catch(e){}
+    const newCat = {
+      id: Date.now(),
+      name: body.name || 'New Category',
+      slug: (body.slug || body.name || 'category').toLowerCase().replace(/\s+/g, '-').replace(/[^a-z0-9-]/g, ''),
+      description: body.description || '',
+      image_url: body.image_url || 'https://images.unsplash.com/photo-1578985545062-69928b1d9587?auto=format&fit=crop&w=800&q=80',
+      display_order: parseInt(body.display_order) || 10,
+      is_active: body.is_active !== undefined ? body.is_active : 1,
+      product_count: 0
+    };
+    try {
+      const custom = JSON.parse(localStorage.getItem('veloura_custom_categories') || '[]');
+      custom.push(newCat);
+      localStorage.setItem('veloura_custom_categories', JSON.stringify(custom));
+    } catch(e) {}
+    return Promise.resolve({ data: newCat, status: 201, statusText: 'Created', headers: {}, config });
+  }
+
+  // Admin Update Category: PUT /admin/categories/:id
+  if (method === 'put' && url.includes('/admin/categories/')) {
+    let body = {};
+    try { body = typeof config.data === 'string' ? JSON.parse(config.data) : config.data || {}; } catch(e){}
+    const idMatch = url.match(/\/admin\/categories\/(\d+)/);
+    const catId = idMatch ? parseInt(idMatch[1]) : null;
+    if (catId) {
+      try {
+        let custom = JSON.parse(localStorage.getItem('veloura_custom_categories') || '[]');
+        const idx = custom.findIndex(c => c.id === catId);
+        if (idx !== -1) custom[idx] = { ...custom[idx], ...body };
+        else custom.push({ id: catId, ...body });
+        localStorage.setItem('veloura_custom_categories', JSON.stringify(custom));
+      } catch(e) {}
+    }
+    return Promise.resolve({ data: { id: catId, ...body }, status: 200, statusText: 'OK', headers: {}, config });
+  }
+
+  // Admin Delete Category: DELETE /admin/categories/:id
+  if (method === 'delete' && url.includes('/admin/categories/')) {
+    const idMatch = url.match(/\/admin\/categories\/(\d+)/);
+    const catId = idMatch ? parseInt(idMatch[1]) : null;
+    if (catId) {
+      try {
+        let deleted = JSON.parse(localStorage.getItem('veloura_deleted_cat_ids') || '[]');
+        if (!deleted.includes(catId)) deleted.push(catId);
+        localStorage.setItem('veloura_deleted_cat_ids', JSON.stringify(deleted));
+      } catch(e) {}
+    }
+    return Promise.resolve({ data: { message: "Category deleted successfully", id: catId }, status: 200, statusText: 'OK', headers: {}, config });
+  }
+
+  // 20. Admin Customers Fallback: GET /admin/customers
+  if (method === 'get' && url.includes('/admin/customers')) {
+    let orders = [];
+    try { orders = JSON.parse(localStorage.getItem('veloura_orders') || '[]'); } catch(e) {}
+    const customerMap = {};
+    orders.forEach(o => {
+      const email = (o.customer_email || 'guest@veloura.com').toLowerCase();
+      if (!customerMap[email]) {
+        customerMap[email] = {
+          id: Object.keys(customerMap).length + 1,
+          full_name: o.customer_name || 'Valued Patron',
+          email: email,
+          phone: o.customer_phone || '+91 98765 43210',
+          city: o.delivery_city || 'Hyderabad',
+          address: o.delivery_address || '101 Jubilee Hills',
+          order_count: 0,
+          total_spend: 0,
+          orders: []
+        };
+      }
+      customerMap[email].order_count += 1;
+      customerMap[email].total_spend += (parseFloat(o.total_amount) || 0);
+      customerMap[email].orders.push(o);
+    });
+    const patrons = Object.values(customerMap);
+    if (!patrons.length) {
+      patrons.push(
+        { id: 1, full_name: "Aarav Sharma", email: "aarav.sharma@example.com", phone: "+91 98765 43210", city: "Mumbai", address: "Flat 402, Sea Green Apartments, Worli", order_count: 3, total_spend: 3847.0, orders: [] },
+        { id: 2, full_name: "Meera Nair", email: "meera.nair@gmail.com", phone: "+91 91234 56789", city: "Bengaluru", address: "Villa 12, Palm Meadows, Whitefield", order_count: 2, total_spend: 1898.0, orders: [] }
+      );
+    }
+    return Promise.resolve({ data: patrons, status: 200, statusText: 'OK', headers: {}, config });
+  }
+
+  // 21. Reservation Items Fallback: POST /admin/reservations/:id/items
+  if (method === 'post' && url.match(/\/admin\/reservations\/\d+\/items/)) {
+    let body = {};
+    try { body = typeof config.data === 'string' ? JSON.parse(config.data) : config.data || {}; } catch(e){}
+    const idMatch = url.match(/\/admin\/reservations\/(\d+)\/items/);
+    const resId = idMatch ? parseInt(idMatch[1]) : null;
+    const newItem = {
+      id: Date.now(),
+      reservation_id: resId,
+      product_id: body.product_id || 1,
+      product_name: body.product_name || 'Signature Item',
+      unit_price: parseFloat(body.unit_price) || 0,
+      quantity: parseInt(body.quantity) || 1,
+      total_price: (parseFloat(body.unit_price) || 0) * (parseInt(body.quantity) || 1),
+      notes: body.notes || ''
+    };
+    try {
+      let bookings = JSON.parse(localStorage.getItem('veloura_table_bookings') || '[]');
+      const b = bookings.find(x => x.id === resId);
+      if (b) {
+        if (!b.items) b.items = [];
+        b.items.push(newItem);
+        b.pre_ordered_items = b.items.map(it => `${it.product_name} x${it.quantity}`).join(', ');
+        localStorage.setItem('veloura_table_bookings', JSON.stringify(bookings));
+      }
+    } catch(e) {}
+    return Promise.resolve({ data: newItem, status: 201, statusText: 'Created', headers: {}, config });
+  }
+
+  // Delete Reservation Item: DELETE /admin/reservations/:id/items/:itemId
+  if (method === 'delete' && url.match(/\/admin\/reservations\/\d+\/items\/\d+/)) {
+    const idMatch = url.match(/\/admin\/reservations\/(\d+)\/items\/(\d+)/);
+    const resId = idMatch ? parseInt(idMatch[1]) : null;
+    const itemId = idMatch ? parseInt(idMatch[2]) : null;
+    try {
+      let bookings = JSON.parse(localStorage.getItem('veloura_table_bookings') || '[]');
+      const b = bookings.find(x => x.id === resId);
+      if (b && b.items) {
+        b.items = b.items.filter(it => it.id !== itemId);
+        b.pre_ordered_items = b.items.map(it => `${it.product_name} x${it.quantity}`).join(', ');
+        localStorage.setItem('veloura_table_bookings', JSON.stringify(bookings));
+      }
+    } catch(e) {}
+    return Promise.resolve({ data: { message: "Item removed" }, status: 200, statusText: 'OK', headers: {}, config });
   }
 
   return Promise.reject(error);

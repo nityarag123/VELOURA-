@@ -117,7 +117,7 @@ export default function OrderConfirmationPage() {
   }
 
   const currentStepIndex = ORDER_STEPS.findIndex(
-    (s) => s.status.toLowerCase() === (order.status || 'Order Placed').toLowerCase()
+    (s) => s.status.toLowerCase() === (order.status || order.order_status || 'Order Placed').toLowerCase()
   );
   const activeIndex = currentStepIndex >= 0 ? currentStepIndex : 0;
 
@@ -155,7 +155,7 @@ export default function OrderConfirmationPage() {
         <div className="flex items-center justify-between pb-4 border-b border-gray-100">
           <div>
             <h3 className="font-serif text-lg font-bold text-[#2D2020]">Live Order Tracking</h3>
-            <p className="text-xs text-gray-400">Current Status: <strong className="text-[#4A1525]">{order.status}</strong></p>
+            <p className="text-xs text-gray-400">Current Status: <strong className="text-[#4A1525]">{order.status || order.order_status || 'Order Placed'}</strong></p>
           </div>
           <span className="text-xs text-gray-400 font-mono">
             {new Date(order.created_at).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
