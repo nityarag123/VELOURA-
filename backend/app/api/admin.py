@@ -103,3 +103,23 @@ def delete_product(
     db.delete(product)
     db.commit()
     return {"message": f"Product '{product.name}' deleted successfully"}
+
+from pydantic import BaseModel
+class AdminChangePassword(BaseModel):
+    current_password: str
+    new_password: str
+
+@router.put("/change-password")
+def change_admin_password(
+    data: AdminChangePassword,
+    admin_user: User = Depends(get_current_admin),
+    db: Session = Depends(get_db)
+):
+    from app.core.security import verify_password, get_password_hash
+    if not verify_password(data.current_password, admin_user.hashed_password):
+        raise HTTPException(status_code=400, detail="Current admin password is incorrect")
+    if len(data.new_password) < 6:
+        raise HTTPException(status_code=400, detail="New password must be at least 6 characters")
+    admin_user.hashed_password = get_password_hash(data.new_password)
+    db.commit()
+    return {"message": "Admin password updated successfully! Please use your new password next time."}

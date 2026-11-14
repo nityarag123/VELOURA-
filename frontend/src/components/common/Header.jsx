@@ -591,13 +591,21 @@ export default function Header() {
               {user ? (
                 <button
                   onClick={() => setIsUserMenuOpen(!isUserMenuOpen)}
-                  className="flex items-center gap-2 bg-[#FAF6F0] hover:bg-white py-1.5 px-3.5 rounded-full transition-all text-xs font-semibold text-[#3D121A] border border-[#E3D7C5] hover:border-[#C5A059] shadow-2xs"
+                  className={`flex items-center gap-2 py-1.5 px-3.5 rounded-full transition-all text-xs font-semibold shadow-2xs ${
+                    isAdmin
+                      ? 'bg-[#260D16] text-[#FAF6EE] border-2 border-[#D8B879] shadow-md hover:scale-105'
+                      : 'bg-[#FAF6F0] hover:bg-white text-[#3D121A] border border-[#E3D7C5] hover:border-[#C5A059]'
+                  }`}
                 >
-                  <div className="w-5 h-5 rounded-full bg-[#3D121A]/10 text-[#C5A059] flex items-center justify-center">
-                    <UserIcon className="w-3 h-3 text-[#C5A059]" />
+                  <div className={`w-5 h-5 rounded-full flex items-center justify-center ${
+                    isAdmin ? 'bg-[#D8B879] text-[#260D16] font-bold text-xs' : 'bg-[#3D121A]/10 text-[#C5A059]'
+                  }`}>
+                    {isAdmin ? '👑' : <UserIcon className="w-3 h-3 text-[#C5A059]" />}
                   </div>
-                  <span className="font-semibold max-w-[85px] truncate">{user.full_name?.split(' ')[0] || 'Patron'}</span>
-                  <ChevronDown className="w-3 h-3 text-[#8C6D4C] opacity-75" />
+                  <span className="font-semibold max-w-[85px] truncate">
+                    {isAdmin ? 'Admin' : (user.full_name?.split(' ')[0] || 'Patron')}
+                  </span>
+                  <ChevronDown className={`w-3 h-3 ${isAdmin ? 'text-[#D8B879]' : 'text-[#8C6D4C]'} opacity-75`} />
                 </button>
               ) : (
                 <Link
@@ -611,11 +619,38 @@ export default function Header() {
 
               {/* User Dropdown */}
               {isUserMenuOpen && user && (
-                <div className="absolute right-0 top-full mt-2 w-56 bg-white rounded-2xl shadow-2xl border border-[#EFE8DF] py-2 z-50 text-gray-800 animate-in fade-in zoom-in-95">
+                <div className="absolute right-0 top-full mt-2 w-60 bg-white rounded-2xl shadow-2xl border border-[#EFE8DF] py-2 z-50 text-gray-800 animate-in fade-in zoom-in-95">
                   <div className="px-4 py-2 border-b border-[#F4EFEA]">
-                    <p className="text-xs font-bold text-gray-900 truncate">{user.full_name}</p>
+                    <div className="flex items-center justify-between gap-1">
+                      <p className="text-xs font-bold text-gray-900 truncate">{user.full_name}</p>
+                      {isAdmin && (
+                        <span className="text-[9px] font-bold uppercase tracking-wider bg-[#260D16] text-[#D8B879] px-2 py-0.5 rounded-full">
+                          Admin
+                        </span>
+                      )}
+                    </div>
                     <p className="text-[11px] text-gray-500 truncate">{user.email}</p>
                   </div>
+
+                  {isAdmin ? (
+                    <Link
+                      to="/admin"
+                      onClick={() => setIsUserMenuOpen(false)}
+                      className="flex items-center gap-2 px-4 py-2.5 text-xs text-[#260D16] font-bold bg-[#FBF7EE] hover:bg-[#E8DDD2] transition border-y border-[#D8B879]/40"
+                    >
+                      <Shield className="w-4 h-4 text-[#C5A059]" />
+                      <span>👑 Master Admin Console</span>
+                    </Link>
+                  ) : (
+                    <Link
+                      to="/admin"
+                      onClick={() => setIsUserMenuOpen(false)}
+                      className="flex items-center gap-2 px-4 py-2 text-xs text-[#8C6D4C] font-bold hover:bg-[#E8DDD2] transition"
+                    >
+                      <Shield className="w-3.5 h-3.5 text-[#C5A059]" />
+                      <span>👑 Switch to Admin Console</span>
+                    </Link>
+                  )}
 
                   <Link
                     to="/profile"
@@ -625,26 +660,6 @@ export default function Header() {
                     <UserIcon className="w-3.5 h-3.5" />
                     <span>My Profile & Orders</span>
                   </Link>
-
-                  {isAdmin ? (
-                    <Link
-                      to="/admin"
-                      onClick={() => setIsUserMenuOpen(false)}
-                      className="flex items-center gap-2 px-4 py-2 text-xs text-[#4A1525] font-bold hover:bg-[#E8DDD2] transition"
-                    >
-                      <Shield className="w-3.5 h-3.5 text-[#C5A059]" />
-                      <span>👑 Admin Console & Catalog</span>
-                    </Link>
-                  ) : (
-                    <Link
-                      to="/login?tab=admin"
-                      onClick={() => setIsUserMenuOpen(false)}
-                      className="flex items-center gap-2 px-4 py-2 text-xs text-[#8C6D4C] font-bold hover:bg-[#E8DDD2] transition"
-                    >
-                      <Shield className="w-3.5 h-3.5" />
-                      <span>Switch to Admin Console</span>
-                    </Link>
-                  )}
 
                   <div className="border-t border-[#F4EFEA] mt-1 pt-1">
                     <button

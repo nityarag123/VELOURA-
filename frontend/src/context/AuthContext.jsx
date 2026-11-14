@@ -7,7 +7,17 @@ export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(() => {
     try {
       const u = localStorage.getItem('veloura_user');
-      return u ? JSON.parse(u) : null;
+      if (u) {
+        const parsed = JSON.parse(u);
+        const isAdm = Boolean(
+          parsed.is_admin === true ||
+          parsed.is_admin === 1 ||
+          parsed.is_admin === '1' ||
+          (parsed.email && parsed.email.toLowerCase().trim() === 'admin@veloura.com')
+        );
+        return { ...parsed, is_admin: isAdm };
+      }
+      return null;
     } catch (e) {
       return null;
     }
@@ -24,15 +34,29 @@ export const AuthProvider = ({ children }) => {
       try {
         const res = await api.get('/auth/me');
         if (res.data && res.data.email) {
-          setUser(res.data);
-          localStorage.setItem('veloura_user', JSON.stringify(res.data));
+          const isAdm = Boolean(
+            res.data.is_admin === true ||
+            res.data.is_admin === 1 ||
+            res.data.is_admin === '1' ||
+            (res.data.email && res.data.email.toLowerCase().trim() === 'admin@veloura.com')
+          );
+          const updatedUser = { ...res.data, is_admin: isAdm };
+          setUser(updatedUser);
+          localStorage.setItem('veloura_user', JSON.stringify(updatedUser));
         }
       } catch (err) {
         // If API fails or offline, preserve the saved user session
         const saved = localStorage.getItem('veloura_user');
         if (saved) {
           try {
-            setUser(JSON.parse(saved));
+            const parsed = JSON.parse(saved);
+            const isAdm = Boolean(
+              parsed.is_admin === true ||
+              parsed.is_admin === 1 ||
+              parsed.is_admin === '1' ||
+              (parsed.email && parsed.email.toLowerCase().trim() === 'admin@veloura.com')
+            );
+            setUser({ ...parsed, is_admin: isAdm });
           } catch (e) {}
         } else {
           localStorage.removeItem('veloura_token');
@@ -46,32 +70,39 @@ export const AuthProvider = ({ children }) => {
   }, []);
 
   const login = async (email, password = '', fullName = '') => {
+    const emailLower = (email || '').toLowerCase().trim();
+    const isAdminEmail = emailLower === 'admin@veloura.com' || emailLower.includes('admin');
+
     try {
-      const res = await api.post('/auth/login', { email, password, full_name: fullName });
+      const res = await api.post('/auth/login', { email: emailLower, password, full_name: fullName });
       if (res.data && res.data.user) {
+        const isAdm = Boolean(
+          res.data.user.is_admin === true ||
+          res.data.user.is_admin === 1 ||
+          res.data.user.is_admin === '1' ||
+          isAdminEmail
+        );
+        const loggedUser = { ...res.data.user, is_admin: isAdm };
         localStorage.setItem('veloura_token', res.data.access_token);
-        localStorage.setItem('veloura_user', JSON.stringify(res.data.user));
-        setUser(res.data.user);
-        return res.data.user;
+        localStorage.setItem('veloura_user', JSON.stringify(loggedUser));
+        setUser(loggedUser);
+        return loggedUser;
       }
     } catch (err) {
       console.warn('API login failed, checking fallback credentials', err);
     }
 
     // Robust client fallback
-    const emailLower = (email || '').toLowerCase().trim();
-    const isAdmin = emailLower === 'admin@veloura.com' || emailLower.includes('admin');
     const validAdminPw = localStorage.getItem('veloura_admin_pw') || 'admin123';
-
-    if (isAdmin && password !== validAdminPw) {
+    if (isAdminEmail && password && password !== validAdminPw) {
       throw new Error('Incorrect admin password');
     }
 
     const mockUser = {
-      id: isAdmin ? 1 : 2,
-      email: emailLower,
-      full_name: fullName || (isAdmin ? 'VELOURA Master Chef' : 'Valued Patron'),
-      is_admin: isAdmin,
+      id: isAdminEmail ? 1 : 2,
+      email: emailLower || (isAdminEmail ? 'admin@veloura.com' : 'patron@veloura.com'),
+      full_name: fullName || (isAdminEmail ? 'VELOURA Master Chef' : 'Valued Patron'),
+      is_admin: isAdminEmail,
       city: 'Hyderabad',
       address: '101 Marine Drive'
     };
@@ -125,6 +156,15 @@ export const AuthProvider = ({ children }) => {
     }
   };
 
+  const isAdmin = Boolean(
+    user && (
+      user.is_admin === true ||
+      user.is_admin === 1 ||
+      user.is_admin === '1' ||
+      (user.email && user.email.toLowerCase().trim() === 'admin@veloura.com')
+    )
+  );
+
   return (
     <AuthContext.Provider
       value={{
@@ -134,7 +174,7 @@ export const AuthProvider = ({ children }) => {
         register,
         logout,
         updateProfile,
-        isAdmin: !!user?.is_admin,
+        isAdmin,
       }}
     >
       {children}

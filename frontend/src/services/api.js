@@ -215,13 +215,13 @@ function handleMockFallback(error) {
     let body = {};
     try { body = typeof config.data === 'string' ? JSON.parse(config.data) : config.data || {}; } catch(e){}
     const email = (body.email || '').toLowerCase().trim();
-    const isAdmin = email.includes('admin');
+    const isAdmin = email === 'admin@veloura.com' || email.includes('admin');
     const mockUser = {
       id: isAdmin ? 1 : 2,
-      email: email || 'patron@veloura.com',
+      email: email || (isAdmin ? 'admin@veloura.com' : 'patron@veloura.com'),
       full_name: body.full_name || (isAdmin ? 'VELOURA Master Chef' : 'Valued Patron'),
       is_admin: isAdmin,
-      city: 'Mumbai',
+      city: 'Hyderabad',
       address: '101 Marine Drive'
     };
     return Promise.resolve({
@@ -236,16 +236,26 @@ function handleMockFallback(error) {
 
   // 9. Auth Me: GET /auth/me
   if (method === 'get' && url.includes('/auth/me')) {
-    return Promise.resolve({
-      data: {
-        id: 2,
-        email: 'patron@veloura.com',
-        full_name: 'Valued Patron',
-        is_admin: false,
-        city: 'Mumbai',
-        address: '101 Marine Drive'
-      },
-      status: 200, statusText: 'OK', headers: {}, config
+    let savedUser = null;
+    try {
+      const u = localStorage.getItem('veloura_user');
+      if (u) savedUser = JSON.parse(u);
+    } catch (e) {}
+
+    if (savedUser && savedUser.email) {
+      const isAdm = Boolean(
+        savedUser.is_admin === true || 
+        savedUser.is_admin === 1 || 
+        savedUser.is_admin === '1' ||
+        savedUser.email.toLowerCase().trim() === 'admin@veloura.com'
+      );
+      return Promise.resolve({
+        data: { ...savedUser, is_admin: isAdm },
+        status: 200, statusText: 'OK', headers: {}, config
+      });
+    }
+    return Promise.reject({
+      response: { status: 401, data: { detail: 'Not authenticated' } }
     });
   }
 
