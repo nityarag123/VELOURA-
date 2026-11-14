@@ -405,6 +405,21 @@ export default function HomePage() {
   const handleReservationSubmit = (e) => {
     e.preventDefault();
     const token = 'VL-' + Math.floor(100000 + Math.random() * 900000);
+    const bookingData = {
+      token,
+      guest_name: reservationName || 'Valued Patron',
+      guest_phone: reservationPhone || '+91 98825 53333',
+      guest_email: reservationEmail || 'guest@veloura.com',
+      reservation_date: reservationDate || 'Today',
+      reservation_time: reservationTime || '7:00 PM',
+      location: reservationLocation,
+      guests_count: reservationGuests,
+      table_number: selectedTable.tableNumber || 'Table 01',
+      table_name: selectedTable.name || 'Salon Window Alcove',
+      special_requests: `Reserved ${selectedTable.name} (${selectedTable.zoneName || selectedTable.zone}). ${reservationType}`,
+      status: 'Confirmed'
+    };
+
     setConfirmedBookingData({
       token,
       name: reservationName,
@@ -418,6 +433,21 @@ export default function HomePage() {
       table: selectedTable
     });
     setReservationSuccess(true);
+
+    // Persist to localStorage for immediate admin visibility
+    try {
+      const existing = JSON.parse(localStorage.getItem('veloura_table_bookings') || '[]');
+      existing.unshift({ id: Date.now(), ...bookingData, created_at: new Date().toISOString() });
+      localStorage.setItem('veloura_table_bookings', JSON.stringify(existing));
+    } catch(err) {
+      console.error('Failed to store reservation locally', err);
+    }
+
+    // Send to backend API
+    api.post('/reservations', bookingData).catch((err) => {
+      console.log('Reservation stored locally (API fallback):', err.message);
+    });
+
     setTimeout(() => {
       setReservationSuccess(false);
       setReservationName('');

@@ -372,8 +372,243 @@ function handleMockFallback(error) {
 
   // 16. Admin Update Order Status: PUT /admin/orders/:id/status
   if (method === 'put' && url.includes('/admin/orders/')) {
+    let body = {};
+    try { body = typeof config.data === 'string' ? JSON.parse(config.data) : config.data || {}; } catch(e){}
+    const idMatch = url.match(/\/admin\/orders\/(\d+)\/status/);
+    const orderId = idMatch ? parseInt(idMatch[1]) : null;
+    if (orderId && body.status) {
+      try {
+        let orders = JSON.parse(localStorage.getItem('veloura_orders') || '[]');
+        orders = orders.map(o => (o.id === orderId ? { ...o, status: body.status } : o));
+        localStorage.setItem('veloura_orders', JSON.stringify(orders));
+      } catch (e) {}
+    }
     return Promise.resolve({
-      data: { message: "Order status updated" },
+      data: { message: "Order status updated", status: body.status },
+      status: 200, statusText: 'OK', headers: {}, config
+    });
+  }
+
+  // 17. Reservations Fallback (Table Bookings)
+  if (method === 'get' && url.includes('/admin/reservations')) {
+    let bookings = [];
+    try {
+      bookings = JSON.parse(localStorage.getItem('veloura_table_bookings') || '[]');
+    } catch (e) {}
+
+    if (!bookings.length) {
+      bookings = [
+        {
+          id: 1,
+          token: "VL-938210",
+          guest_name: "Aarav & Radhika Sharma",
+          guest_phone: "+91 98765 43210",
+          guest_email: "aarav.sharma@example.com",
+          reservation_date: "Today",
+          reservation_time: "7:30 PM - 9:30 PM",
+          location: "Veloura Grand Reserve Salon • Jubilee Hills, Hyderabad",
+          guests_count: "2 Guests",
+          table_number: "Table 02",
+          table_name: "Parisian Velvet Booth",
+          special_requests: "25th Anniversary private dining with champagne gateau presentation.",
+          status: "Table Prepared",
+          created_at: new Date(Date.now() - 3600000).toISOString()
+        },
+        {
+          id: 2,
+          token: "VL-621840",
+          guest_name: "Vikramaditya Singhania",
+          guest_phone: "+91 98200 11223",
+          guest_email: "vikram.singh@example.com",
+          reservation_date: "Tomorrow",
+          reservation_time: "8:00 PM - 10:30 PM",
+          location: "Veloura Grand Reserve Salon • Mumbai Seafront",
+          guests_count: "6-8 Guests VIP",
+          table_number: "Table 04",
+          table_name: "The Imperial Grand Round",
+          special_requests: "Family Milestone Birthday celebration. Chandelier suite required.",
+          status: "Confirmed",
+          created_at: new Date(Date.now() - 7200000).toISOString()
+        },
+        {
+          id: 3,
+          token: "VL-410952",
+          guest_name: "Ananya Deshmukh",
+          guest_phone: "+91 99887 66554",
+          guest_email: "ananya.desh@gmail.com",
+          reservation_date: "Today",
+          reservation_time: "4:00 PM - 6:00 PM",
+          location: "Veloura Grand Reserve Salon • Bengaluru",
+          guests_count: "2 Guests",
+          table_number: "Table 01",
+          table_name: "Salon Window Alcove",
+          special_requests: "Afternoon High Tea and signature pour-over tasting.",
+          status: "Guests Seated",
+          created_at: new Date(Date.now() - 14400000).toISOString()
+        }
+      ];
+      try { localStorage.setItem('veloura_table_bookings', JSON.stringify(bookings)); } catch (e) {}
+    }
+    return Promise.resolve({ data: bookings, status: 200, statusText: 'OK', headers: {}, config });
+  }
+
+  // Create Reservation: POST /reservations or POST /admin/reservations
+  if (method === 'post' && (url.includes('/reservations') || url.includes('/admin/reservations'))) {
+    let body = {};
+    try { body = typeof config.data === 'string' ? JSON.parse(config.data) : config.data || {}; } catch(e){}
+    const newBooking = {
+      id: Date.now(),
+      token: body.token || `VL-${Math.floor(100000 + Math.random() * 900000)}`,
+      guest_name: body.guest_name || body.name || 'Valued Patron',
+      guest_phone: body.guest_phone || body.phone || '+91 98825 53333',
+      guest_email: body.guest_email || body.email || 'guest@veloura.com',
+      reservation_date: body.reservation_date || body.date || 'Today',
+      reservation_time: body.reservation_time || body.time || '7:00 PM',
+      location: body.location || 'Veloura Grand Reserve Salon • Jubilee Hills, Hyderabad',
+      guests_count: body.guests_count || body.guests || '2 Guests',
+      table_number: body.table_number || (body.table && body.table.tableNumber) || 'Table 01',
+      table_name: body.table_name || (body.table && body.table.name) || 'Salon Window Alcove',
+      special_requests: body.special_requests || 'Standard Reservation',
+      status: body.status || 'Confirmed',
+      created_at: new Date().toISOString()
+    };
+    try {
+      const existing = JSON.parse(localStorage.getItem('veloura_table_bookings') || '[]');
+      existing.unshift(newBooking);
+      localStorage.setItem('veloura_table_bookings', JSON.stringify(existing));
+    } catch(e) {}
+    return Promise.resolve({ data: newBooking, status: 201, statusText: 'Created', headers: {}, config });
+  }
+
+  // Update Reservation Status: PUT /admin/reservations/:id/status
+  if (method === 'put' && url.includes('/admin/reservations/')) {
+    let body = {};
+    try { body = typeof config.data === 'string' ? JSON.parse(config.data) : config.data || {}; } catch(e){}
+    const idMatch = url.match(/\/admin\/reservations\/(\d+)\/status/);
+    const resId = idMatch ? parseInt(idMatch[1]) : null;
+    if (resId && body.status) {
+      try {
+        let bookings = JSON.parse(localStorage.getItem('veloura_table_bookings') || '[]');
+        bookings = bookings.map(b => (b.id === resId ? { ...b, status: body.status } : b));
+        localStorage.setItem('veloura_table_bookings', JSON.stringify(bookings));
+      } catch (e) {}
+    }
+    return Promise.resolve({
+      data: { message: "Reservation status updated", status: body.status },
+      status: 200, statusText: 'OK', headers: {}, config
+    });
+  }
+
+  // 18. Customer Works & Bespoke Gateaux Fallback
+  if (method === 'get' && url.includes('/admin/works')) {
+    let works = [];
+    try {
+      works = JSON.parse(localStorage.getItem('veloura_customer_works') || '[]');
+    } catch (e) {}
+
+    if (!works.length) {
+      works = [
+        {
+          id: 1,
+          work_code: "WRK-2026-101",
+          client_name: "Mrs. Gayatri Varma",
+          client_phone: "+91 98450 99887",
+          client_email: "gayatri.varma@example.com",
+          occasion: "3-Tier Royal Velvet & 24K Gold Wedding Gateau",
+          event_date: "2026-11-28",
+          guest_count: 180,
+          flavour_profile: "Belgian Dark Truffle & Madagascar Vanilla Bean",
+          tier_count: "3 Tiers Hand-Sculpted",
+          dietary_spec: "100% Eggless",
+          design_notes: "Cascading edible sugar-craft white roses with brushed edible 24K gold foil. Matching wedding motif.",
+          estimated_budget: 24500.0,
+          status: "Design Consulted",
+          created_at: new Date(Date.now() - 86400000).toISOString()
+        },
+        {
+          id: 2,
+          work_code: "WRK-2026-102",
+          client_name: "Rohan Malhotra (TechCorp India)",
+          client_phone: "+91 97112 33445",
+          client_email: "rohan.m@techcorp.in",
+          occasion: "Corporate 10th Milestone Celebration Cake",
+          event_date: "2026-11-20",
+          guest_count: 80,
+          flavour_profile: "Opera Hazelnut Praline",
+          tier_count: "2 Tiers Sculpted Modernist",
+          dietary_spec: "Eggless & Nut-labelled",
+          design_notes: "Corporate logo printed on white Belgian chocolate plaque with LED back-glow stage stand.",
+          estimated_budget: 16500.0,
+          status: "In Production",
+          created_at: new Date(Date.now() - 172800000).toISOString()
+        },
+        {
+          id: 3,
+          work_code: "WRK-2026-103",
+          client_name: "Dr. Meenakshi Iyer",
+          client_phone: "+91 98220 54321",
+          client_email: "meenakshi.iyer@hospital.org",
+          occasion: "Bespoke 50th Golden Jubilee Botanical Gateau",
+          event_date: "2026-11-25",
+          guest_count: 50,
+          flavour_profile: "Persian Pistachio & Rose Saffron",
+          tier_count: "2 Tiers Hexagonal",
+          dietary_spec: "100% Eggless / Sugar-Conscious",
+          design_notes: "Handmade edible sugar orchids with botanical green velvet finish.",
+          estimated_budget: 14000.0,
+          status: "Quotation Approved",
+          created_at: new Date(Date.now() - 259200000).toISOString()
+        }
+      ];
+      try { localStorage.setItem('veloura_customer_works', JSON.stringify(works)); } catch (e) {}
+    }
+    return Promise.resolve({ data: works, status: 200, statusText: 'OK', headers: {}, config });
+  }
+
+  // Create Work: POST /admin/works
+  if (method === 'post' && url.includes('/admin/works')) {
+    let body = {};
+    try { body = typeof config.data === 'string' ? JSON.parse(config.data) : config.data || {}; } catch(e){}
+    const newWork = {
+      id: Date.now(),
+      work_code: body.work_code || `WRK-2026-${Math.floor(100 + Math.random() * 900)}`,
+      client_name: body.client_name || 'Bespoke Client',
+      client_phone: body.client_phone || '+91 98825 53333',
+      client_email: body.client_email || '',
+      occasion: body.occasion || 'Celebration Cake',
+      event_date: body.event_date || 'Upcoming',
+      guest_count: parseInt(body.guest_count) || 50,
+      flavour_profile: body.flavour_profile || 'Belgian Dark Truffle',
+      tier_count: body.tier_count || '2 Tiers',
+      dietary_spec: body.dietary_spec || '100% Eggless',
+      design_notes: body.design_notes || '',
+      estimated_budget: parseFloat(body.estimated_budget) || 12000.0,
+      status: body.status || 'Inquiry Received',
+      created_at: new Date().toISOString()
+    };
+    try {
+      const existing = JSON.parse(localStorage.getItem('veloura_customer_works') || '[]');
+      existing.unshift(newWork);
+      localStorage.setItem('veloura_customer_works', JSON.stringify(existing));
+    } catch(e) {}
+    return Promise.resolve({ data: newWork, status: 201, statusText: 'Created', headers: {}, config });
+  }
+
+  // Update Work Status: PUT /admin/works/:id/status
+  if (method === 'put' && url.includes('/admin/works/')) {
+    let body = {};
+    try { body = typeof config.data === 'string' ? JSON.parse(config.data) : config.data || {}; } catch(e){}
+    const idMatch = url.match(/\/admin\/works\/(\d+)\/status/);
+    const workId = idMatch ? parseInt(idMatch[1]) : null;
+    if (workId && body.status) {
+      try {
+        let works = JSON.parse(localStorage.getItem('veloura_customer_works') || '[]');
+        works = works.map(w => (w.id === workId ? { ...w, status: body.status } : w));
+        localStorage.setItem('veloura_customer_works', JSON.stringify(works));
+      } catch (e) {}
+    }
+    return Promise.resolve({
+      data: { message: "Work status updated", status: body.status },
       status: 200, statusText: 'OK', headers: {}, config
     });
   }

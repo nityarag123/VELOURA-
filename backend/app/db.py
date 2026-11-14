@@ -136,6 +136,45 @@ def init_db():
     )
     ''')
 
+    c.execute('''
+    CREATE TABLE IF NOT EXISTS reservations (
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        token TEXT UNIQUE NOT NULL,
+        guest_name TEXT NOT NULL,
+        guest_phone TEXT NOT NULL,
+        guest_email TEXT NOT NULL,
+        reservation_date TEXT NOT NULL,
+        reservation_time TEXT NOT NULL,
+        location TEXT NOT NULL,
+        guests_count TEXT NOT NULL,
+        table_number TEXT,
+        table_name TEXT,
+        special_requests TEXT,
+        status TEXT DEFAULT 'Confirmed',
+        created_at TEXT DEFAULT CURRENT_TIMESTAMP
+    )
+    ''')
+
+    c.execute('''
+    CREATE TABLE IF NOT EXISTS customer_works (
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        work_code TEXT UNIQUE NOT NULL,
+        client_name TEXT NOT NULL,
+        client_phone TEXT NOT NULL,
+        client_email TEXT,
+        occasion TEXT NOT NULL,
+        event_date TEXT NOT NULL,
+        guest_count INTEGER DEFAULT 50,
+        flavour_profile TEXT,
+        tier_count TEXT,
+        dietary_spec TEXT DEFAULT '100% Eggless',
+        design_notes TEXT,
+        estimated_budget REAL DEFAULT 12000.0,
+        status TEXT DEFAULT 'Inquiry Received',
+        created_at TEXT DEFAULT CURRENT_TIMESTAMP
+    )
+    ''')
+
     conn.commit()
 
     # Check if categories already seeded

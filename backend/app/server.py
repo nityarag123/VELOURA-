@@ -638,6 +638,158 @@ def update_order_status(order_id):
 
     return json_response(order)
 
+# ================= DINING SALON RESERVATIONS =================
+@app.route('/api/reservations', method='POST')
+def create_reservation():
+    data = get_json_body()
+    guest_name = (data.get('guest_name') or '').strip()
+    guest_phone = (data.get('guest_phone') or '').strip()
+    guest_email = (data.get('guest_email') or '').strip()
+    reservation_date = (data.get('reservation_date') or '').strip()
+    reservation_time = (data.get('reservation_time') or '').strip()
+    location = data.get('location') or 'Veloura Grand Reserve Salon • Jubilee Hills, Hyderabad'
+    guests_count = data.get('guests_count') or '2 Guests'
+    table_number = data.get('table_number') or 'Table 01'
+    table_name = data.get('table_name') or 'Salon Window Alcove'
+    special_requests = data.get('special_requests') or ''
+    token = data.get('token') or f"VL-{random.randint(100000, 999999)}"
+
+    if not guest_name or not guest_phone:
+        return error_response("Guest name and phone number are required", 400)
+
+    conn = get_connection()
+    c = conn.cursor()
+    c.execute('''
+        INSERT INTO reservations (
+            token, guest_name, guest_phone, guest_email, reservation_date, reservation_time,
+            location, guests_count, table_number, table_name, special_requests, status
+        ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, 'Confirmed')
+    ''', (token, guest_name, guest_phone, guest_email, reservation_date, reservation_time, location, guests_count, table_number, table_name, special_requests))
+    res_id = c.lastrowid
+    conn.commit()
+
+    c.execute("SELECT * FROM reservations WHERE id = ?", (res_id,))
+    res_data = dict(c.fetchone())
+    conn.close()
+    return json_response(res_data, 201)
+
+@app.route('/api/admin/reservations', method='GET')
+def admin_reservations():
+    admin = require_admin()
+    if not admin:
+        return error_response("Admin access required", 403)
+
+    conn = get_connection()
+    c = conn.cursor()
+    c.execute("SELECT * FROM reservations ORDER BY created_at DESC")
+    reservations = [dict(r) for r in c.fetchall()]
+    conn.close()
+    return json_response(reservations)
+
+@app.route('/api/admin/reservations/<res_id:int>/status', method='PUT')
+def update_reservation_status(res_id):
+    admin = require_admin()
+    if not admin:
+        return error_response("Admin access required", 403)
+
+    data = get_json_body()
+    status = data.get('status')
+    if not status:
+        return error_response("Status is required", 400)
+
+    conn = get_connection()
+    c = conn.cursor()
+    c.execute("UPDATE reservations SET status = ? WHERE id = ?", (status, res_id))
+    conn.commit()
+    c.execute("SELECT * FROM reservations WHERE id = ?", (res_id,))
+    row = c.fetchone()
+    conn.close()
+    if not row:
+        return error_response("Reservation not found", 404)
+    return json_response(dict(row))
+
+@app.route('/api/admin/reservations', method='POST')
+def admin_create_reservation():
+    admin = require_admin()
+    if not admin:
+        return error_response("Admin access required", 403)
+    return create_reservation()
+
+# ================= CUSTOMER WORKS & BESPOKE INQUIRIES =================
+@app.route('/api/admin/works', method='GET')
+def admin_works():
+    admin = require_admin()
+    if not admin:
+        return error_response("Admin access required", 403)
+
+    conn = get_connection()
+    c = conn.cursor()
+    c.execute("SELECT * FROM customer_works ORDER BY created_at DESC")
+    works = [dict(w) for w in c.fetchall()]
+    conn.close()
+    return json_response(works)
+
+@app.route('/api/admin/works', method='POST')
+def admin_create_work():
+    admin = require_admin()
+    if not admin:
+        return error_response("Admin access required", 403)
+
+    data = get_json_body()
+    work_code = data.get('work_code') or f"WRK-2026-{random.randint(100, 999)}"
+    client_name = (data.get('client_name') or '').strip()
+    client_phone = (data.get('client_phone') or '').strip()
+    client_email = data.get('client_email') or ''
+    occasion = data.get('occasion') or 'Bespoke Celebration Gateau'
+    event_date = data.get('event_date') or 'Upcoming'
+    guest_count = int(data.get('guest_count') or 50)
+    flavour_profile = data.get('flavour_profile') or 'Belgian Chocolate Truffle'
+    tier_count = data.get('tier_count') or '2 Tiers'
+    dietary_spec = data.get('dietary_spec') or '100% Eggless'
+    design_notes = data.get('design_notes') or ''
+    estimated_budget = float(data.get('estimated_budget') or 12000.0)
+    status = data.get('status') or 'Inquiry Received'
+
+    if not client_name or not client_phone:
+        return error_response("Client name and phone number are required", 400)
+
+    conn = get_connection()
+    c = conn.cursor()
+    c.execute('''
+        INSERT INTO customer_works (
+            work_code, client_name, client_phone, client_email, occasion, event_date,
+            guest_count, flavour_profile, tier_count, dietary_spec, design_notes, estimated_budget, status
+        ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+    ''', (work_code, client_name, client_phone, client_email, occasion, event_date, guest_count, flavour_profile, tier_count, dietary_spec, design_notes, estimated_budget, status))
+    work_id = c.lastrowid
+    conn.commit()
+    c.execute("SELECT * FROM customer_works WHERE id = ?", (work_id,))
+    row = c.fetchone()
+    conn.close()
+    return json_response(dict(row), 201)
+
+@app.route('/api/admin/works/<work_id:int>/status', method='PUT')
+def update_work_status(work_id):
+    admin = require_admin()
+    if not admin:
+        return error_response("Admin access required", 403)
+
+    data = get_json_body()
+    status = data.get('status')
+    if not status:
+        return error_response("Status is required", 400)
+
+    conn = get_connection()
+    c = conn.cursor()
+    c.execute("UPDATE customer_works SET status = ? WHERE id = ?", (status, work_id))
+    conn.commit()
+    c.execute("SELECT * FROM customer_works WHERE id = ?", (work_id,))
+    row = c.fetchone()
+    conn.close()
+    if not row:
+        return error_response("Work not found", 404)
+    return json_response(dict(row))
+
 @app.route('/api/admin/products', method='POST')
 def admin_add_product():
     admin = require_admin()
