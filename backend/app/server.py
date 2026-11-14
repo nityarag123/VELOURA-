@@ -652,6 +652,7 @@ def create_reservation():
     table_number = data.get('table_number') or 'Table 01'
     table_name = data.get('table_name') or 'Salon Window Alcove'
     special_requests = data.get('special_requests') or ''
+    pre_ordered_items = data.get('pre_ordered_items') or ''
     token = data.get('token') or f"VL-{random.randint(100000, 999999)}"
 
     if not guest_name or not guest_phone:
@@ -662,9 +663,9 @@ def create_reservation():
     c.execute('''
         INSERT INTO reservations (
             token, guest_name, guest_phone, guest_email, reservation_date, reservation_time,
-            location, guests_count, table_number, table_name, special_requests, status
-        ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, 'Confirmed')
-    ''', (token, guest_name, guest_phone, guest_email, reservation_date, reservation_time, location, guests_count, table_number, table_name, special_requests))
+            location, guests_count, table_number, table_name, special_requests, pre_ordered_items, status
+        ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, 'Confirmed')
+    ''', (token, guest_name, guest_phone, guest_email, reservation_date, reservation_time, location, guests_count, table_number, table_name, special_requests, pre_ordered_items))
     res_id = c.lastrowid
     conn.commit()
 
@@ -714,6 +715,18 @@ def admin_create_reservation():
     if not admin:
         return error_response("Admin access required", 403)
     return create_reservation()
+
+@app.route('/api/admin/reservations/<res_id:int>', method='DELETE')
+def admin_delete_reservation(res_id):
+    admin = require_admin()
+    if not admin:
+        return error_response("Admin access required", 403)
+    conn = get_connection()
+    c = conn.cursor()
+    c.execute("DELETE FROM reservations WHERE id = ?", (res_id,))
+    conn.commit()
+    conn.close()
+    return json_response({"message": "Reservation deleted successfully"})
 
 # ================= CUSTOMER WORKS & BESPOKE INQUIRIES =================
 @app.route('/api/admin/works', method='GET')

@@ -72,6 +72,27 @@ function handleMockFallback(error) {
 
     let filtered = [...MOCK_PRODUCTS];
 
+    try {
+      const custom = JSON.parse(localStorage.getItem('veloura_custom_products') || '[]');
+      if (Array.isArray(custom)) {
+        custom.forEach((cp) => {
+          const idx = filtered.findIndex((p) => p.id === cp.id);
+          if (idx !== -1) {
+            filtered[idx] = { ...filtered[idx], ...cp };
+          } else {
+            filtered.unshift(cp);
+          }
+        });
+      }
+    } catch (e) {}
+
+    try {
+      const deleted = JSON.parse(localStorage.getItem('veloura_deleted_product_ids') || '[]');
+      if (Array.isArray(deleted)) {
+        filtered = filtered.filter((p) => !deleted.includes(p.id));
+      }
+    } catch (e) {}
+
     if (category) {
       filtered = filtered.filter(p => p.category_slug === category);
     }
@@ -346,8 +367,22 @@ function handleMockFallback(error) {
   if (method === 'put' && url.includes('/admin/products/')) {
     let body = {};
     try { body = typeof config.data === 'string' ? JSON.parse(config.data) : config.data || {}; } catch(e){}
+    const idMatch = url.match(/\/admin\/products\/(\d+)/);
+    const prodId = idMatch ? parseInt(idMatch[1]) : null;
+    if (prodId) {
+      try {
+        let custom = JSON.parse(localStorage.getItem('veloura_custom_products') || '[]');
+        const idx = custom.findIndex(p => p.id === prodId);
+        if (idx !== -1) {
+          custom[idx] = { ...custom[idx], ...body };
+        } else {
+          custom.push({ id: prodId, ...body });
+        }
+        localStorage.setItem('veloura_custom_products', JSON.stringify(custom));
+      } catch (e) {}
+    }
     return Promise.resolve({
-      data: { message: "Product updated successfully", ...body },
+      data: { id: prodId, message: "Product updated successfully", ...body },
       status: 200, statusText: 'OK', headers: {}, config
     });
   }
@@ -356,16 +391,46 @@ function handleMockFallback(error) {
   if (method === 'post' && url.includes('/admin/products')) {
     let body = {};
     try { body = typeof config.data === 'string' ? JSON.parse(config.data) : config.data || {}; } catch(e){}
+    const cat = MOCK_CATEGORIES.find(c => c.id === parseInt(body.category_id)) || MOCK_CATEGORIES[0];
+    const newProd = {
+      id: Date.now(),
+      rating: 4.95,
+      review_count: 1,
+      category_name: cat.name,
+      category_slug: cat.slug,
+      gallery_json: JSON.stringify([body.image_url]),
+      flavours_json: typeof body.flavours === 'string' ? JSON.stringify(body.flavours.split(',').map(s => s.trim())) : JSON.stringify(body.flavours || ["Classic"]),
+      weights_json: typeof body.weights === 'string' ? JSON.stringify(body.weights.split(',').map(s => s.trim())) : JSON.stringify(body.weights || ["Standard"]),
+      ...body
+    };
+    try {
+      let custom = JSON.parse(localStorage.getItem('veloura_custom_products') || '[]');
+      custom.unshift(newProd);
+      localStorage.setItem('veloura_custom_products', JSON.stringify(custom));
+    } catch(e) {}
     return Promise.resolve({
-      data: { id: Date.now(), ...body },
+      data: newProd,
       status: 201, statusText: 'Created', headers: {}, config
     });
   }
 
   // 15. Admin Delete Product: DELETE /admin/products/:id
   if (method === 'delete' && url.includes('/admin/products/')) {
+    const idMatch = url.match(/\/admin\/products\/(\d+)/);
+    const prodId = idMatch ? parseInt(idMatch[1]) : null;
+    if (prodId) {
+      try {
+        let deleted = JSON.parse(localStorage.getItem('veloura_deleted_product_ids') || '[]');
+        if (!deleted.includes(prodId)) deleted.push(prodId);
+        localStorage.setItem('veloura_deleted_product_ids', JSON.stringify(deleted));
+
+        let custom = JSON.parse(localStorage.getItem('veloura_custom_products') || '[]');
+        custom = custom.filter(p => p.id !== prodId);
+        localStorage.setItem('veloura_custom_products', JSON.stringify(custom));
+      } catch (e) {}
+    }
     return Promise.resolve({
-      data: { message: "Product deleted successfully" },
+      data: { message: "Product deleted successfully", id: prodId },
       status: 200, statusText: 'OK', headers: {}, config
     });
   }
@@ -469,6 +534,7 @@ function handleMockFallback(error) {
       table_number: body.table_number || (body.table && body.table.tableNumber) || 'Table 01',
       table_name: body.table_name || (body.table && body.table.name) || 'Salon Window Alcove',
       special_requests: body.special_requests || 'Standard Reservation',
+      pre_ordered_items: body.pre_ordered_items || '',
       status: body.status || 'Confirmed',
       created_at: new Date().toISOString()
     };
@@ -478,6 +544,20 @@ function handleMockFallback(error) {
       localStorage.setItem('veloura_table_bookings', JSON.stringify(existing));
     } catch(e) {}
     return Promise.resolve({ data: newBooking, status: 201, statusText: 'Created', headers: {}, config });
+  }
+
+  // Delete Reservation: DELETE /admin/reservations/:id
+  if (method === 'delete' && url.includes('/admin/reservations/')) {
+    const idMatch = url.match(/\/admin\/reservations\/(\d+)/);
+    const resId = idMatch ? parseInt(idMatch[1]) : null;
+    if (resId) {
+      try {
+        let bookings = JSON.parse(localStorage.getItem('veloura_table_bookings') || '[]');
+        bookings = bookings.filter(b => b.id !== resId);
+        localStorage.setItem('veloura_table_bookings', JSON.stringify(bookings));
+      } catch (e) {}
+    }
+    return Promise.resolve({ data: { message: "Reservation deleted successfully" }, status: 200, statusText: 'OK', headers: {}, config });
   }
 
   // Update Reservation Status: PUT /admin/reservations/:id/status

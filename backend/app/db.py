@@ -150,6 +150,7 @@ def init_db():
         table_number TEXT,
         table_name TEXT,
         special_requests TEXT,
+        pre_ordered_items TEXT,
         status TEXT DEFAULT 'Confirmed',
         created_at TEXT DEFAULT CURRENT_TIMESTAMP
     )
