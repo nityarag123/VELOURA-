@@ -162,21 +162,30 @@ function handleMockFallback(error) {
     try { body = typeof config.data === 'string' ? JSON.parse(config.data) : config.data || {}; } catch(e){}
     const randomSuffix = Math.floor(10000 + Math.random() * 90000);
     const orderNumber = `VEL-2026-${randomSuffix}`;
+    const rawMethod = (body.payment_method || 'Cash on Delivery').toLowerCase();
+    const isCod = rawMethod.includes('cash') || rawMethod.includes('cod');
+    const paymentMethod = isCod ? 'Cash on Delivery' : 'Online Payment (Demo)';
+    const demoResult = (body.demo_payment_result || 'success').toLowerCase();
+    const paymentStatus = isCod ? 'Pending' : (demoResult === 'failed' ? 'Failed' : 'Paid');
+    const transactionId = isCod ? `COD-2026-${randomSuffix}` : `DEMO-TXN-2026-${randomSuffix}`;
+
     const newOrder = {
       id: Date.now(),
       order_number: orderNumber,
+      transaction_id: transactionId,
       customer_name: body.customer_name || 'Customer',
       customer_email: body.customer_email || 'patron@veloura.com',
       customer_phone: body.customer_phone || '+91 98765 43210',
       delivery_address: body.delivery_address || '101 Pâtisserie Boulevard',
-      delivery_city: body.delivery_city || 'Mumbai',
-      delivery_pincode: body.delivery_pincode || '400001',
+      delivery_city: body.delivery_city || 'Hyderabad',
+      delivery_pincode: body.delivery_pincode || '500033',
       delivery_date: body.delivery_date || 'Today',
       delivery_slot: body.delivery_slot || 'Evening Prime (5 PM - 9 PM)',
       special_instructions: body.special_instructions || '',
       total_amount: body.total_amount || 0,
-      payment_method: body.payment_method || 'Online Payment',
-      payment_status: 'Paid',
+      payment_method: paymentMethod,
+      payment_status: paymentStatus,
+      status: 'Order Placed',
       order_status: 'Order Placed',
       items: body.items || [],
       created_at: new Date().toISOString()
@@ -450,6 +459,25 @@ function handleMockFallback(error) {
     }
     return Promise.resolve({
       data: { message: "Order status updated", status: body.status },
+      status: 200, statusText: 'OK', headers: {}, config
+    });
+  }
+
+  // 16b. Admin Update Payment Status: PUT /admin/orders/:id/payment-status
+  if (method === 'put' && url.includes('/admin/orders/') && url.includes('/payment-status')) {
+    let body = {};
+    try { body = typeof config.data === 'string' ? JSON.parse(config.data) : config.data || {}; } catch(e){}
+    const idMatch = url.match(/\/admin\/orders\/(\d+)\/payment-status/);
+    const orderId = idMatch ? parseInt(idMatch[1]) : null;
+    if (orderId && body.status) {
+      try {
+        let orders = JSON.parse(localStorage.getItem('veloura_orders') || '[]');
+        orders = orders.map(o => (o.id === orderId ? { ...o, payment_status: body.status } : o));
+        localStorage.setItem('veloura_orders', JSON.stringify(orders));
+      } catch (e) {}
+    }
+    return Promise.resolve({
+      data: { message: `Payment status updated to ${body.status}`, status: body.status },
       status: 200, statusText: 'OK', headers: {}, config
     });
   }

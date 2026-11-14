@@ -79,13 +79,15 @@ class Order(Base):
     discount = Column(Float, default=0.0)
     delivery_fee = Column(Float, default=0.0)
     total_amount = Column(Float, nullable=False)
-    payment_method = Column(String(50), default="Online / Card")
-    payment_status = Column(String(50), default="Paid")
+    payment_method = Column(String(50), default="Cash on Delivery")
+    payment_status = Column(String(50), default="Pending")
+    transaction_id = Column(String(100), nullable=True)
     status = Column(String(50), default="Order Placed")
     created_at = Column(DateTime, default=datetime.utcnow)
 
     user = relationship("User", back_populates="orders")
     items = relationship("OrderItem", back_populates="order", cascade="all, delete-orphan")
+    payment = relationship("Payment", back_populates="order", uselist=False, cascade="all, delete-orphan")
 
 class OrderItem(Base):
     __tablename__ = "order_items"
@@ -165,4 +167,19 @@ class ReservationItem(Base):
 
     reservation = relationship("Reservation", back_populates="items")
     product = relationship("Product")
+
+class Payment(Base):
+    __tablename__ = "payments"
+
+    id = Column(Integer, primary_key=True, index=True)
+    order_id = Column(Integer, ForeignKey("orders.id"), nullable=False, index=True)
+    transaction_id = Column(String(100), unique=True, index=True, nullable=False)
+    payment_method = Column(String(100), nullable=False)
+    amount = Column(Float, nullable=False)
+    status = Column(String(50), nullable=False, default="Pending")  # Paid, Pending, Failed
+    is_demo = Column(Boolean, default=True)
+    paid_at = Column(DateTime, nullable=True)
+    created_at = Column(DateTime, default=datetime.utcnow)
+
+    order = relationship("Order", back_populates="payment")
 

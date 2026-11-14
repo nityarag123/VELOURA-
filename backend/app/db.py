@@ -88,11 +88,27 @@ def init_db():
         discount REAL DEFAULT 0,
         delivery_fee REAL DEFAULT 0,
         total_amount REAL NOT NULL,
-        payment_method TEXT DEFAULT 'Online / Card',
-        payment_status TEXT DEFAULT 'Paid (Verified)',
+        payment_method TEXT DEFAULT 'Cash on Delivery',
+        payment_status TEXT DEFAULT 'Pending',
+        transaction_id TEXT,
         status TEXT DEFAULT 'Order Placed',
         created_at TEXT DEFAULT CURRENT_TIMESTAMP,
         FOREIGN KEY(user_id) REFERENCES users(id)
+    )
+    ''')
+
+    c.execute('''
+    CREATE TABLE IF NOT EXISTS payments (
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        order_id INTEGER NOT NULL,
+        transaction_id TEXT UNIQUE NOT NULL,
+        payment_method TEXT NOT NULL,
+        amount REAL NOT NULL,
+        status TEXT NOT NULL DEFAULT 'Pending',
+        is_demo INTEGER DEFAULT 1,
+        paid_at TEXT,
+        created_at TEXT DEFAULT CURRENT_TIMESTAMP,
+        FOREIGN KEY(order_id) REFERENCES orders(id) ON DELETE CASCADE
     )
     ''')
 

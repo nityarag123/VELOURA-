@@ -264,12 +264,31 @@ export default function OrderConfirmationPage() {
               </div>
             )}
             <div className="flex justify-between text-base font-bold text-[#2D2020] pt-2 border-t border-gray-100">
-              <span>Total Paid</span>
+              <span>Total Amount</span>
               <span className="text-[#4A1525]">₹{order.total_amount}</span>
             </div>
-            <p className="text-[10px] text-gray-400 pt-1">
-              Payment via {order.payment_method} ({order.payment_status})
-            </p>
+            <div className="pt-2 border-t border-gray-100 space-y-1.5 text-xs">
+              <div className="flex justify-between items-center">
+                <span className="text-gray-500">Payment Method:</span>
+                <span className="font-semibold text-gray-800">{order.payment_method || 'Online Payment (Demo)'}</span>
+              </div>
+              <div className="flex justify-between items-center">
+                <span className="text-gray-500">Payment Status:</span>
+                <span className={`px-2.5 py-0.5 rounded-full text-[10px] font-bold ${
+                  (order.payment_status || '').toLowerCase() === 'paid' ? 'bg-emerald-100 text-emerald-800' :
+                  (order.payment_status || '').toLowerCase() === 'failed' ? 'bg-rose-100 text-rose-800' :
+                  'bg-amber-100 text-amber-800'
+                }`}>
+                  {order.payment_status || (order.payment_method === 'Cash on Delivery' ? 'Pending' : 'Paid')}
+                </span>
+              </div>
+              {order.transaction_id && (
+                <div className="flex justify-between items-center text-[10px] text-gray-400 font-mono">
+                  <span>Reference:</span>
+                  <span>{order.transaction_id}</span>
+                </div>
+              )}
+            </div>
           </div>
         </div>
 

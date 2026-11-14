@@ -2,6 +2,7 @@ import os
 import sys
 import json
 import random
+from datetime import datetime
 from bottle import Bottle, request, response, run, HTTPResponse, static_file
 
 sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
@@ -368,29 +369,75 @@ def create_order():
     if not items:
         return error_response("Order must contain at least one item", 400)
 
-    user = get_current_user()
-    user_id = user['id'] if user else None
-
-    order_number = f"VEL-2026-{random.randint(10000, 99999)}"
+    customer_phone = (data.get('customer_phone') or '').strip()
+    total_amount = float(data.get('total_amount', 0))
 
     conn = get_connection()
     c = conn.cursor()
+
+    # Prevent duplicate orders within 4 seconds with identical phone and amount
+    if customer_phone:
+        c.execute("""
+            SELECT id, order_number FROM orders 
+            WHERE customer_phone = ? AND total_amount = ? AND datetime(created_at) >= datetime('now', '-4 seconds')
+            ORDER BY id DESC LIMIT 1
+        """, (customer_phone, total_amount))
+        dup = c.fetchone()
+        if dup:
+            c.execute("SELECT * FROM orders WHERE id = ?", (dup['id'],))
+            order_row = dict(c.fetchone())
+            c.execute("SELECT * FROM order_items WHERE order_id = ?", (dup['id'],))
+            order_row['items'] = [dict(it) for it in c.fetchall()]
+            c.execute("SELECT * FROM payments WHERE order_id = ?", (dup['id'],))
+            p_row = c.fetchone()
+            order_row['payment'] = dict(p_row) if p_row else None
+            conn.close()
+            return json_response(order_row, 200)
+
+    user = get_current_user()
+    user_id = user['id'] if user else None
+
+    random_num = random.randint(10000, 99999)
+    order_number = f"VEL-2026-{random_num}"
+
+    # Determine Payment Method and Payment Status
+    raw_payment_method = (data.get('payment_method') or 'Cash on Delivery').strip()
+    is_cod = 'cash' in raw_payment_method.lower() or 'cod' in raw_payment_method.lower()
+    
+    if is_cod:
+        payment_method = 'Cash on Delivery'
+        payment_status = 'Pending'
+        transaction_id = f"COD-2026-{random_num}"
+        paid_at = None
+    else:
+        demo_type = data.get('demo_payment_type') or 'UPI / Card'
+        payment_method = f"Online Payment (Demo - {demo_type})" if demo_type != 'Online' else "Online Payment (Demo)"
+        demo_result = (data.get('demo_payment_result') or 'success').lower()
+        if demo_result == 'failed':
+            payment_status = 'Failed'
+            paid_at = None
+            transaction_id = f"DEMO-FAIL-{random_num}"
+        else:
+            payment_status = 'Paid'
+            paid_at = datetime.utcnow().strftime('%Y-%m-%d %H:%M:%S')
+            transaction_id = f"DEMO-TXN-2026-{random_num}"
+
     c.execute('''
         INSERT INTO orders (
             order_number, user_id, customer_name, customer_email, customer_phone,
             delivery_address, city, pincode, delivery_date, delivery_time_slot,
             cake_message, special_instructions, subtotal, discount, delivery_fee,
-            total_amount, payment_method, payment_status, status
-        ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+            total_amount, payment_method, payment_status, transaction_id, status
+        ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
     ''', (
         order_number,
         user_id,
-        data.get('customer_name', 'Guest'),
-        (data.get('customer_email') or 'guest@veloura.com').lower(),
-        data.get('customer_phone', ''),
-        data.get('delivery_address', ''),
-        data.get('city', ''),
-        data.get('pincode', ''),
+        (data.get('customer_name') or 'Valued Patron').strip(),
+        (data.get('customer_email') or 'patron@veloura.com').lower().strip(),
+        customer_phone,
+        (data.get('delivery_address') or '101 Veloura Boulevard').strip(),
+        (data.get('city') or 'Hyderabad').strip(),
+        (data.get('pincode') or '500033').strip(),
         data.get('delivery_date', 'Today'),
         data.get('delivery_time_slot', 'Evening (6 PM - 9 PM)'),
         data.get('cake_message', ''),
@@ -398,12 +445,28 @@ def create_order():
         float(data.get('subtotal', 0)),
         float(data.get('discount', 0)),
         float(data.get('delivery_fee', 0)),
-        float(data.get('total_amount', 0)),
-        data.get('payment_method', 'Online / Card'),
-        'Paid (Verified)',
+        total_amount,
+        payment_method,
+        payment_status,
+        transaction_id,
         'Order Placed'
     ))
     order_id = c.lastrowid
+
+    # Create linked Payment record
+    c.execute('''
+        INSERT INTO payments (
+            order_id, transaction_id, payment_method, amount, status, is_demo, paid_at, created_at
+        ) VALUES (?, ?, ?, ?, ?, ?, ?, CURRENT_TIMESTAMP)
+    ''', (
+        order_id,
+        transaction_id,
+        payment_method,
+        total_amount,
+        payment_status,
+        0 if is_cod else 1,
+        paid_at
+    ))
 
     for it in items:
         c.execute('''
@@ -432,6 +495,9 @@ def create_order():
     order_row = dict(c.fetchone())
     c.execute("SELECT * FROM order_items WHERE order_id = ?", (order_id,))
     order_row['items'] = [dict(it) for it in c.fetchall()]
+    c.execute("SELECT * FROM payments WHERE order_id = ?", (order_id,))
+    p_row = c.fetchone()
+    order_row['payment'] = dict(p_row) if p_row else None
     conn.close()
 
     return json_response(order_row, 201)
@@ -740,6 +806,9 @@ def admin_orders():
     for o in orders:
         c.execute("SELECT * FROM order_items WHERE order_id = ?", (o['id'],))
         o['items'] = [dict(it) for it in c.fetchall()]
+        c.execute("SELECT * FROM payments WHERE order_id = ?", (o['id'],))
+        p_row = c.fetchone()
+        o['payment'] = dict(p_row) if p_row else None
 
     conn.close()
     return json_response(orders)
@@ -769,9 +838,64 @@ def update_order_status(order_id):
     order = dict(row)
     c.execute("SELECT * FROM order_items WHERE order_id = ?", (order_id,))
     order['items'] = [dict(it) for it in c.fetchall()]
+    c.execute("SELECT * FROM payments WHERE order_id = ?", (order_id,))
+    p_row = c.fetchone()
+    order['payment'] = dict(p_row) if p_row else None
     conn.close()
 
     return json_response(order)
+
+@app.route('/api/admin/orders/<order_id:int>/payment-status', method='PUT')
+def update_order_payment_status(order_id):
+    admin = require_admin()
+    if not admin:
+        return error_response("Admin access required", 403)
+
+    data = get_json_body()
+    new_status = (data.get('status') or '').strip()
+    if new_status not in ['Paid', 'Pending', 'Failed']:
+        return error_response("Invalid payment status. Must be Paid, Pending, or Failed", 400)
+
+    conn = get_connection()
+    c = conn.cursor()
+    c.execute("SELECT * FROM orders WHERE id = ?", (order_id,))
+    order_row = c.fetchone()
+    if not order_row:
+        conn.close()
+        return error_response("Order not found", 404)
+
+    paid_at = datetime.utcnow().strftime('%Y-%m-%d %H:%M:%S') if new_status == 'Paid' else None
+
+    # Update orders table
+    c.execute("UPDATE orders SET payment_status = ? WHERE id = ?", (new_status, order_id))
+
+    # Update or insert payments table
+    c.execute("SELECT id FROM payments WHERE order_id = ?", (order_id,))
+    p_row = c.fetchone()
+    if p_row:
+        c.execute("UPDATE payments SET status = ?, paid_at = COALESCE(?, paid_at) WHERE order_id = ?", (new_status, paid_at, order_id))
+    else:
+        tx_id = order_row['transaction_id'] or f"TXN-{order_id}"
+        c.execute("""
+            INSERT INTO payments (order_id, transaction_id, payment_method, amount, status, is_demo, paid_at, created_at)
+            VALUES (?, ?, ?, ?, ?, 1, ?, CURRENT_TIMESTAMP)
+        """, (order_id, tx_id, order_row['payment_method'], order_row['total_amount'], new_status, paid_at))
+
+    conn.commit()
+
+    c.execute("SELECT * FROM orders WHERE id = ?", (order_id,))
+    updated_order = dict(c.fetchone())
+    c.execute("SELECT * FROM order_items WHERE order_id = ?", (order_id,))
+    updated_order['items'] = [dict(it) for it in c.fetchall()]
+    c.execute("SELECT * FROM payments WHERE order_id = ?", (order_id,))
+    p_info = c.fetchone()
+    updated_order['payment'] = dict(p_info) if p_info else None
+    conn.close()
+
+    res_payload = dict(updated_order)
+    res_payload["message"] = f"Payment status successfully updated to {new_status}"
+    res_payload["order"] = updated_order
+    return json_response(res_payload)
 
 # ================= DINING SALON RESERVATIONS & ATTACHED ITEMS =================
 @app.route('/api/reservations', method='POST')
