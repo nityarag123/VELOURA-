@@ -65,7 +65,7 @@ const CHOCOLATE_PRODUCTS = [
     origin: 'Ruby Cocoa Beans',
     cocoa: '34% Natural Ruby Cocoa',
     desc: 'Naturally pink Ruby cocoa bark studded with tart freeze-dried raspberries, roasted pistachio slivers, and rose petals.',
-    image: 'https://images.unsplash.com/photo-1575372587186-500b396791e8?auto=format&fit=crop&w=800&q=80',
+    image: 'https://images.unsplash.com/photo-1549007994-cb92caebd54b?auto=format&fit=crop&w=800&q=80',
     tag: 'Exotic Creation'
   },
   {
@@ -527,6 +527,10 @@ export default function ChocolateExperiencePage() {
                       src={item.image}
                       alt={item.name}
                       className="w-full h-full object-cover group-hover:scale-108 transition-transform duration-700"
+                      onError={(e) => {
+                        e.currentTarget.onerror = null;
+                        e.currentTarget.src = 'https://images.unsplash.com/photo-1606313564200-e75d5e30476c?auto=format&fit=crop&w=800&q=80';
+                      }}
                     />
                     <div className="absolute top-4 left-4 z-10 flex flex-col gap-1.5">
                       <span className="px-3 py-1 rounded-full text-[10px] uppercase tracking-widest font-semibold bg-black/60 backdrop-blur-md text-[#FFDFB3] border border-white/20">

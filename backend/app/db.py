@@ -234,7 +234,7 @@ def seed_data(conn):
     # Categories
     categories = [
         ("Birthday Cakes", "birthday-cakes", "Exquisite artisanal cakes designed to make every birthday celebration unforgettable.", "https://images.unsplash.com/photo-1578985545062-69928b1d9587?auto=format&fit=crop&w=600&q=80", 1),
-        ("Anniversary Cakes", "anniversary-cakes", "Romantic, elegant floral and tiered creations celebrating your bond of love.", "https://images.unsplash.com/photo-1535141192574-5d4897c13136?auto=format&fit=crop&w=600&q=80", 1),
+        ("Anniversary Cakes", "anniversary-cakes", "Romantic, elegant floral and tiered creations celebrating your bond of love.", "https://images.unsplash.com/photo-1588195538326-c5b1e9f80a1b?auto=format&fit=crop&w=600&q=80", 1),
         ("Chocolate Cakes", "chocolate-cakes", "Pure indulgence with 70% dark Belgian cocoa, silky truffles, and crunchy pralines.", "https://images.unsplash.com/photo-1606890737304-57a1ca8a5b62?auto=format&fit=crop&w=600&q=80", 1),
         ("Designer & Bento Cakes", "designer-cakes", "Chic Korean minimalist bento cakes and handcrafted sculpted aesthetic cakes.", "https://images.unsplash.com/photo-1588195538326-c5b1e9f80a1b?auto=format&fit=crop&w=600&q=80", 1),
         ("Luxury Cupcakes", "cupcakes", "Individual velvet swirls, gold leaf embellishments, and gourmet buttercreams.", "https://images.unsplash.com/photo-1587668178277-295251f900ce?auto=format&fit=crop&w=600&q=80", 1),
@@ -289,7 +289,7 @@ def seed_data(conn):
             cat_map["birthday-cakes"],
             849.0, 749.0, 4.92, 67,
             "https://images.unsplash.com/photo-1586985289688-ca3cf47d3e6e?auto=format&fit=crop&w=800&q=80",
-            json.dumps(["https://images.unsplash.com/photo-1586985289688-ca3cf47d3e6e?auto=format&fit=crop&w=800&q=80", "https://images.unsplash.com/photo-1535141192574-5d4897c13136?auto=format&fit=crop&w=800&q=80"]),
+            json.dumps(["https://images.unsplash.com/photo-1586985289688-ca3cf47d3e6e?auto=format&fit=crop&w=800&q=80", "https://images.unsplash.com/photo-1588195538326-c5b1e9f80a1b?auto=format&fit=crop&w=800&q=80"]),
             json.dumps(["Red Velvet Cream Cheese", "Raspberry Mascarpone"]),
             json.dumps(["0.5 kg", "1.0 kg", "1.5 kg", "2.0 kg"]),
             1, 1, 1, 1
@@ -313,8 +313,8 @@ def seed_data(conn):
             "A stunning tiered masterwork adorned with handcrafted sugar peonies, shimmering edible 24K gold leaves, and delicate champagne ganache.",
             cat_map["anniversary-cakes"],
             1299.0, 1149.0, 4.98, 39,
-            "https://images.unsplash.com/photo-1535141192574-5d4897c13136?auto=format&fit=crop&w=800&q=80",
-            json.dumps(["https://images.unsplash.com/photo-1535141192574-5d4897c13136?auto=format&fit=crop&w=800&q=80"]),
+            "https://images.unsplash.com/photo-1588195538326-c5b1e9f80a1b?auto=format&fit=crop&w=800&q=80",
+            json.dumps(["https://images.unsplash.com/photo-1588195538326-c5b1e9f80a1b?auto=format&fit=crop&w=800&q=80"]),
             json.dumps(["Champagne Rose Vanilla", "Red Velvet Luxury", "Dark Belgian Ganache"]),
             json.dumps(["1.0 kg", "1.5 kg", "2.0 kg", "3.0 kg"]),
             1, 1, 1, 1
@@ -350,8 +350,8 @@ def seed_data(conn):
             "A hypnotizing deep violet and cosmic blue high-gloss mirror glaze over French dark chocolate mousse and crunchy feuilletine base.",
             cat_map["designer-cakes"],
             999.0, 899.0, 4.96, 31,
-            "https://images.unsplash.com/photo-1518047601542-4505c440a338?auto=format&fit=crop&w=800&q=80",
-            json.dumps(["https://images.unsplash.com/photo-1518047601542-4505c440a338?auto=format&fit=crop&w=800&q=80"]),
+            "https://images.unsplash.com/photo-1576618148400-f54bed99fcfd?auto=format&fit=crop&w=800&q=80",
+            json.dumps(["https://images.unsplash.com/photo-1576618148400-f54bed99fcfd?auto=format&fit=crop&w=800&q=80"]),
             json.dumps(["Galaxy Chocolate Feuilletine", "Blueberry White Chocolate"]),
             json.dumps(["0.5 kg", "1.0 kg", "1.5 kg"]),
             0, 1, 1, 1
@@ -388,8 +388,8 @@ def seed_data(conn):
             "Authentic Parisian almond flour macarons filled with chocolate ganache, pistachio praline, passion fruit curd, salted butter caramel, and Tahitian vanilla.",
             cat_map["pastries"],
             699.0, 599.0, 4.94, 76,
-            "https://images.unsplash.com/photo-1569864321390-34d3f524fb9e?auto=format&fit=crop&w=800&q=80",
-            json.dumps(["https://images.unsplash.com/photo-1569864321390-34d3f524fb9e?auto=format&fit=crop&w=800&q=80"]),
+            "https://images.unsplash.com/photo-1569864358642-9d1684040f43?auto=format&fit=crop&w=800&q=80",
+            json.dumps(["https://images.unsplash.com/photo-1569864358642-9d1684040f43?auto=format&fit=crop&w=800&q=80"]),
             json.dumps(["Assorted 6 French Flavours"]),
             json.dumps(["Box of 12", "Box of 24"]),
             1, 1, 1, 1

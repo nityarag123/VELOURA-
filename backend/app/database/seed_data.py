@@ -59,7 +59,7 @@ def seed_database(db: Session):
             "name": "Anniversary Cakes",
             "slug": "anniversary-cakes",
             "description": "Romantic, elegant floral and tiered creations celebrating your bond of love.",
-            "image_url": "https://images.unsplash.com/photo-1535141192574-5d4897c13136?auto=format&fit=crop&w=600&q=80",
+            "image_url": "https://images.unsplash.com/photo-1588195538326-c5b1e9f80a1b?auto=format&fit=crop&w=600&q=80",
             "is_featured": True
         },
         {
@@ -177,7 +177,7 @@ def seed_database(db: Session):
             "image_url": "https://images.unsplash.com/photo-1586985289688-ca3cf47d3e6e?auto=format&fit=crop&w=800&q=80",
             "gallery_json": json.dumps([
                 "https://images.unsplash.com/photo-1586985289688-ca3cf47d3e6e?auto=format&fit=crop&w=800&q=80",
-                "https://images.unsplash.com/photo-1535141192574-5d4897c13136?auto=format&fit=crop&w=800&q=80"
+                "https://images.unsplash.com/photo-1588195538326-c5b1e9f80a1b?auto=format&fit=crop&w=800&q=80"
             ]),
             "flavours_json": json.dumps(["Red Velvet Cream Cheese", "Raspberry Mascarpone"]),
             "weights_json": json.dumps(["0.5 kg", "1.0 kg", "1.5 kg", "2.0 kg"]),
@@ -214,9 +214,9 @@ def seed_database(db: Session):
             "discount_price": 1149.0,
             "rating": 4.98,
             "review_count": 39,
-            "image_url": "https://images.unsplash.com/photo-1535141192574-5d4897c13136?auto=format&fit=crop&w=800&q=80",
+            "image_url": "https://images.unsplash.com/photo-1588195538326-c5b1e9f80a1b?auto=format&fit=crop&w=800&q=80",
             "gallery_json": json.dumps([
-                "https://images.unsplash.com/photo-1535141192574-5d4897c13136?auto=format&fit=crop&w=800&q=80"
+                "https://images.unsplash.com/photo-1588195538326-c5b1e9f80a1b?auto=format&fit=crop&w=800&q=80"
             ]),
             "flavours_json": json.dumps(["Champagne Rose Vanilla", "Red Velvet Luxury", "Dark Belgian Ganache"]),
             "weights_json": json.dumps(["1.0 kg", "1.5 kg", "2.0 kg", "3.0 kg"]),
@@ -272,9 +272,9 @@ def seed_database(db: Session):
             "discount_price": 899.0,
             "rating": 4.96,
             "review_count": 31,
-            "image_url": "https://images.unsplash.com/photo-1518047601542-4505c440a338?auto=format&fit=crop&w=800&q=80",
+            "image_url": "https://images.unsplash.com/photo-1576618148400-f54bed99fcfd?auto=format&fit=crop&w=800&q=80",
             "gallery_json": json.dumps([
-                "https://images.unsplash.com/photo-1518047601542-4505c440a338?auto=format&fit=crop&w=800&q=80"
+                "https://images.unsplash.com/photo-1576618148400-f54bed99fcfd?auto=format&fit=crop&w=800&q=80"
             ]),
             "flavours_json": json.dumps(["Galaxy Chocolate Feuilletine", "Blueberry White Chocolate"]),
             "weights_json": json.dumps(["0.5 kg", "1.0 kg", "1.5 kg"]),
@@ -331,9 +331,9 @@ def seed_database(db: Session):
             "discount_price": 599.0,
             "rating": 4.94,
             "review_count": 76,
-            "image_url": "https://images.unsplash.com/photo-1569864321390-34d3f524fb9e?auto=format&fit=crop&w=800&q=80",
+            "image_url": "https://images.unsplash.com/photo-1569864358642-9d1684040f43?auto=format&fit=crop&w=800&q=80",
             "gallery_json": json.dumps([
-                "https://images.unsplash.com/photo-1569864321390-34d3f524fb9e?auto=format&fit=crop&w=800&q=80"
+                "https://images.unsplash.com/photo-1569864358642-9d1684040f43?auto=format&fit=crop&w=800&q=80"
             ]),
             "flavours_json": json.dumps(["Assorted 6 French Flavours"]),
             "weights_json": json.dumps(["Box of 12", "Box of 24"]),

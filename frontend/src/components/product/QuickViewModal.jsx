@@ -72,6 +72,10 @@ export default function QuickViewModal({ product, onClose }) {
               src={activeImage || product.image_url}
               alt={product.name}
               className="w-full h-full object-cover"
+              onError={(e) => {
+                e.currentTarget.onerror = null;
+                e.currentTarget.src = 'https://images.unsplash.com/photo-1578985545062-69928b1d9587?auto=format&fit=crop&w=800&q=80';
+              }}
             />
           </div>
 

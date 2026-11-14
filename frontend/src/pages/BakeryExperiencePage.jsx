@@ -76,7 +76,7 @@ const BAKERY_CAKES = [
     rating: 4.94,
     tag: 'Crunchy Praline',
     desc: 'Slow-roasted Italian hazelnut mousse, crisp feuilletine praline wafer, and milk chocolate glaze.',
-    image: 'https://images.unsplash.com/photo-1535141192574-5d4897c13136?auto=format&fit=crop&w=800&q=80',
+    image: 'https://images.unsplash.com/photo-1606890737304-57a1ca8a5b62?auto=format&fit=crop&w=800&q=80',
     slug: 'piedmont-hazelnut-praline-gateau'
   },
   {
@@ -143,7 +143,7 @@ const BAKERY_DESSERTS = [
     price: 380,
     tag: 'Chef Signature',
     desc: 'Thick-cut golden brioche soaked in vanilla custard, caramelized with brown sugar and served with whipped crème.',
-    image: 'https://images.unsplash.com/photo-1484723091739-00a6976da767?auto=format&fit=crop&w=800&q=80',
+    image: 'https://images.unsplash.com/photo-1506084868230-bb9d95c24759?auto=format&fit=crop&w=800&q=80',
     slug: 'brioche-french-toast-caramel'
   },
   {
@@ -688,6 +688,10 @@ export default function BakeryExperiencePage() {
                       alt={cake.name}
                       className="w-full h-full object-cover group-hover:scale-108 transition-transform duration-700"
                       loading="lazy"
+                      onError={(e) => {
+                        e.currentTarget.onerror = null;
+                        e.currentTarget.src = 'https://images.unsplash.com/photo-1578985545062-69928b1d9587?auto=format&fit=crop&w=800&q=80';
+                      }}
                     />
                     <div className="absolute inset-0 bg-gradient-to-t from-[#240D15] via-transparent to-black/30" />
                     
@@ -830,6 +834,10 @@ export default function BakeryExperiencePage() {
                       alt={item.name}
                       className="w-full h-full object-cover group-hover:scale-108 transition-transform duration-700"
                       loading="lazy"
+                      onError={(e) => {
+                        e.currentTarget.onerror = null;
+                        e.currentTarget.src = 'https://images.unsplash.com/photo-1555507036-ab1f4038808a?auto=format&fit=crop&w=800&q=80';
+                      }}
                     />
                     <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent" />
                     
@@ -972,6 +980,10 @@ export default function BakeryExperiencePage() {
                       alt={item.name}
                       className="w-full h-full object-cover group-hover:scale-108 transition-transform duration-700"
                       loading="lazy"
+                      onError={(e) => {
+                        e.currentTarget.onerror = null;
+                        e.currentTarget.src = 'https://images.unsplash.com/photo-1509440159596-0249088772ff?auto=format&fit=crop&w=800&q=80';
+                      }}
                     />
                     <div className="absolute inset-0 bg-gradient-to-t from-[#240D15] via-transparent to-black/30" />
                     
@@ -1149,6 +1161,10 @@ export default function BakeryExperiencePage() {
                       alt={item.name}
                       className="w-full h-full object-cover group-hover:scale-108 transition-transform duration-700"
                       loading="lazy"
+                      onError={(e) => {
+                        e.currentTarget.onerror = null;
+                        e.currentTarget.src = 'https://images.unsplash.com/photo-1570197788417-0e82375c9371?auto=format&fit=crop&w=800&q=80';
+                      }}
                     />
                     <div className="absolute inset-0 bg-gradient-to-t from-black/45 via-transparent to-black/20" />
                     

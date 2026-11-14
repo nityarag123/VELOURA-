@@ -852,6 +852,37 @@ function handleMockFallback(error) {
   return Promise.reject(error);
 }
 
+const BROKEN_URL_MAP = {
+  'photo-1569864321390-34d3f524fb9e': 'photo-1569864358642-9d1684040f43',
+  'photo-1535141192574-5d4897c13136': 'photo-1588195538326-c5b1e9f80a1b',
+  'photo-1518047601542-4505c440a338': 'photo-1576618148400-f54bed99fcfd',
+  'photo-1548741487-18d16a1a090c': 'photo-1606313564200-e75d5e30476c',
+  'photo-1484723091739-00a6976da767': 'photo-1506084868230-bb9d95c24759',
+  'photo-1575372587186-500b396791e8': 'photo-1549007994-cb92caebd54b'
+};
+
+function sanitizeImageUrls(obj) {
+  if (!obj) return obj;
+  if (typeof obj === 'string') {
+    let res = obj;
+    for (const [broken, fixed] of Object.entries(BROKEN_URL_MAP)) {
+      if (res.includes(broken)) res = res.replaceAll(broken, fixed);
+    }
+    return res;
+  }
+  if (Array.isArray(obj)) {
+    return obj.map(sanitizeImageUrls);
+  }
+  if (typeof obj === 'object') {
+    const sanitized = {};
+    for (const [k, v] of Object.entries(obj)) {
+      sanitized[k] = sanitizeImageUrls(v);
+    }
+    return sanitized;
+  }
+  return obj;
+}
+
 // Intercept responses: if static server returned index.html or failed with 404, fallback cleanly!
 api.interceptors.response.use(
   (response) => {
@@ -859,10 +890,17 @@ api.interceptors.response.use(
     if (typeof response.data === 'string' && (response.data.includes('<!doctype html>') || response.data.includes('<html'))) {
       return handleMockFallback({ config: response.config, response });
     }
+    if (response.data) {
+      response.data = sanitizeImageUrls(response.data);
+    }
     return response;
   },
-  (error) => {
-    return handleMockFallback(error);
+  async (error) => {
+    const res = await handleMockFallback(error);
+    if (res && res.data) {
+      res.data = sanitizeImageUrls(res.data);
+    }
+    return res;
   }
 );
 
