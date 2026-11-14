@@ -47,32 +47,57 @@ export default function UserProfilePage() {
   }, [user]);
 
   useEffect(() => {
-    if (activeTab === 'orders' && user) {
+    if (activeTab === 'orders') {
       const fetchOrders = async () => {
         setOrdersLoading(true);
+        let list = [];
         try {
-          const res = await api.get('/orders/my-orders');
-          setOrders(res.data);
-        } catch (err) {
-          console.error(err);
-        } finally {
-          setOrdersLoading(false);
+          const local = JSON.parse(localStorage.getItem('veloura_orders') || '[]');
+          if (Array.isArray(local)) list = [...local];
+        } catch (e) {}
+
+        if (user) {
+          try {
+            const res = await api.get('/orders/my-orders');
+            if (Array.isArray(res.data) && res.data.length > 0) {
+              res.data.forEach((o) => {
+                if (!list.some((existing) => existing.order_number === o.order_number)) {
+                  list.push(o);
+                }
+              });
+            }
+          } catch (err) {
+            console.error(err);
+          }
         }
+        setOrders(list);
+        setOrdersLoading(false);
       };
       fetchOrders();
     }
   }, [activeTab, user]);
 
-  if (!user) {
+  if (!user && activeTab !== 'orders') {
     return (
-      <div className="max-w-4xl mx-auto px-4 py-20 text-center">
-        <h2 className="font-serif text-2xl font-bold">Please sign in to view your account</h2>
-        <Link
-          to="/login"
-          className="mt-4 inline-block px-6 py-2.5 bg-[#4A1525] text-white text-xs font-semibold rounded-full"
-        >
-          Sign In
-        </Link>
+      <div className="max-w-4xl mx-auto px-4 py-20 text-center space-y-4">
+        <h2 className="font-serif text-2xl font-bold text-[#2D2020]">Please sign in to view your account</h2>
+        <p className="text-xs text-gray-500 max-w-sm mx-auto">
+          Sign in to manage your addresses, profile details, and synced order history.
+        </p>
+        <div className="flex items-center justify-center gap-3 pt-2">
+          <Link
+            to="/login"
+            className="px-6 py-2.5 bg-[#4A1525] hover:bg-[#6E1C34] text-white text-xs font-semibold rounded-full shadow-sm transition"
+          >
+            Sign In
+          </Link>
+          <button
+            onClick={() => setActiveTab('orders')}
+            className="px-6 py-2.5 bg-[#FAF3EB] hover:bg-[#F3E5D4] text-[#4A1525] text-xs font-semibold rounded-full border border-[#E5D2BE] transition"
+          >
+            View Device Orders Log
+          </button>
+        </div>
       </div>
     );
   }
@@ -98,45 +123,60 @@ export default function UserProfilePage() {
           <span>Home</span>
         </Link>
         <span className="text-gray-300">/</span>
-        <span className="text-[#4A1525] font-bold">My Account</span>
+        <span className="text-[#4A1525] font-bold">My Account & Orders Log</span>
       </nav>
 
       {/* Profile Header */}
       <div className="p-6 sm:p-8 bg-white rounded-3xl border border-[#F0E6DA] flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 shadow-2xs">
         <div className="flex items-center gap-4">
           <div className="w-16 h-16 rounded-full bg-[#4A1525] text-[#E6C387] flex items-center justify-center font-serif text-2xl font-bold shadow-sm">
-            {user.full_name?.charAt(0).toUpperCase()}
+            {user ? user.full_name?.charAt(0).toUpperCase() : 'G'}
           </div>
           <div>
-            <h1 className="font-serif text-2xl sm:text-3xl font-bold text-[#2D2020]">{user.full_name}</h1>
-            <p className="text-xs text-gray-400 mt-0.5">{user.email}</p>
+            <h1 className="font-serif text-2xl sm:text-3xl font-bold text-[#2D2020]">
+              {user ? user.full_name : 'Guest Patron'}
+            </h1>
+            <p className="text-xs text-gray-400 mt-0.5">
+              {user ? user.email : 'Device Session • Orders Log'}
+            </p>
           </div>
         </div>
 
-        <button
-          onClick={() => {
-            logout();
-            navigate('/');
-          }}
-          className="text-xs font-semibold text-red-600 hover:underline px-3 py-1.5"
-        >
-          Sign Out
-        </button>
+        {user ? (
+          <button
+            onClick={() => {
+              logout();
+              navigate('/');
+            }}
+            className="text-xs font-semibold text-red-600 hover:underline px-3 py-1.5"
+          >
+            Sign Out
+          </button>
+        ) : (
+          <Link
+            to="/login"
+            className="px-5 py-2 rounded-full bg-[#4A1525] hover:bg-[#6E1C34] text-white text-xs font-bold transition shadow-xs"
+          >
+            Sign In / Register
+          </Link>
+        )}
       </div>
 
       {/* Navigation Tabs */}
       <div className="flex gap-2 border-b border-[#F0E6DA] pb-2">
-        <button
-          onClick={() => setActiveTab('profile')}
-          className={`flex items-center gap-2 px-5 py-2.5 rounded-full text-xs font-bold uppercase tracking-wider transition ${
-            activeTab === 'profile'
-              ? 'bg-[#4A1525] text-white shadow-xs'
-              : 'bg-[#FAF3EB] text-gray-700 hover:bg-[#F5EAD9]'
-          }`}
-        >
-          <User className="w-4 h-4" />
-          <span>Profile & Address</span>
-        </button>
+        {user && (
+          <button
+            onClick={() => setActiveTab('profile')}
+            className={`flex items-center gap-2 px-5 py-2.5 rounded-full text-xs font-bold uppercase tracking-wider transition ${
+              activeTab === 'profile'
+                ? 'bg-[#4A1525] text-white shadow-xs'
+                : 'bg-[#FAF3EB] text-gray-700 hover:bg-[#F5EAD9]'
+            }`}
+          >
+            <User className="w-4 h-4" />
+            <span>Profile & Address</span>
+          </button>
+        )}
 
         <button
           onClick={() => setActiveTab('orders')}

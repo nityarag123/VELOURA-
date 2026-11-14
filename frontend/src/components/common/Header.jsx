@@ -285,13 +285,20 @@ export default function Header() {
               <Phone className="w-3 h-3 text-[#C5A059]" />
               <span>Concierge: +91 88825 53333</span>
             </a>
-            <span className="hidden sm:inline text-white/30">•</span>
             <button
               onClick={() => setIsTrackModalOpen(true)}
               className="text-[#E8DCCB] hover:text-[#C5A059] transition font-semibold"
             >
               Track Order
             </button>
+            <span className="text-white/30">•</span>
+            <Link
+              to="/profile?tab=orders"
+              className="text-[#E8DCCB] hover:text-[#C5A059] transition font-semibold inline-flex items-center gap-1"
+            >
+              <Package className="w-3 h-3 text-[#C5A059]" />
+              <span>My Orders</span>
+            </Link>
             {isAdmin && (
               <>
                 <span className="text-white/30">•</span>
@@ -825,6 +832,17 @@ export default function Header() {
               >
                 Gallery
               </a>
+              <Link 
+                to="/profile?tab=orders" 
+                onClick={() => setIsMobileMenuOpen(false)}
+                className="flex items-center justify-between py-2 border-b border-[#F4EFEA] text-xs font-semibold text-[#3D121A]"
+              >
+                <div className="flex items-center gap-2">
+                  <Package className="w-4 h-4 text-[#C5A059]" />
+                  <span>My Orders Log & History</span>
+                </div>
+                <ArrowRight className="w-3.5 h-3.5 text-gray-400" />
+              </Link>
             </div>
 
             <div className="pt-2 flex flex-col gap-2">

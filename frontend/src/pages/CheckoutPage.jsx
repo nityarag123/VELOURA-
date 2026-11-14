@@ -93,6 +93,22 @@ export default function CheckoutPage() {
       const res = await api.post('/orders', payload);
       const createdOrder = res.data;
       const orderNum = createdOrder.order_number || createdOrder.order?.order_number;
+      
+      // Store in customer local orders log for instant retrieval
+      try {
+        const existing = JSON.parse(localStorage.getItem('veloura_orders') || '[]');
+        const orderToStore = {
+          ...payload,
+          ...createdOrder,
+          order_number: orderNum,
+          status: createdOrder.status || 'Order Placed',
+          created_at: createdOrder.created_at || new Date().toISOString()
+        };
+        const updated = [orderToStore, ...existing.filter(o => o.order_number !== orderNum)];
+        localStorage.setItem('veloura_orders', JSON.stringify(updated));
+        localStorage.setItem('veloura_last_order', orderNum);
+      } catch (e) {}
+
       clearCart();
       navigate(`/order-confirmation/${orderNum}`);
     } catch (apiErr) {
