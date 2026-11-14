@@ -307,10 +307,9 @@ export default function HomePage() {
   const [loading, setLoading] = useState(false);
   const [quickViewProduct, setQuickViewProduct] = useState(null);
 
-  // Automatic Hero Carousel State (4 Slides, Silk-Smooth Cross-Fade & Timer Reset)
+  // Automatic Hero Carousel State (4 Slides, Silk-Smooth Cross-Fade & Instant Responsive Controls)
   const [currentHeroSlide, setCurrentHeroSlide] = useState(0);
   const [isHeroAutoPlaying, setIsHeroAutoPlaying] = useState(true);
-  const [isHeroTransitioning, setIsHeroTransitioning] = useState(false);
   const heroTimerRef = useRef(null);
 
   const resetHeroTimer = () => {
@@ -330,35 +329,20 @@ export default function HomePage() {
   }, [isHeroAutoPlaying]);
 
   const handlePrevHeroSlide = (e) => {
-    if (e) {
-      e.preventDefault();
-      e.stopPropagation();
-    }
-    if (isHeroTransitioning) return;
-    setIsHeroTransitioning(true);
+    if (e && e.stopPropagation) e.stopPropagation();
     setCurrentHeroSlide((prev) => (prev - 1 + HERO_SLIDES.length) % HERO_SLIDES.length);
     resetHeroTimer();
-    setTimeout(() => setIsHeroTransitioning(false), 500);
   };
 
   const handleNextHeroSlide = (e) => {
-    if (e) {
-      e.preventDefault();
-      e.stopPropagation();
-    }
-    if (isHeroTransitioning) return;
-    setIsHeroTransitioning(true);
+    if (e && e.stopPropagation) e.stopPropagation();
     setCurrentHeroSlide((prev) => (prev + 1) % HERO_SLIDES.length);
     resetHeroTimer();
-    setTimeout(() => setIsHeroTransitioning(false), 500);
   };
 
   const handleGoToHeroSlide = (idx) => {
-    if (isHeroTransitioning || idx === currentHeroSlide) return;
-    setIsHeroTransitioning(true);
     setCurrentHeroSlide(idx);
     resetHeroTimer();
-    setTimeout(() => setIsHeroTransitioning(false), 500);
   };
 
   // Reservation & Table form state
@@ -554,9 +538,8 @@ export default function HomePage() {
         <button
           type="button"
           onClick={handlePrevHeroSlide}
-          disabled={isHeroTransitioning}
           aria-label="Previous slide"
-          className="absolute left-3 sm:left-6 top-1/2 -translate-y-1/2 z-30 w-12 h-12 sm:w-14 sm:h-14 rounded-full bg-[#160B0D]/75 hover:bg-[#D8B879] text-white hover:text-[#160B0D] backdrop-blur-md border border-[#D8B879]/50 hover:border-[#D8B879] flex items-center justify-center transition-all duration-300 shadow-2xl hover:scale-110 active:scale-95 cursor-pointer disabled:opacity-60"
+          className="absolute left-3 sm:left-6 top-1/2 -translate-y-1/2 z-40 w-12 h-12 sm:w-14 sm:h-14 rounded-full bg-[#160B0D]/80 hover:bg-[#D8B879] text-[#FAF6EE] hover:text-[#160B0D] backdrop-blur-md border border-[#D8B879]/50 hover:border-[#D8B879] flex items-center justify-center transition-all duration-200 shadow-2xl hover:scale-110 active:scale-90 cursor-pointer select-none"
         >
           <ChevronLeft className="w-6 h-6 sm:w-7 sm:h-7 pointer-events-none" />
         </button>
@@ -564,15 +547,14 @@ export default function HomePage() {
         <button
           type="button"
           onClick={handleNextHeroSlide}
-          disabled={isHeroTransitioning}
           aria-label="Next slide"
-          className="absolute right-3 sm:right-6 top-1/2 -translate-y-1/2 z-30 w-12 h-12 sm:w-14 sm:h-14 rounded-full bg-[#160B0D]/75 hover:bg-[#D8B879] text-white hover:text-[#160B0D] backdrop-blur-md border border-[#D8B879]/50 hover:border-[#D8B879] flex items-center justify-center transition-all duration-300 shadow-2xl hover:scale-110 active:scale-95 cursor-pointer disabled:opacity-60"
+          className="absolute right-3 sm:right-6 top-1/2 -translate-y-1/2 z-40 w-12 h-12 sm:w-14 sm:h-14 rounded-full bg-[#160B0D]/80 hover:bg-[#D8B879] text-[#FAF6EE] hover:text-[#160B0D] backdrop-blur-md border border-[#D8B879]/50 hover:border-[#D8B879] flex items-center justify-center transition-all duration-200 shadow-2xl hover:scale-110 active:scale-90 cursor-pointer select-none"
         >
           <ChevronRight className="w-6 h-6 sm:w-7 sm:h-7 pointer-events-none" />
         </button>
 
         {/* 4 Small Pagination Dots at Bottom */}
-        <div className="absolute bottom-6 sm:bottom-8 left-0 right-0 z-30 flex items-center justify-center gap-2.5">
+        <div className="absolute bottom-6 sm:bottom-8 left-0 right-0 z-40 flex items-center justify-center gap-2.5">
           {HERO_SLIDES.map((slide, sIdx) => {
             const isSelected = currentHeroSlide === sIdx;
             return (
