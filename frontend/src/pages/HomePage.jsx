@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { Link, useNavigate, useLocation } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import { 
@@ -307,24 +307,58 @@ export default function HomePage() {
   const [loading, setLoading] = useState(false);
   const [quickViewProduct, setQuickViewProduct] = useState(null);
 
-  // Automatic Hero Carousel State (4 Slides, 4.5s interval)
+  // Automatic Hero Carousel State (4 Slides, Silk-Smooth Cross-Fade & Timer Reset)
   const [currentHeroSlide, setCurrentHeroSlide] = useState(0);
   const [isHeroAutoPlaying, setIsHeroAutoPlaying] = useState(true);
+  const [isHeroTransitioning, setIsHeroTransitioning] = useState(false);
+  const heroTimerRef = useRef(null);
 
-  useEffect(() => {
-    if (!isHeroAutoPlaying) return;
-    const timer = setInterval(() => {
-      setCurrentHeroSlide((prev) => (prev + 1) % HERO_SLIDES.length);
-    }, 4500);
-    return () => clearInterval(timer);
-  }, [isHeroAutoPlaying]);
-
-  const handlePrevHeroSlide = () => {
-    setCurrentHeroSlide((prev) => (prev - 1 + HERO_SLIDES.length) % HERO_SLIDES.length);
+  const resetHeroTimer = () => {
+    if (heroTimerRef.current) clearInterval(heroTimerRef.current);
+    if (isHeroAutoPlaying) {
+      heroTimerRef.current = setInterval(() => {
+        setCurrentHeroSlide((prev) => (prev + 1) % HERO_SLIDES.length);
+      }, 5000);
+    }
   };
 
-  const handleNextHeroSlide = () => {
+  useEffect(() => {
+    resetHeroTimer();
+    return () => {
+      if (heroTimerRef.current) clearInterval(heroTimerRef.current);
+    };
+  }, [isHeroAutoPlaying]);
+
+  const handlePrevHeroSlide = (e) => {
+    if (e) {
+      e.preventDefault();
+      e.stopPropagation();
+    }
+    if (isHeroTransitioning) return;
+    setIsHeroTransitioning(true);
+    setCurrentHeroSlide((prev) => (prev - 1 + HERO_SLIDES.length) % HERO_SLIDES.length);
+    resetHeroTimer();
+    setTimeout(() => setIsHeroTransitioning(false), 500);
+  };
+
+  const handleNextHeroSlide = (e) => {
+    if (e) {
+      e.preventDefault();
+      e.stopPropagation();
+    }
+    if (isHeroTransitioning) return;
+    setIsHeroTransitioning(true);
     setCurrentHeroSlide((prev) => (prev + 1) % HERO_SLIDES.length);
+    resetHeroTimer();
+    setTimeout(() => setIsHeroTransitioning(false), 500);
+  };
+
+  const handleGoToHeroSlide = (idx) => {
+    if (isHeroTransitioning || idx === currentHeroSlide) return;
+    setIsHeroTransitioning(true);
+    setCurrentHeroSlide(idx);
+    resetHeroTimer();
+    setTimeout(() => setIsHeroTransitioning(false), 500);
   };
 
   // Reservation & Table form state
@@ -431,36 +465,36 @@ export default function HomePage() {
         onMouseEnter={() => setIsHeroAutoPlaying(false)}
         onMouseLeave={() => setIsHeroAutoPlaying(true)}
       >
-        {/* Sliding Flex Track */}
-        <div 
-          className="flex w-full h-full transition-transform duration-700 ease-in-out"
-          style={{ transform: `translateX(-${currentHeroSlide * 100}%)` }}
-        >
+        {/* Luxury Stacked Cross-Fade Slides - Silk Smooth Transitions without Glitches */}
+        <div className="absolute inset-0 w-full h-full">
           {HERO_SLIDES.map((slide, idx) => {
             const isActive = currentHeroSlide === idx;
             return (
               <div
                 key={slide.id}
-                className="w-full min-w-full flex-shrink-0 relative min-h-[85vh] sm:min-h-[90vh] lg:min-h-[92vh] flex items-center justify-center overflow-hidden"
+                className={`absolute inset-0 w-full h-full flex items-center justify-center transition-opacity duration-1000 ease-in-out ${
+                  isActive ? 'opacity-100 z-10 pointer-events-auto' : 'opacity-0 z-0 pointer-events-none'
+                }`}
+                aria-hidden={!isActive}
               >
-                {/* Background Image with slow zoom */}
+                {/* Background Image with slow Ken-Burns zoom */}
                 <img
                   src={slide.image}
                   alt={slide.headline}
-                  className={`absolute inset-0 w-full h-full object-cover object-center transition-transform duration-[7000ms] ease-out ${
+                  className={`absolute inset-0 w-full h-full object-cover object-center transition-transform duration-[8000ms] ease-out ${
                     isActive ? 'scale-105' : 'scale-100'
                   }`}
                   loading={idx === 0 ? 'eager' : 'lazy'}
                 />
 
-                {/* Subtle Dark Luxury Overlay for Text Readability */}
+                {/* Subtle Dark Luxury Overlays for Maximum Legibility */}
                 <div className="absolute inset-0 bg-gradient-to-t from-[#15050C] via-[#220813]/65 to-[#15050C]/55" />
                 <div className="absolute inset-0 bg-gradient-to-r from-[#15050C]/85 via-transparent to-[#15050C]/85" />
                 <div className="absolute inset-0 bg-[radial-gradient(#D8B879_0.8px,transparent_0.8px)] [background-size:24px_24px] opacity-15 pointer-events-none" />
 
-                {/* Slide Content */}
-                <div className={`max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 text-center relative z-10 py-24 sm:py-32 space-y-6 transition-all duration-700 ${
-                  isActive ? 'opacity-100 translate-y-0' : 'opacity-40 translate-y-2'
+                {/* Slide Content with upward fade */}
+                <div className={`max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 text-center relative z-10 py-24 sm:py-32 space-y-6 transition-all duration-700 delay-100 ${
+                  isActive ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'
                 }`}>
                   
                   {/* Eyebrow Tag */}
@@ -516,33 +550,38 @@ export default function HomePage() {
           })}
         </div>
 
-        {/* Manual Navigation Arrows (Left & Right) */}
+        {/* Manual Navigation Arrows (Left & Right) with High Z-Index & Tactile Click */}
         <button
+          type="button"
           onClick={handlePrevHeroSlide}
+          disabled={isHeroTransitioning}
           aria-label="Previous slide"
-          className="absolute left-3 sm:left-6 top-1/2 -translate-y-1/2 z-20 w-11 h-11 sm:w-13 sm:h-13 rounded-full bg-[#160B0D]/60 hover:bg-[#D8B879] text-white hover:text-[#160B0D] backdrop-blur-md border border-[#D8B879]/40 hover:border-[#D8B879] flex items-center justify-center transition-all duration-300 shadow-xl hover:scale-110 active:scale-95"
+          className="absolute left-3 sm:left-6 top-1/2 -translate-y-1/2 z-30 w-12 h-12 sm:w-14 sm:h-14 rounded-full bg-[#160B0D]/75 hover:bg-[#D8B879] text-white hover:text-[#160B0D] backdrop-blur-md border border-[#D8B879]/50 hover:border-[#D8B879] flex items-center justify-center transition-all duration-300 shadow-2xl hover:scale-110 active:scale-95 cursor-pointer disabled:opacity-60"
         >
-          <ChevronLeft className="w-5 h-5 sm:w-6 sm:h-6" />
+          <ChevronLeft className="w-6 h-6 sm:w-7 sm:h-7 pointer-events-none" />
         </button>
 
         <button
+          type="button"
           onClick={handleNextHeroSlide}
+          disabled={isHeroTransitioning}
           aria-label="Next slide"
-          className="absolute right-3 sm:right-6 top-1/2 -translate-y-1/2 z-20 w-11 h-11 sm:w-13 sm:h-13 rounded-full bg-[#160B0D]/60 hover:bg-[#D8B879] text-white hover:text-[#160B0D] backdrop-blur-md border border-[#D8B879]/40 hover:border-[#D8B879] flex items-center justify-center transition-all duration-300 shadow-xl hover:scale-110 active:scale-95"
+          className="absolute right-3 sm:right-6 top-1/2 -translate-y-1/2 z-30 w-12 h-12 sm:w-14 sm:h-14 rounded-full bg-[#160B0D]/75 hover:bg-[#D8B879] text-white hover:text-[#160B0D] backdrop-blur-md border border-[#D8B879]/50 hover:border-[#D8B879] flex items-center justify-center transition-all duration-300 shadow-2xl hover:scale-110 active:scale-95 cursor-pointer disabled:opacity-60"
         >
-          <ChevronRight className="w-5 h-5 sm:w-6 sm:h-6" />
+          <ChevronRight className="w-6 h-6 sm:w-7 sm:h-7 pointer-events-none" />
         </button>
 
         {/* 4 Small Pagination Dots at Bottom */}
-        <div className="absolute bottom-6 sm:bottom-8 left-0 right-0 z-20 flex items-center justify-center gap-2.5">
+        <div className="absolute bottom-6 sm:bottom-8 left-0 right-0 z-30 flex items-center justify-center gap-2.5">
           {HERO_SLIDES.map((slide, sIdx) => {
             const isSelected = currentHeroSlide === sIdx;
             return (
               <button
                 key={slide.id}
-                onClick={() => setCurrentHeroSlide(sIdx)}
+                type="button"
+                onClick={() => handleGoToHeroSlide(sIdx)}
                 aria-label={`Go to slide ${sIdx + 1}: ${slide.category}`}
-                className={`transition-all duration-300 rounded-full focus:outline-none ${
+                className={`transition-all duration-300 rounded-full focus:outline-none cursor-pointer ${
                   isSelected
                     ? 'w-8 h-2.5 bg-[#D8B879] shadow-[0_0_12px_rgba(216,184,121,0.8)]'
                     : 'w-2.5 h-2.5 bg-white/40 hover:bg-white/80 hover:scale-125'

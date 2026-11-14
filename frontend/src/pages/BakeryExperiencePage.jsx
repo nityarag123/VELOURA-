@@ -453,10 +453,23 @@ export default function BakeryExperiencePage() {
     }
   }, [categoryParam]);
 
-  const handleScroll = (ref, dir) => {
+  const handleScroll = (ref, dir, category) => {
     if (!ref.current) return;
+    if (category === 'cakes') {
+      setIsCakesPaused(true);
+      setTimeout(() => setIsCakesPaused(false), 2500);
+    } else if (category === 'desserts') {
+      setIsDessertsPaused(true);
+      setTimeout(() => setIsDessertsPaused(false), 2500);
+    } else if (category === 'boulangerie') {
+      setIsBoulangeriePaused(true);
+      setTimeout(() => setIsBoulangeriePaused(false), 2500);
+    } else if (category === 'gelato') {
+      setIsGelatoPaused(true);
+      setTimeout(() => setIsGelatoPaused(false), 2500);
+    }
     ref.current.scrollBy({
-      left: dir === 'left' ? -350 : 350,
+      left: dir === 'left' ? -360 : 360,
       behavior: 'smooth'
     });
   };
@@ -615,14 +628,14 @@ export default function BakeryExperiencePage() {
               {/* Navigation Controls */}
               <div className="flex items-center gap-3 shrink-0">
                 <button
-                  onClick={() => handleScroll(cakesRef, 'left')}
+                  onClick={() => handleScroll(cakesRef, 'left', 'cakes')}
                   className="w-10 h-10 rounded-full bg-white/10 hover:bg-[#D8B879] text-white hover:text-[#160B0D] border border-white/20 flex items-center justify-center transition-all"
                   aria-label="Previous cakes"
                 >
                   <ChevronLeft className="w-5 h-5" />
                 </button>
                 <button
-                  onClick={() => handleScroll(cakesRef, 'right')}
+                  onClick={() => handleScroll(cakesRef, 'right', 'cakes')}
                   className="w-10 h-10 rounded-full bg-white/10 hover:bg-[#D8B879] text-white hover:text-[#160B0D] border border-white/20 flex items-center justify-center transition-all"
                   aria-label="Next cakes"
                 >
@@ -639,7 +652,7 @@ export default function BakeryExperiencePage() {
             >
               {/* Floating Side Navigation Arrows */}
               <button
-                onClick={() => handleScroll(cakesRef, 'left')}
+                onClick={() => handleScroll(cakesRef, 'left', 'cakes')}
                 className="absolute -left-3 sm:-left-5 top-1/2 -translate-y-1/2 z-20 w-11 h-11 rounded-full bg-[#160B0D]/90 text-white border border-white/20 flex items-center justify-center hover:border-[#D8B879] hover:bg-[#260D16] shadow-2xl transition opacity-75 group-hover/cakes:opacity-100"
                 aria-label="Previous cakes"
               >
@@ -647,7 +660,7 @@ export default function BakeryExperiencePage() {
               </button>
 
               <button
-                onClick={() => handleScroll(cakesRef, 'right')}
+                onClick={() => handleScroll(cakesRef, 'right', 'cakes')}
                 className="absolute -right-3 sm:-right-5 top-1/2 -translate-y-1/2 z-20 w-11 h-11 rounded-full bg-[#160B0D]/90 text-white border border-white/20 flex items-center justify-center hover:border-[#D8B879] hover:bg-[#260D16] shadow-2xl transition opacity-75 group-hover/cakes:opacity-100"
                 aria-label="Next cakes"
               >
@@ -757,14 +770,14 @@ export default function BakeryExperiencePage() {
               {/* Navigation Controls */}
               <div className="flex items-center gap-3 shrink-0">
                 <button
-                  onClick={() => handleScroll(dessertsRef, 'left')}
+                  onClick={() => handleScroll(dessertsRef, 'left', 'desserts')}
                   className="w-10 h-10 rounded-full bg-white hover:bg-[#260D16] text-[#260D16] hover:text-[#F6EAD5] border border-[#E8DEC8] flex items-center justify-center transition-all shadow-xs"
                   aria-label="Previous desserts"
                 >
                   <ChevronLeft className="w-5 h-5" />
                 </button>
                 <button
-                  onClick={() => handleScroll(dessertsRef, 'right')}
+                  onClick={() => handleScroll(dessertsRef, 'right', 'desserts')}
                   className="w-10 h-10 rounded-full bg-white hover:bg-[#260D16] text-[#260D16] hover:text-[#F6EAD5] border border-[#E8DEC8] flex items-center justify-center transition-all shadow-xs"
                   aria-label="Next desserts"
                 >
@@ -781,7 +794,7 @@ export default function BakeryExperiencePage() {
             >
               {/* Floating Side Navigation Arrows */}
               <button
-                onClick={() => handleScroll(dessertsRef, 'left')}
+                onClick={() => handleScroll(dessertsRef, 'left', 'desserts')}
                 className="absolute -left-3 sm:-left-5 top-1/2 -translate-y-1/2 z-20 w-11 h-11 rounded-full bg-white/95 text-[#260D16] border border-[#E8DEC8] flex items-center justify-center hover:border-[#D8B879] hover:bg-[#FAF6EE] shadow-xl transition opacity-75 group-hover/desserts:opacity-100"
                 aria-label="Previous desserts"
               >
@@ -789,7 +802,7 @@ export default function BakeryExperiencePage() {
               </button>
 
               <button
-                onClick={() => handleScroll(dessertsRef, 'right')}
+                onClick={() => handleScroll(dessertsRef, 'right', 'desserts')}
                 className="absolute -right-3 sm:-right-5 top-1/2 -translate-y-1/2 z-20 w-11 h-11 rounded-full bg-white/95 text-[#260D16] border border-[#E8DEC8] flex items-center justify-center hover:border-[#D8B879] hover:bg-[#FAF6EE] shadow-xl transition opacity-75 group-hover/desserts:opacity-100"
                 aria-label="Next desserts"
               >
@@ -899,14 +912,14 @@ export default function BakeryExperiencePage() {
               {/* Navigation Controls */}
               <div className="flex items-center gap-3 shrink-0">
                 <button
-                  onClick={() => handleScroll(boulangerieRef, 'left')}
+                  onClick={() => handleScroll(boulangerieRef, 'left', 'boulangerie')}
                   className="w-10 h-10 rounded-full bg-white/10 hover:bg-[#D8B879] text-white hover:text-[#160B0D] border border-white/20 flex items-center justify-center transition-all"
                   aria-label="Previous boulangerie"
                 >
                   <ChevronLeft className="w-5 h-5" />
                 </button>
                 <button
-                  onClick={() => handleScroll(boulangerieRef, 'right')}
+                  onClick={() => handleScroll(boulangerieRef, 'right', 'boulangerie')}
                   className="w-10 h-10 rounded-full bg-white/10 hover:bg-[#D8B879] text-white hover:text-[#160B0D] border border-white/20 flex items-center justify-center transition-all"
                   aria-label="Next boulangerie"
                 >
@@ -923,7 +936,7 @@ export default function BakeryExperiencePage() {
             >
               {/* Floating Side Navigation Arrows */}
               <button
-                onClick={() => handleScroll(boulangerieRef, 'left')}
+                onClick={() => handleScroll(boulangerieRef, 'left', 'boulangerie')}
                 className="absolute -left-3 sm:-left-5 top-1/2 -translate-y-1/2 z-20 w-11 h-11 rounded-full bg-[#160B0D]/90 text-white border border-white/20 flex items-center justify-center hover:border-[#D8B879] hover:bg-[#260D16] shadow-2xl transition opacity-75 group-hover/boulangerie:opacity-100"
                 aria-label="Previous boulangerie"
               >
@@ -931,7 +944,7 @@ export default function BakeryExperiencePage() {
               </button>
 
               <button
-                onClick={() => handleScroll(boulangerieRef, 'right')}
+                onClick={() => handleScroll(boulangerieRef, 'right', 'boulangerie')}
                 className="absolute -right-3 sm:-right-5 top-1/2 -translate-y-1/2 z-20 w-11 h-11 rounded-full bg-[#160B0D]/90 text-white border border-white/20 flex items-center justify-center hover:border-[#D8B879] hover:bg-[#260D16] shadow-2xl transition opacity-75 group-hover/boulangerie:opacity-100"
                 aria-label="Next boulangerie"
               >
@@ -1041,14 +1054,14 @@ export default function BakeryExperiencePage() {
               {/* Navigation Controls */}
               <div className="flex items-center gap-3 shrink-0">
                 <button
-                  onClick={() => handleScroll(gelatoRef, 'left')}
+                  onClick={() => handleScroll(gelatoRef, 'left', 'gelato')}
                   className="w-10 h-10 rounded-full bg-white hover:bg-[#260D16] text-[#260D16] hover:text-[#F6EAD5] border border-[#E8DEC8] flex items-center justify-center transition-all shadow-xs"
                   aria-label="Previous gelato"
                 >
                   <ChevronLeft className="w-5 h-5" />
                 </button>
                 <button
-                  onClick={() => handleScroll(gelatoRef, 'right')}
+                  onClick={() => handleScroll(gelatoRef, 'right', 'gelato')}
                   className="w-10 h-10 rounded-full bg-white hover:bg-[#260D16] text-[#260D16] hover:text-[#F6EAD5] border border-[#E8DEC8] flex items-center justify-center transition-all shadow-xs"
                   aria-label="Next gelato"
                 >
@@ -1065,7 +1078,7 @@ export default function BakeryExperiencePage() {
             >
               {/* Floating Side Navigation Arrows */}
               <button
-                onClick={() => handleScroll(gelatoRef, 'left')}
+                onClick={() => handleScroll(gelatoRef, 'left', 'gelato')}
                 className="absolute -left-3 sm:-left-5 top-1/2 -translate-y-1/2 z-20 w-11 h-11 rounded-full bg-white/95 text-[#260D16] border border-[#E8DEC8] flex items-center justify-center hover:border-[#D8B879] hover:bg-[#FAF6EE] shadow-xl transition opacity-75 group-hover/gelato:opacity-100"
                 aria-label="Previous gelato"
               >
@@ -1073,7 +1086,7 @@ export default function BakeryExperiencePage() {
               </button>
 
               <button
-                onClick={() => handleScroll(gelatoRef, 'right')}
+                onClick={() => handleScroll(gelatoRef, 'right', 'gelato')}
                 className="absolute -right-3 sm:-right-5 top-1/2 -translate-y-1/2 z-20 w-11 h-11 rounded-full bg-white/95 text-[#260D16] border border-[#E8DEC8] flex items-center justify-center hover:border-[#D8B879] hover:bg-[#FAF6EE] shadow-xl transition opacity-75 group-hover/gelato:opacity-100"
                 aria-label="Next gelato"
               >
